@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@import './tailwind/_base.css';
+@import './tailwind/_components.css';
+@import './tailwind/_utilities.css';
+
+@import './_checkbox-radio-switch.css';
+@import './_progress.css';
+@import './_scrollbars.css';
+@import './_table.css';
+@import './_color.css';
+@import './_font.css';
+
+@import './styles/_basic.css';
+@import './styles/_white.css';
+
+@config '../../tailwind.config.js';
+@plugin "daisyui";
+
+@theme {
+  --font-poppins: 'Poppins';
+}
