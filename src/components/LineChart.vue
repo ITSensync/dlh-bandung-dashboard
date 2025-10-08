@@ -25,7 +25,7 @@ ChartJS.register(
 
 const options = {
   responsive: true,
-  maintainAspectRation: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       display: false,
@@ -48,12 +48,12 @@ const data = {
       fill: true,
       tension: 0.4,
       borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
     },
   ],
 }
 </script>
 
 <template>
-  <Line :data="data" :options="options" height="90" />
+  <Line :data="data" :options="options" />
 </template>

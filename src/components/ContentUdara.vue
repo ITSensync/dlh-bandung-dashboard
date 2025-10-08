@@ -4,7 +4,7 @@ import LineChart from './LineChart.vue'
 
 <template>
   <div class="w-[35vw] bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
-    <p class="font-poppins text-xl font-semibold text-center mt-2">Kualitas Udara</p>
+    <p class="font-poppins text-lg font-semibold text-center mt-2">Kualitas Udara</p>
     <div class="border border-zinc-500 mt-4"></div>
 
     <!-- HEADER NILAI -->
@@ -41,7 +41,7 @@ import LineChart from './LineChart.vue'
     <!-- GRAPH PM10 -->
     <div class="w-full bg-dlh_blue_dark p-4 font-poppins">
       <div class="flex flex-row justify-between">
-        <p class="font-bold text-sm">Konsentrasi PM10 <span class="font-normal">(24 Jam)</span></p>
+        <p class="font-bold text-sm">ISPU PM10 <span class="font-normal">(24 Jam)</span></p>
         <div class="flex flex-row gap-4 font-bold text-xs">
           <div class="badge badge-error">MAX: -</div>
           <div class="badge badge-accent">MIN: -</div>
@@ -54,7 +54,7 @@ import LineChart from './LineChart.vue'
     </div>
     <div class="w-full bg-dlh_blue_dark p-4 font-poppins mt-4">
       <div class="flex flex-row justify-between">
-        <p class="font-bold text-sm">Konsentrasi PM2.5 <span class="font-normal">(24 Jam)</span></p>
+        <p class="font-bold text-sm">ISPU PM2.5 <span class="font-normal">(24 Jam)</span></p>
         <div class="flex flex-row gap-4 font-bold text-xs">
           <div class="badge badge-error">MAX: -</div>
           <div class="badge badge-accent">MIN: -</div>

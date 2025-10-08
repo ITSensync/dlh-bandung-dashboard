@@ -1,6 +1,7 @@
 <script setup lang="js">
 import ContentGas from '@/components/ContentGas.vue'
 import ContentUdara from '@/components/ContentUdara.vue'
+import ContentWeather from '@/components/ContentWeather.vue'
 import NavbarGuest from '@/components/NavbarGuest.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
 </script>
@@ -12,6 +13,7 @@ import LayoutGuest from '@/layouts/LayoutGuest.vue'
       <div class="flex flex-row h-full p-4 gap-4">
         <ContentUdara />
         <ContentGas />
+        <ContentWeather />
       </div>
     </div>
   </LayoutGuest>
