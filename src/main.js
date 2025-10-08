@@ -34,7 +34,7 @@ if (
 }
 
 // Default title tag
-const defaultDocumentTitle = 'Admin Sensync Absensi'
+const defaultDocumentTitle = 'AQMS DLH KOTA BANDUNG'
 
 // Set document title from route meta
 router.afterEach((to) => {

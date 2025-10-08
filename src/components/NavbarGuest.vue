@@ -12,10 +12,8 @@ onMounted(() => {
   <div class="flex flex-row justify-between bg-dlh_blue_dark pl-2">
     <div class="flex flex-row gap-4 items-center py-2 justify-center">
       <img src="/dlh.png" alt="DLH LOGO" height="20" class="h-12" />
-      <div className="flex-1">
-        <a className="text-xl font-poppins font-extrabold"
-          >Pemantauan Kualitas Udara Kota Bandung</a
-        >
+      <div class="flex-1">
+        <a class="text-xl font-poppins font-extrabold">Pemantauan Kualitas Udara Kota Bandung</a>
         <div class="flex flex-row gap-2 font-poppins font-semibold">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +32,7 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div className="flex flex-col items-center justify-center bg-dlh_green font-poppins px-2">
+    <div class="flex flex-col items-center justify-center bg-dlh_green font-poppins px-2">
       <p class="font-bold text-xl">{{ timeStore.time }} WIB</p>
       <p>{{ timeStore.date }}</p>
     </div>
