@@ -63,10 +63,10 @@ const currentTitle = computed(() => title[activeIndex.value])
             :slidesPerView="1"
             :spaceBetween="30"
             :loop="true"
-            :pagination="{
-              clickable: true,
+            :autoplay="{
+              delay: 5000,
+              disableOnInteraction: true,
             }"
-            :navigation="true"
             :modules="modules"
             @slideChange="onSlideChange"
             class="mySwiper h-[15vw]"
