@@ -1,6 +1,34 @@
 <script setup>
 import CardTextGas from './CardTextGas.vue'
 import LineChart from './LineChart.vue'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+
+// Import Swiper styles
+import 'swiper/css'
+
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
+
+// import './style.css'
+
+// import required modules
+import { Autoplay } from 'swiper/modules'
+import { computed, ref } from 'vue'
+
+const modules = [Autoplay]
+
+// 🧠 state untuk menyimpan index slide aktif
+const activeIndex = ref(0)
+
+const title = ['Suhu', 'Curah Hujan', 'UV']
+
+// 🔥 event handler saat swiper berubah
+const onSlideChange = (swiper) => {
+  activeIndex.value = swiper.realIndex
+  console.log('Slide aktif:', activeIndex.value)
+}
+
+const currentTitle = computed(() => title[activeIndex.value])
 </script>
 
 <template>
@@ -26,10 +54,27 @@ import LineChart from './LineChart.vue'
 
       <div class="w-full bg-dlh_blue_dark p-4 font-poppins mt-4">
         <div class="flex flex-row justify-center mb-4">
-          <p class="font-bold text-sm">Suhu <span class="font-normal">(24 Jam)</span></p>
+          <p class="font-bold text-sm">
+            {{ currentTitle }} <span class="font-normal">(24 Jam)</span>
+          </p>
         </div>
-        <div class="w-full h-[15vw]">
-          <LineChart />
+        <div class="w-full">
+          <swiper
+            :slidesPerView="1"
+            :spaceBetween="30"
+            :loop="true"
+            :pagination="{
+              clickable: true,
+            }"
+            :navigation="true"
+            :modules="modules"
+            @slideChange="onSlideChange"
+            class="mySwiper h-[15vw]"
+          >
+            <swiper-slide><LineChart /></swiper-slide>
+            <swiper-slide><LineChart /></swiper-slide>
+            <swiper-slide><LineChart /></swiper-slide>
+          </swiper>
         </div>
       </div>
     </div>
