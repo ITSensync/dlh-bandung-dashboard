@@ -55,5 +55,5 @@ const data = {
 </script>
 
 <template>
-  <Line :data="data" :options="options" height="115" />
+  <Line :data="data" :options="options" height="90" />
 </template>

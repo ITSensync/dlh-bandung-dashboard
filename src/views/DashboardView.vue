@@ -1,5 +1,6 @@
 <script setup lang="js">
-import ContentUdara from '@/components/ContentUdara.vue';
+import ContentGas from '@/components/ContentGas.vue'
+import ContentUdara from '@/components/ContentUdara.vue'
 import NavbarGuest from '@/components/NavbarGuest.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
 </script>
@@ -8,8 +9,9 @@ import LayoutGuest from '@/layouts/LayoutGuest.vue'
   <LayoutGuest>
     <div class="min-h-screen bg-zinc-800">
       <NavbarGuest />
-      <div class="flex flex-row h-full p-4">
-        <ContentUdara/>
+      <div class="flex flex-row h-full p-4 gap-4">
+        <ContentUdara />
+        <ContentGas />
       </div>
     </div>
   </LayoutGuest>

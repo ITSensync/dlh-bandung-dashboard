@@ -3,7 +3,7 @@ import LineChart from './LineChart.vue'
 </script>
 
 <template>
-  <div class="w-1/3 h-full bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
+  <div class="w-[35vw] bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
     <p class="font-poppins text-xl font-semibold text-center mt-2">Kualitas Udara</p>
     <div class="border border-zinc-500 mt-4"></div>
 
