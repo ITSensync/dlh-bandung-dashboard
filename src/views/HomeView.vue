@@ -2,7 +2,15 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { useMainStore } from '@/stores/main'
-import { mdiAccountMultiple, mdiChartTimelineVariant, mdiCalendar, mdiCalendarMonth } from '@mdi/js'
+import {
+  mdiAccountMultiple,
+  mdiChartTimelineVariant,
+  mdiCalendar,
+  mdiCalendarMonth,
+  mdiLightbulbOutline,
+  mdiWeatherDust,
+  mdiSmog,
+} from '@mdi/js'
 import * as chartConfig from '@/components/Charts/chart.config.js'
 import SectionMain from '@/components/SectionMain.vue'
 import CardBoxWidget from '@/components/CardBoxWidget.vue'
@@ -13,6 +21,7 @@ import TableListPresence from '@/components/TableListPresence.vue'
 import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'
 import CardName from '@/components/CardName.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
+import CardGauge from '@/components/CardGauge.vue'
 
 const chartData = ref(null)
 
@@ -36,14 +45,14 @@ const fetchData = () => {
   mainStore.fetchPresenceMonthly(currentMonth)
 }
 
-watch(
+/* watch(
   [() => mainStore.presenceToday, () => mainStore.presenceMonthly],
   ([newToday, newMonthly]) => {
     totalPresenceToday.value = newToday.length
     totalPresenceMonthly.value = newMonthly.reduce((sum, item) => sum + item.jumlah_hadir, 0)
     dataPresenceToday.value = newToday
   },
-)
+) */
 
 onMounted(() => {
   fetchData() // fetch pertama kali saat page render
@@ -92,13 +101,18 @@ const transactionBarItems = computed(() => mainStore.history) */
         />
       </div> -->
 
-      <SectionTitleLineWithButton
-        :icon="mdiAccountMultiple"
-        title="Absensi Hari Ini"
-        class="-mt-10"
-      />
+      <SectionTitleLineWithButton :icon="mdiSmog" title="Partikulat" class="-mt-10" />
 
-      <div
+      <div class="flex flex-row w-full gap-4">
+        <div class="flex flex-col h-fit w-full">
+          <CardGauge class="" name="PM10" value="50" unit="µg/m³"/>
+        </div>
+        <div class="flex flex-col h-fit w-full">
+          <CardGauge class="" name="PM2.5" value="120" unit="µg/m³"/>
+        </div>
+      </div>
+
+      <!-- <div
         class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-5 gap-y-4 mt-2"
         v-if="totalPresenceToday > 0"
       >
@@ -109,11 +123,11 @@ const transactionBarItems = computed(() => mainStore.history) */
           :check-in="item.waktu_masuk"
           :last-update="item.terakhir_terlihat"
         />
-      </div>
+      </div> -->
 
-      <CardBox v-else>
+      <!-- <CardBox v-else>
         <CardBoxComponentEmpty text="Belum ada yang absen nih..." />
-      </CardBox>
+      </CardBox> -->
       <!-- 
 
       <CardBox has-table v-if="totalPresenceToday > 0">

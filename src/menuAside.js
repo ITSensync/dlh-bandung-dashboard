@@ -1,31 +1,41 @@
 import {
-  mdiAccountTie,
-  mdiCalendarMonth,
   mdiCalendarToday,
-  mdiMonitor,
+  mdiClockOutline,
+  mdiFileDocumentOutline,
+  mdiTimerOutline,
 } from '@mdi/js'
 
 export default [
   {
     to: '/summary',
-    icon: mdiMonitor,
-    label: 'Dashboard',
+    icon: mdiFileDocumentOutline,
+    label: 'Summary',
+  },
+  {
+    to: '/history-5-menit',
+    label: 'Data 5 Menit',
+    icon: mdiTimerOutline,
+  },
+  {
+    to: '/history-30-menit',
+    label: 'Data 30 Menit',
+    icon: mdiClockOutline,
   },
   {
     to: '/presence-date',
     label: 'Per Tanggal',
     icon: mdiCalendarToday,
   },
-  {
-    to: '/presence-monthly',
-    label: 'Per Bulan',
-    icon: mdiCalendarMonth,
-  },
-  {
-    to: '/presence-person',
-    label: 'Per Orang',
-    icon: mdiAccountTie,
-  },
+  // {
+  //   to: '/presence-monthly',
+  //   label: 'Per Bulan',
+  //   icon: mdiCalendarMonth,
+  // },
+  // {
+  //   to: '/presence-person',
+  //   label: 'Per Orang',
+  //   icon: mdiAccountTie,
+  // },
   // {
   //   to: '/tables',
   //   label: 'Tables',

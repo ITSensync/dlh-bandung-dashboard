@@ -96,7 +96,7 @@ onMounted(() => {
       <div class="flex-1">
         <slot />
       </div>
-      <FooterBar class="inset-x-0 bottom-0"> Sensync Absensi </FooterBar>
+      <FooterBar class="inset-x-0 bottom-0"> AQMS DLH KOTA BANDUNG </FooterBar>
     </div>
   </div>
 </template>

@@ -1,6 +1,4 @@
-import {
-  mdiThemeLightDark,
-} from '@mdi/js'
+import { mdiThemeLightDark } from "@mdi/js";
 
 export default [
   // {

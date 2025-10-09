@@ -33,11 +33,27 @@ const routes = [
   },
   {
     meta: {
-      title: 'History',
+      title: 'History 5 Menit',
     },
-    path: '/history',
-    name: 'history',
+    path: '/history-5-menit',
+    name: 'history 5 menit',
     // component: () => import('@/views/TablesView.vue'),
+  },
+  {
+    meta: {
+      title: 'History 30 Menit',
+    },
+    path: '/history-30-menit',
+    name: 'history 30 menit',
+    // component: () => import('@/views/TablesView.vue'),
+  },
+  {
+    meta: {
+      title: 'Presence By Date',
+    },
+    path: '/presence-date',
+    name: 'presence by date',
+    component: () => import('@/views/PresenceByDate.vue'),
   },
   /* {
     meta: {
