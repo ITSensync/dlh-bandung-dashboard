@@ -35,7 +35,7 @@ const routes = [
     meta: {
       title: 'History 5 Menit',
     },
-    path: '/history-5-menit',
+    path: '/ispu',
     name: 'history 5 menit',
     // component: () => import('@/views/TablesView.vue'),
   },

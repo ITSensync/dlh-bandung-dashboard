@@ -10,6 +10,13 @@ import {
   mdiLightbulbOutline,
   mdiWeatherDust,
   mdiSmog,
+  mdiGasCylinder,
+  mdiFlaskOutline,
+  mdiMolecule,
+  mdiMoleculeCo,
+  mdiFactory,
+  mdiCar,
+  mdiWeatherCloudy,
 } from '@mdi/js'
 import * as chartConfig from '@/components/Charts/chart.config.js'
 import SectionMain from '@/components/SectionMain.vue'
@@ -22,6 +29,13 @@ import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'
 import CardName from '@/components/CardName.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import CardGauge from '@/components/CardGauge.vue'
+import CardWeather from '@/components/CardTemperature.vue'
+import CardTemperature from '@/components/CardTemperature.vue'
+import CardWind from '@/components/CardWind.vue'
+import CardPressure from '@/components/CardPressure.vue'
+import CardUv from '@/components/CardUv.vue'
+import CardPrecip from '@/components/CardPrecip.vue'
+import CardSolar from '@/components/CardSolar.vue'
 
 const chartData = ref(null)
 
@@ -105,11 +119,62 @@ const transactionBarItems = computed(() => mainStore.history) */
 
       <div class="flex flex-row w-full gap-4">
         <div class="flex flex-col h-fit w-full">
-          <CardGauge class="" name="PM10" value="50" unit="µg/m³"/>
+          <CardGauge class="" name="PM10" value="50" unit="µg/m³" />
         </div>
         <div class="flex flex-col h-fit w-full">
-          <CardGauge class="" name="PM2.5" value="120" unit="µg/m³"/>
+          <CardGauge class="" name="PM2.5" value="120" unit="µg/m³" />
         </div>
+      </div>
+
+      <SectionTitleLineWithButton :icon="mdiGasCylinder" title="Gas (µg/m³)" class="" />
+
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-5 mb-3">
+        <CardBoxWidget
+          class="h-fit"
+          color="text-violet-500"
+          :icon="mdiFlaskOutline"
+          :number="12"
+          label="HC"
+        />
+        <CardBoxWidget
+          class="h-fit"
+          color="text-slate-500"
+          :icon="mdiMoleculeCo"
+          :number="totalPresenceToday"
+          label="CO"
+        />
+        <CardBoxWidget
+          class="h-fit"
+          color="text-sky-500"
+          :icon="mdiMolecule"
+          :number="totalPresenceMonthly"
+          label="O3"
+        />
+        <CardBoxWidget
+          class="h-fit"
+          color="text-amber-500"
+          :icon="mdiFactory"
+          :number="totalPresenceMonthly"
+          label="SO2"
+        />
+        <CardBoxWidget
+          class="h-fit"
+          color="text-rose-500"
+          :icon="mdiCar"
+          :number="totalPresenceMonthly"
+          label="NO2"
+        />
+      </div>
+
+      <SectionTitleLineWithButton :icon="mdiWeatherCloudy" title="Cuaca" class="" />
+
+      <div class="grid grid-cols-3 gap-4">
+        <CardTemperature />
+        <CardWind/>
+        <CardPressure/>
+        <CardPrecip/>
+        <CardUv/>
+        <CardSolar/>
       </div>
 
       <!-- <div

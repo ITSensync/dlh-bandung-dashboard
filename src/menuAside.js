@@ -2,7 +2,7 @@ import {
   mdiCalendarToday,
   mdiClockOutline,
   mdiFileDocumentOutline,
-  mdiTimerOutline,
+  mdiGauge,
 } from '@mdi/js'
 
 export default [
@@ -12,9 +12,9 @@ export default [
     label: 'Summary',
   },
   {
-    to: '/history-5-menit',
-    label: 'Data 5 Menit',
-    icon: mdiTimerOutline,
+    to: '/ispu',
+    label: 'ISPU Per Jam',
+    icon: mdiGauge,
   },
   {
     to: '/history-30-menit',
