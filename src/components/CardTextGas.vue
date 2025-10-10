@@ -8,7 +8,7 @@ const param = defineProps({
 
 <template>
   <div
-    class="w-full h-[calc(100vh-745px)] rounded-xl flex flex-col items-center justify-center p-3 gap-2 bg-dlh_blue_dark font-poppins"
+    class="w-full h-full rounded-xl flex flex-col items-center justify-center p-3 gap-2 bg-dlh_blue_dark font-poppins"
   >
     <p class="font-semibold text-md">{{ param.name }}</p>
     <p class="font-bold text-yellow-300 text-4xl">{{ param.value }}</p>
