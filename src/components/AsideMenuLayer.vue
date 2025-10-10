@@ -1,9 +1,8 @@
 <script setup>
-import { mdiLogout, mdiClose } from '@mdi/js'
+import { mdiLogout } from '@mdi/js'
 import { computed } from 'vue'
 import AsideMenuList from '@/components/AsideMenuList.vue'
 import AsideMenuItem from '@/components/AsideMenuItem.vue'
-import BaseIcon from '@/components/BaseIcon.vue'
 
 defineProps({
   menu: {
@@ -26,9 +25,9 @@ const menuClick = (event, item) => {
   emit('menu-click', event, item)
 }
 
-const asideLgCloseClick = (event) => {
+/* const asideLgCloseClick = (event) => {
   emit('aside-lg-close-click', event)
-}
+} */
 </script>
 
 <template>
@@ -38,12 +37,12 @@ const asideLgCloseClick = (event) => {
   >
     <div class="aside 3xl:rounded-2xl flex-1 flex flex-col overflow-hidden dark:bg-slate-900">
       <div class="aside-brand flex flex-row h-14 items-center justify-between dark:bg-slate-900">
-        <div class="text-center flex-1 lg:text-left lg:pl-6 xl:text-center xl:pl-0">
+        <div class="text-center flex-1 lg:text-center lg:pl-0">
           <b class="font-black font-poppins">AQMS Dashboard</b>
         </div>
-        <button class="hidden lg:inline-block xl:hidden p-3" @click.prevent="asideLgCloseClick">
+        <!-- <button class="hidden lg:inline-block xl:hidden p-3" @click.prevent="asideLgCloseClick">
           <BaseIcon :path="mdiClose" />
-        </button>
+        </button> -->
       </div>
       <div
         class="flex-1 overflow-y-auto overflow-x-hidden aside-scrollbars dark:aside-scrollbars-[slate]"

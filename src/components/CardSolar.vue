@@ -30,9 +30,9 @@ const chartOptions = ref({
         name: {
           //   formater: () => 'AVC',
           show: true,
-          offsetY: 15,
+          offsetY: 25,
           color: '#888',
-          fontSize: '40px',
+          fontSize: '70px',
         },
         value: {
           formatter: () => '',
