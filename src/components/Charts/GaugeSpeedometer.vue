@@ -30,7 +30,7 @@ console.log(props.name);
       :needle-transition-duration="2000"
       needle-transition="easeElastic"
       needle-color="grey"
-      class="h-[30vh]"
+      class="xl:h-[30vh] lg:h-[45vh] md:h-[60vh] h-[90vh]"
     />
   </div>
 </template>

@@ -4,13 +4,13 @@ import BaseLevel from '@/components/BaseLevel.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
 
-/* const props = defineProps({
+const props = defineProps({
   checkable: Boolean,
   data: [],
   type: String,
 })
 
-const items = ref(props.data)
+/* const items = ref(props.data)
 
 const perPage = ref(10)
 
@@ -55,7 +55,7 @@ watch(
         <th>O3</th>
         <th>SO2</th>
         <th>NO2</th>
-        <template v-if="type !== 'ispu'">
+        <template v-if="props.type !== 'ispu'">
           <th>Kec. Angin</th>
           <th>Arah Angin</th>
           <th>Suhu</th>

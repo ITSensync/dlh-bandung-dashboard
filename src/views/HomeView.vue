@@ -117,7 +117,7 @@ const transactionBarItems = computed(() => mainStore.history) */
 
       <SectionTitleLineWithButton :icon="mdiSmog" title="Partikulat" class="-mt-10" />
 
-      <div class="flex flex-row w-full gap-4">
+      <div class="flex flex-col lg:flex-row w-full gap-4">
         <div class="flex flex-col h-fit w-full">
           <CardGauge class="" name="PM10" :value=50 unit="µg/m³" />
         </div>
@@ -128,7 +128,7 @@ const transactionBarItems = computed(() => mainStore.history) */
 
       <SectionTitleLineWithButton :icon="mdiGasCylinder" title="Gas (µg/m³)" class="" />
 
-      <div class="grid grid-cols-1 gap-4 lg:grid-cols-5 mb-3 font-poppins">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:grid-cols-5 mb-3 font-poppins">
         <CardBoxWidget
           class="h-fit"
           color="text-violet-500"
@@ -168,7 +168,7 @@ const transactionBarItems = computed(() => mainStore.history) */
 
       <SectionTitleLineWithButton :icon="mdiWeatherCloudy" title="Cuaca" class="" />
 
-      <div class="grid grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <CardTemperature />
         <CardWind/>
         <CardPressure/>
