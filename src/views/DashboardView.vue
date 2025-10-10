@@ -8,7 +8,7 @@ import LayoutGuest from '@/layouts/LayoutGuest.vue'
 
 <template>
   <LayoutGuest>
-    <div class="min-h-screen bg-zinc-800">
+    <div class="min-h-screen bg-zinc-800 text-white">
       <NavbarGuest />
       <div class="flex flex-row h-full p-4 gap-4">
         <ContentUdara />

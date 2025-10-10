@@ -67,3 +67,46 @@ import LineChart from './LineChart.vue'
     </div>
   </div>
 </template>
+
+<style scoped>
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* 8px */
+  border-radius: 0.25rem; /* sesuaikan sesuai kebutuhan */
+  vertical-align: middle;
+  color: #1f2937; /* base-content */
+  border: 1px solid #f2f2f2; /* base-200 */
+  font-size: 0.875rem; /* 14px */
+  width: fit-content;
+  padding-inline: calc(0.75rem - 1px);
+  background-size: auto;
+  background-color: #ffffff; /* base-100 */
+  height: 1.5rem; /* contoh ukuran */
+}
+
+.badge-error {
+  --badge-color: #dc2626; /* error */
+  --badge-fg: #ffffff; /* error-content */
+  background-color: var(--badge-color);
+  color: var(--badge-fg);
+  border-color: var(--badge-color);
+}
+
+.badge-accent {
+  --badge-color: #37cdbe; /* accent */
+  --badge-fg: #163835; /* accent-content */
+  background-color: var(--badge-color);
+  color: var(--badge-fg);
+  border-color: var(--badge-color);
+}
+
+.badge-success {
+  --badge-color: #16a34a; /* success */
+  --badge-fg: #ffffff; /* success-content */
+  background-color: var(--badge-color);
+  color: var(--badge-fg);
+  border-color: var(--badge-color);
+}
+</style>
