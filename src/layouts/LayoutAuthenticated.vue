@@ -76,7 +76,7 @@ onMounted(() => {
         <NavBarItemPlain display="hidden 3xl:flex" @click.prevent="ui.isAsideLgActive = true">
           <BaseIcon :path="mdiMenu" size="24" />
         </NavBarItemPlain>
-        <NavBarItemPlain use-margin class="p-4 dark:hover:text-white">
+        <NavBarItemPlain use-margin class="p-4 dark:hover:text-white font-poppins">
           <div class="flex flex-row gap-2 justify-end items-end">
             <p class="text-md font-bold">
               {{ timeStore.date }}

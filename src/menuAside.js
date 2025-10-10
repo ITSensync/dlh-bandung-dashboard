@@ -17,13 +17,13 @@ export default [
     icon: mdiGauge,
   },
   {
-    to: '/history-30-menit',
+    to: '/history',
     label: 'Data 30 Menit',
     icon: mdiClockOutline,
   },
   {
-    to: '/presence-date',
-    label: 'Per Tanggal',
+    to: '/harian',
+    label: 'Per Hari',
     icon: mdiCalendarToday,
   },
   // {

@@ -1,5 +1,13 @@
 <script setup>
 import VueSpeedometer from 'vue-speedometer'
+
+const props = defineProps({
+  name: String,
+  value: Number,
+})
+
+console.log(props.name);
+
 </script>
 
 <template>
@@ -10,11 +18,13 @@ import VueSpeedometer from 'vue-speedometer'
       :needle-height-ratio="0.7"
       :max-segment-labels="6"
       :ring-width="35"
-      :custom-segment-stops="[0, 50, 150, 350, 420, 500]"
+      :custom-segment-stops="
+        props.name === 'PM10' ? [0, 50, 150, 350, 420, 500] : [0, 15.5, 55.4, 150.4, 250.4, 300]
+      "
       :segment-colors="['limegreen', 'skyblue', 'gold', 'tomato', 'black']"
-      :value="333"
+      :value="props.value"
       :min-value="0"
-      :max-value="500"
+      :max-value="props.name == 'PM10' ? 500 : 300"
       text-color="#d8dee9"
       current-value-text=""
       :needle-transition-duration="2000"

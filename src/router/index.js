@@ -33,27 +33,27 @@ const routes = [
   },
   {
     meta: {
-      title: 'History 5 Menit',
+      title: 'ISPU',
     },
     path: '/ispu',
-    name: 'history 5 menit',
-    // component: () => import('@/views/TablesView.vue'),
+    name: 'ISPU Per Jam',
+    component: () => import('@/views/IspuView.vue'),
   },
   {
     meta: {
-      title: 'History 30 Menit',
+      title: 'History',
     },
-    path: '/history-30-menit',
-    name: 'history 30 menit',
-    // component: () => import('@/views/TablesView.vue'),
+    path: '/history',
+    name: 'history',
+    component: () => import('@/views/DataView.vue'),
   },
   {
     meta: {
-      title: 'Presence By Date',
+      title: 'Harian',
     },
-    path: '/presence-date',
-    name: 'presence by date',
-    component: () => import('@/views/PresenceByDate.vue'),
+    path: '/harian',
+    name: 'Per Hari',
+    component: () => import('@/views/HarianView.vue'),
   },
   /* {
     meta: {

@@ -6,7 +6,7 @@ const year = new Date().getFullYear()
 </script>
 
 <template>
-  <footer class="py-4 px-6 flex justify-center" :class="containerMaxW">
+  <footer class="py-4 px-6 flex justify-center font-poppins" :class="containerMaxW">
     <BaseLevel>
       <div class="text-center md:text-left">
         <b>&copy;{{ year }}.</b>

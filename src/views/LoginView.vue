@@ -36,8 +36,9 @@ const submit = () => {
   <LayoutGuest>
     <SectionFullScreen v-slot="{ cardClass }" bg="">
       <CardBox :class="cardClass" is-form @submit.prevent="submit">
-        <div class="w-full flex items-center justify-center mb-4">
-          <img src="/dlh.png" class="h-24"/>
+        <div class="w-full flex flex-col gap-2 items-center justify-center mb-4">
+          <img src="/dlh2.png" class="h-16"/>
+          <p class="font-poppins font-extrabold text-xl">AQMS KOTA BANDUNG</p>
         </div>
         <FormField label="Login" help="Please enter your username">
           <FormControl

@@ -119,16 +119,16 @@ const transactionBarItems = computed(() => mainStore.history) */
 
       <div class="flex flex-row w-full gap-4">
         <div class="flex flex-col h-fit w-full">
-          <CardGauge class="" name="PM10" value="50" unit="µg/m³" />
+          <CardGauge class="" name="PM10" :value=50 unit="µg/m³" />
         </div>
         <div class="flex flex-col h-fit w-full">
-          <CardGauge class="" name="PM2.5" value="120" unit="µg/m³" />
+          <CardGauge class="" name="PM2.5" :value=120 unit="µg/m³" />
         </div>
       </div>
 
       <SectionTitleLineWithButton :icon="mdiGasCylinder" title="Gas (µg/m³)" class="" />
 
-      <div class="grid grid-cols-1 gap-4 lg:grid-cols-5 mb-3">
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-5 mb-3 font-poppins">
         <CardBoxWidget
           class="h-fit"
           color="text-violet-500"
