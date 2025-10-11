@@ -49,7 +49,7 @@ function handleReset() {
 }
 
 function handleBtnExcel() {
-  Export.exportToExcel(tableData.value, `ISPU_${form.startDate}-${form.endDate}.xlsx`)
+  Export.exportToExcel(tableData.value, `30Menit_${form.startDate}-${form.endDate}.xlsx`)
 }
 </script>
 

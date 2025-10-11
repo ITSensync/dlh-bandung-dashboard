@@ -78,7 +78,11 @@ watch(
           {{ index + 1 }}
         </td>
         <td data-label="Waktu">
-          {{ `${DateFormatter.formatToDate(data.tanggal)} - ${data.jam.slice(0, 5)}` }}
+          {{
+            props.type != 'harian'
+              ? `${DateFormatter.formatToDate(data.tanggal)} - ${data.jam.slice(0, 5)}`
+              : `${DateFormatter.formatToDate(data.tanggal)}`
+          }}
         </td>
         <td data-label="PM10">
           {{ data.pm10 }}
