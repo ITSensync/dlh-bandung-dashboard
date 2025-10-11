@@ -37,7 +37,7 @@ const getColor = (index) => {
   if (index <= activeLayers.value) {
     return colorSteps[index - 1] || colorSteps[colorSteps.length - 1]
   }
-  return '#111827'
+  return '-'
 }
 
 const generateStatus = (val) => {

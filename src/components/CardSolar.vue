@@ -26,7 +26,7 @@ const chartOptions = ref({
       endAngle: 360,
       hollow: {
         size: '65%',
-        background: '#1D293D',
+        background: '',
       },
       track: {
         background: '#dddddd',
