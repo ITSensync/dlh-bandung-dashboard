@@ -8,15 +8,49 @@ import SectionMain from '@/components/SectionMain.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import TableData from '@/components/TableData.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
+import { useMainStore } from '@/stores/main'
+import Export from '@/utils/Export'
 import { mdiCalendarRange, mdiFileExcel, mdiTable } from '@mdi/js'
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 
 const form = reactive({
   startDate: '',
   endDate: '',
 })
-
+const mainStore = useMainStore()
 const tableIspu = ref([])
+
+onMounted(() => {
+  mainStore.fetchIspuDaily('daily')
+  tableIspu.value = mainStore.listDailyIspu
+})
+
+watch(
+  () => mainStore.listDailyIspu,
+  (newVal) => {
+    tableIspu.value = newVal
+  },
+)
+
+function handleSubmit() {
+  if (!form.startDate) {
+    alert('Tanggal Awal harus diisi')
+  } else {
+    console.log('Semua tanggal sudah diisi:', form.startDate, form.endDate)
+    mainStore.fetchIspuDaily('daily', form.startDate, form.endDate)
+  }
+}
+
+function handleReset() {
+  form.startDate = ''
+  form.endDate = ''
+  mainStore.fetchIspuDaily('daily')
+  tableIspu.value = mainStore.listDailyIspu
+}
+
+function handleBtnExcel() {
+  Export.exportToExcel(tableIspu.value, `ISPU_${form.startDate}-${form.endDate}.xlsx`)
+}
 </script>
 
 <template>
@@ -28,7 +62,7 @@ const tableIspu = ref([])
         class="-mt-4"
       />
 
-      <component :is="'form'" class="-mb-4 font-poppins">
+      <component :is="'form'" class="-mb-4 font-poppins" @submit.prevent="handleSubmit">
         <div class="flex flex-row items-center gap-5">
           <FormField help="Jangan isi tanggal akhir jika untuk range data satu hari" class="w-full">
             <FormControl
@@ -47,7 +81,7 @@ const tableIspu = ref([])
           </FormField>
           <div class="w-fit gap-4 flex justify-end -mt-5">
             <BaseButton type="submit" color="info" label="Submit" />
-            <BaseButton type="reset" color="danger" outline label="Reset" />
+            <BaseButton type="reset" color="danger" outline label="Reset" :onclick="handleReset" />
           </div>
         </div>
       </component>
@@ -64,8 +98,8 @@ const tableIspu = ref([])
         />
       </SectionTitleLineWithButton>
 
-      <CardBox has-table v-if="tableIspu >= 0">
-        <TableData type="ispu" />
+      <CardBox has-table v-if="tableIspu.length > 0">
+        <TableData type="ispu" :data="tableIspu" />
       </CardBox>
       <CardBox v-else>
         <CardBoxComponentEmpty text="Tidak ada data ..." />

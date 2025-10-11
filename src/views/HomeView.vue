@@ -42,10 +42,8 @@ const mainStore = useMainStore()
 const summaryToday = ref({})
 
 let intervalId = null
-const dateNow = DateFormatter.getLocalIsoDate()
-const currentDay = dateNow.split('T')[0]
 const fetchData = () => {
-  mainStore.fetch30Minute('daily', currentDay, currentDay)
+  mainStore.fetch30Minute('daily')
   summaryToday.value = mainStore.listDaily30Minute[0]
 }
 

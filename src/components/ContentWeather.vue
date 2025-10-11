@@ -15,7 +15,6 @@ import 'swiper/css/navigation'
 import { Autoplay } from 'swiper/modules'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useMainStore } from '@/stores/main'
-import DateFormatter from '@/utils/DateFormatter'
 
 let intervalId = null
 const mainStore = useMainStore()
@@ -36,13 +35,10 @@ const listDailyUv = ref([])
 const listDailyHujan = ref([])
 
 const fetchData = async () => {
-  const today = DateFormatter.getLocalIsoDate()
-  const formatted = today.split('T')[0]
-
-  await mainStore.fetch30Minute('weather', formatted, formatted)
+  await mainStore.fetch30Minute('weather')
   latestWeatherData.value = mainStore.latestWeather
 
-  mainStore.fetch30Minute('daily', formatted, formatted)
+  mainStore.fetch30Minute('daily')
 
   listDailySuhu.value = mainStore.listDaily30Minute.map((data) => {
     return {

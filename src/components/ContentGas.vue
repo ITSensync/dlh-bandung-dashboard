@@ -2,7 +2,6 @@
 import { useMainStore } from '@/stores/main'
 import CardTextGas from './CardTextGas.vue'
 import { onMounted, onUnmounted, ref, watch } from 'vue'
-import DateFormatter from '@/utils/DateFormatter'
 
 let intervalId = null
 const mainStore = useMainStore()
@@ -17,10 +16,7 @@ const latestGasData = ref({
 })
 
 const fetchData = async () => {
-  const today = DateFormatter.getLocalIsoDate()
-  const formatted = today.split('T')[0]
-
-  await mainStore.fetch30Minute('gas', formatted, formatted)
+  await mainStore.fetch30Minute('gas')
   latestGasData.value = mainStore.latestGas
 
 }

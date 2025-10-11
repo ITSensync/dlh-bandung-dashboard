@@ -5,6 +5,9 @@ import DateFormatter from '@/utils/DateFormatter'
 
 export const useMainStore = defineStore('main', () => {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const today = DateFormatter.getLocalIsoDate()
+  const formatted = today.split('T')[0]
+
   const userName = ref('Admin')
   const userEmail = ref('doe.doe.doe@example.com')
 
@@ -65,8 +68,8 @@ export const useMainStore = defineStore('main', () => {
     })
   }
 
-  function fetchIspuDaily(param) {
-    axios.get(`${apiUrl}/get-ispu.php`).then((result) => {
+  function fetchIspuDaily(param, start = formatted, end = formatted) {
+    axios.get(`${apiUrl}/get-ispu-filter.php?start=${start}&end=${end}`).then((result) => {
       const data = result.data.data || []
 
       if (param === 'pm10') {
@@ -109,7 +112,7 @@ export const useMainStore = defineStore('main', () => {
     })
   }
 
-  function fetch30Minute(param, start, end) {
+  function fetch30Minute(param, start = formatted, end = formatted) {
     axios.get(`${apiUrl}/get-data-filter.php?start=${start}&end=${end}`).then((result) => {
       const data = result.data.data || []
 
