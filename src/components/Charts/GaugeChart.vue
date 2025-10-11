@@ -9,7 +9,6 @@ const props = defineProps({
   value: {
     type: Number,
     default: 80,
-    required: true,
   },
 })
 

@@ -1,8 +1,12 @@
 <script setup>
-import { ref } from 'vue'
 import CardBox from './CardBox.vue'
 
-const waterLevel = ref(50)
+const props = defineProps({
+  waterLevel: {
+    type: Number,
+    default: 0,
+  },
+})
 </script>
 
 <template>
@@ -16,7 +20,7 @@ const waterLevel = ref(50)
               <svg
                 class="water"
                 viewBox="0 0 200 100"
-                :style="{ top: `calc(98% - ${waterLevel}%)` }"
+                :style="{ top: `calc(98% - ${props.waterLevel}%)` }"
               >
                 <defs>
                   <linearGradient id="waterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -64,7 +68,7 @@ const waterLevel = ref(50)
         </div>
         <div class="flex flex-col font-poppins w-1/3">
           <p class="font-medium text-lg text-zinc-400">Rasio saat ini</p>
-          <p class="font-bold text-lg">40 mm/jam</p>
+          <p class="font-bold text-lg">{{ props.waterLevel }} mm/jam</p>
         </div>
       </div>
     </div>

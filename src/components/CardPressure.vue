@@ -3,6 +3,13 @@ import CardBox from './CardBox.vue'
 // import { ref } from 'vue'
 import GaugeChart from './Charts/GaugeChart.vue'
 
+const props = defineProps({
+  press: {
+    type: Number,
+    default: 0,
+  },
+})
+
 /* const series = ref([67])
 
 const chartOptions = ref({
@@ -63,11 +70,11 @@ const chartOptions = ref({
             :options="chartOptions"
             :series="series"
           /> -->
-          <GaugeChart />
+          <GaugeChart :value="props.press"/>
         </div>
         <div class="flex flex-col font-poppins w-1/3">
           <p class="font-medium text-lg text-zinc-400">Nilai Saat ini</p>
-          <p class="font-bold text-lg">67 mBar</p>
+          <p class="font-bold text-lg">{{ props.press }} mBar</p>
         </div>
       </div>
     </div>

@@ -1,9 +1,13 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import CardBox from './CardBox.vue'
 
-// data dinamis (misal dari API)
-const solarRadiation = ref(7)
+const props = defineProps({
+  solarRadiation: {
+    type: Number,
+    default: 0,
+  },
+})
 
 const totalLayers = 13
 
@@ -23,19 +27,32 @@ const colorSteps = [
   '#FFFFFF', // putih puncak
 ]
 
-// hitung layer aktif berdasarkan nilai data
 const activeLayers = computed(() => {
-  const maxValue = 10
-  const ratio = Math.min(solarRadiation.value / maxValue, 1)
+  const maxValue = 13
+  const ratio = Math.min(props.solarRadiation / maxValue, 1)
   return Math.ceil(ratio * totalLayers)
 })
 
-// warna tiap layer berdasarkan urutan
 const getColor = (index) => {
   if (index <= activeLayers.value) {
     return colorSteps[index - 1] || colorSteps[colorSteps.length - 1]
   }
   return '#111827'
+}
+
+const generateStatus = (val) => {
+  switch (true) {
+    case val >= 0 && val < 3:
+      return 'Aman'
+    case val >= 4 && val < 7:
+      return 'Sedang'
+    case val >= 8 && val < 11:
+      return 'Tinggi'
+    case val > 12:
+      return 'Sangat Tinggi'
+    default:
+      return '-'
+  }
 }
 </script>
 
@@ -45,7 +62,7 @@ const getColor = (index) => {
       <p class="font-poppins">UV</p>
 
       <div class="flex flex-row justify-between items-center gap-5 px-4">
-        <div class="w-2/3 ">
+        <div class="w-2/3">
           <svg
             width="162px"
             height="136px"
@@ -67,11 +84,11 @@ const getColor = (index) => {
         <div class="flex flex-col gap-4 w-1/3">
           <div class="flex flex-col font-poppins">
             <p class="font-medium text-lg text-zinc-400">Rasio UV</p>
-            <p class="font-bold text-lg">10</p>
+            <p class="font-bold text-lg">{{ props.solarRadiation }}</p>
           </div>
           <div class="flex flex-col font-poppins">
             <p class="font-medium text-lg text-zinc-400">UV Status</p>
-            <p class="font-bold text-lg">High</p>
+            <p class="font-bold text-lg">{{ generateStatus(props.solarRadiation) }}</p>
           </div>
         </div>
       </div>

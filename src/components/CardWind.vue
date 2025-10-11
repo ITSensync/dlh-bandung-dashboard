@@ -1,3 +1,18 @@
+<script setup>
+import CardBox from './CardBox.vue'
+
+const props = defineProps({
+  degrees: {
+    type: Number,
+    default: 0,
+  },
+  speed: {
+    type: Number,
+    default: 0,
+  }
+})
+</script>
+
 <template>
   <CardBox>
     <div class="flex flex-col h-full gap-2">
@@ -67,29 +82,17 @@
         <div class="flex flex-col gap-4 w-1/3">
           <div class="flex flex-col font-poppins">
             <p class="font-medium text-lg text-zinc-400">Arah</p>
-            <p class="font-bold text-lg">0°</p>
+            <p class="font-bold text-lg">{{props.degrees}}°</p>
           </div>
           <div class="flex flex-col font-poppins">
             <p class="font-medium text-lg text-zinc-400">Kecepatan</p>
-            <p class="font-bold text-lg">100 mph</p>
+            <p class="font-bold text-lg">{{ props.speed }} mph</p>
           </div>
         </div>
       </div>
     </div>
   </CardBox>
 </template>
-
-<script setup>
-import CardBox from './CardBox.vue'
-
-const props = defineProps({
-  degrees: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-})
-</script>
 
 <style scoped>
 .compass {

@@ -21,7 +21,7 @@ const error = ref(false)
 const router = useRouter()
 
 const submit = () => {
-  if (form.login === 'admin' && form.pass === 'admin') {
+  if (form.login === 'adminDLH' && form.pass === 'aqmsKotaBandung') {
     router.push('/summary')
     AuthToken.setAuthToken('auth-token', 'oqkwfqnfqwne2312341fmamsd', 10800000) //3 hours
   } else {

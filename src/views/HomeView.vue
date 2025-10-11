@@ -36,42 +36,27 @@ import CardPressure from '@/components/CardPressure.vue'
 import CardUv from '@/components/CardUv.vue'
 import CardPrecip from '@/components/CardPrecip.vue'
 import CardSolar from '@/components/CardSolar.vue'
-
-const chartData = ref(null)
-
-const fillChartData = () => {
-  chartData.value = chartConfig.sampleChartData()
-}
+import DateFormatter from '@/utils/DateFormatter'
 
 const mainStore = useMainStore()
-const totalPresenceToday = ref(0)
-const totalPresenceMonthly = ref(0)
-const dataPresenceToday = ref([])
+const summaryToday = ref({})
 
-// onMounted(() => {
-//   fillChartData()
-// })
 let intervalId = null
-const dateNow = new Date()
-const currentMonth = dateNow.toISOString().slice(0, 7)
+const dateNow = DateFormatter.getLocalIsoDate()
+const currentDay = dateNow.split('T')[0]
 const fetchData = () => {
-  mainStore.fetchPresenceToday()
-  mainStore.fetchPresenceMonthly(currentMonth)
+  mainStore.fetch30Minute('daily', currentDay, currentDay)
+  summaryToday.value = mainStore.listDaily30Minute[0]
 }
 
-/* watch(
-  [() => mainStore.presenceToday, () => mainStore.presenceMonthly],
-  ([newToday, newMonthly]) => {
-    totalPresenceToday.value = newToday.length
-    totalPresenceMonthly.value = newMonthly.reduce((sum, item) => sum + item.jumlah_hadir, 0)
-    dataPresenceToday.value = newToday
-  },
-) */
+watch([() => mainStore.listDaily30Minute], ([newSummaryToday]) => {
+  summaryToday.value = newSummaryToday[0]
+})
 
 onMounted(() => {
   fetchData() // fetch pertama kali saat page render
 
-  // ulangi setiap 5 menit (300000 ms)
+  // ulangi setiap 2 menit (300000 ms)
   intervalId = setInterval(() => {
     fetchData()
   }, 120000)
@@ -80,49 +65,19 @@ onMounted(() => {
 onUnmounted(() => {
   if (intervalId) clearInterval(intervalId)
 })
-
-/* const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
-
-const transactionBarItems = computed(() => mainStore.history) */
 </script>
 
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <!-- <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" class="-mt-10" />
-
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-3">
-        <CardBoxWidget
-          class="h-fit"
-          color="text-emerald-500"
-          :icon="mdiAccountMultiple"
-          :number="12"
-          label="Karyawan"
-        />
-        <CardBoxWidget
-          class="h-fit"
-          color="text-blue-500"
-          :icon="mdiCalendar"
-          :number="totalPresenceToday"
-          label="Rekap Hari Ini"
-        />
-        <CardBoxWidget
-          class="h-fit"
-          color="text-red-500"
-          :icon="mdiCalendarMonth"
-          :number="totalPresenceMonthly"
-          label="Rekap Bulanan"
-        />
-      </div> -->
-
       <SectionTitleLineWithButton :icon="mdiSmog" title="Partikulat" class="-mt-10" />
 
       <div class="flex flex-col lg:flex-row w-full gap-4">
         <div class="flex flex-col h-fit w-full">
-          <CardGauge class="" name="PM10" :value=50 unit="µg/m³" />
+          <CardGauge class="" name="PM10" :value="Number(summaryToday?.pm10 || 0)" unit="µg/m³" />
         </div>
         <div class="flex flex-col h-fit w-full">
-          <CardGauge class="" name="PM2.5" :value=120 unit="µg/m³" />
+          <CardGauge class="" name="PM2.5" :value="Number(summaryToday?.pm25 || 0)" unit="µg/m³" />
         </div>
       </div>
 
@@ -133,35 +88,35 @@ const transactionBarItems = computed(() => mainStore.history) */
           class="h-fit"
           color="text-violet-500"
           :icon="mdiFlaskOutline"
-          :number="12"
+          :number="Number(summaryToday?.hc || 0)"
           label="HC"
         />
         <CardBoxWidget
           class="h-fit"
           color="text-slate-500"
           :icon="mdiMoleculeCo"
-          :number="totalPresenceToday"
+          :number="Number(summaryToday?.co || 0)"
           label="CO"
         />
         <CardBoxWidget
           class="h-fit"
           color="text-sky-500"
           :icon="mdiMolecule"
-          :number="totalPresenceMonthly"
+          :number="Number(summaryToday?.o3 || 0)"
           label="O3"
         />
         <CardBoxWidget
           class="h-fit"
           color="text-amber-500"
           :icon="mdiFactory"
-          :number="totalPresenceMonthly"
+          :number="Number(summaryToday?.so2 || 0)"
           label="SO2"
         />
         <CardBoxWidget
           class="h-fit"
           color="text-rose-500"
           :icon="mdiCar"
-          :number="totalPresenceMonthly"
+          :number="Number(summaryToday?.no2 || 0)"
           label="NO2"
         />
       </div>
@@ -169,12 +124,15 @@ const transactionBarItems = computed(() => mainStore.history) */
       <SectionTitleLineWithButton :icon="mdiWeatherCloudy" title="Cuaca" class="" />
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <CardTemperature />
-        <CardWind/>
-        <CardPressure/>
-        <CardPrecip/>
-        <CardUv/>
-        <CardSolar/>
+        <CardTemperature
+          :suhu="Number(summaryToday?.temp || 0)"
+          :humd="Number(summaryToday?.humd || 0)"
+        />
+        <CardWind :degrees="Number(summaryToday?.wd || 0)" :speed="Number(summaryToday?.ws || 0)" />
+        <CardPressure :press="Number(summaryToday?.press || 0)" />
+        <CardPrecip :water-level="Number(summaryToday?.rain || 0)" />
+        <CardUv :solarRadiation="Number(summaryToday?.uv || 0)" />
+        <CardSolar :val="Number(summaryToday?.solar) || 0" />
       </div>
 
       <!-- <div

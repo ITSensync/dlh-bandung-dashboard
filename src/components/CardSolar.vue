@@ -3,7 +3,14 @@ import { ref } from 'vue'
 import CardBox from './CardBox.vue'
 import VueApexCharts from 'vue3-apexcharts'
 
-const series = ref([20])
+const props = defineProps({
+  val: {
+    type: Number,
+    default: 0,
+  },
+})
+
+const series = ref([props.val])
 
 const chartOptions = ref({
   chart: {
@@ -71,7 +78,7 @@ const chartOptions = ref({
         </div>
         <div class="flex flex-col w-1/3 font-poppins">
           <p class="font-medium text-lg text-zinc-400">Rasio Saat ini</p>
-          <p class="font-bold text-lg">40 watt/m2</p>
+          <p class="font-bold text-lg">{{ props.val }} watt/m2</p>
         </div>
       </div>
     </div>
