@@ -85,21 +85,21 @@ watch(
         jam: data.jam,
         suhu: data.temp,
       }
-    })
+    }).reverse()
 
     listDailyUv.value = newList30Minute.map((data) => {
       return {
         jam: data.jam,
         uv: data.uv,
       }
-    })
+    }).reverse()
 
     listDailyHujan.value = newList30Minute.map((data) => {
       return {
         jam: data.jam,
         curah_hujan: data.rain,
       }
-    })
+    }).reverse()
   },
 )
 
