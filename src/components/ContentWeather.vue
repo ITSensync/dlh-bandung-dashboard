@@ -151,7 +151,7 @@ const currentTitle = computed(() => title[activeIndex.value])
             :loop="true"
             :autoplay="{
               delay: 5000,
-              disableOnInteraction: true,
+              disableOnInteraction: false,
             }"
             :modules="modules"
             @slideChange="onSlideChange"
