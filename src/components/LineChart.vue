@@ -10,6 +10,7 @@ import {
   Legend,
   Filler,
 } from 'chart.js'
+import { computed } from 'vue'
 import { Line } from 'vue-chartjs'
 
 ChartJS.register(
@@ -28,6 +29,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  listData: {
+    type: Array,
+    default: () => [],
+  },
 })
 
 const generateColor = (param) => {
@@ -44,8 +49,8 @@ const generateColor = (param) => {
         bg: 'rgba(75, 192, 75, 0.2)',
       }
 
-    default: // 🎨 warna pastel acak
-    {
+    default: {
+      // 🎨 warna pastel acak
       const pastel = () => Math.floor(Math.random() * 128 + 127) // 127–255 → warna lembut/pastel
       const r = pastel()
       const g = pastel()
@@ -75,21 +80,19 @@ const options = {
   },
 }
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
-
-const data = {
-  labels,
+const data = computed(() => ({
+  labels: props.listData.map((i) => i.jam.slice(0,5)),
   datasets: [
     {
-      label: props.param,
-      data: labels.map(() => Math.floor(Math.random() * 101)),
-      fill: true,
-      tension: 0.4,
+      label: props.param.toUpperCase(),
+      data: props.listData.map((i) => i[props.param]),
       borderColor: color.border,
       backgroundColor: color.bg,
+      tension: 0.4,
+      fill: true,
     },
   ],
-}
+}))
 </script>
 
 <template>

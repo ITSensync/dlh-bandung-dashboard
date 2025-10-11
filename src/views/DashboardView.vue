@@ -4,6 +4,7 @@ import ContentUdara from '@/components/ContentUdara.vue'
 import ContentWeather from '@/components/ContentWeather.vue'
 import NavbarGuest from '@/components/NavbarGuest.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
+
 </script>
 
 <template>

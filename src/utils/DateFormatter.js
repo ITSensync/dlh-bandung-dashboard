@@ -74,11 +74,27 @@ function getDifferenceHour(startIso, endIso) {
   return `${hours} jam ${minutes} menit`;
 }
 
+function getLocalIsoDate() {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const day = String(now.getDate()).padStart(2, '0')
+  const hours = String(now.getHours()).padStart(2, '0')
+  const minutes = String(now.getMinutes()).padStart(2, '0')
+  const seconds = String(now.getSeconds()).padStart(2, '0')
+
+  const localISO = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`
+
+  return localISO
+
+}
+
 export default {
   convertToTime,
   convertToDate,
   convertToNamedMonth,
   getTodayMonth,
   formatToDate,
-  getDifferenceHour
+  getDifferenceHour,
+  getLocalIsoDate
 }

@@ -13,19 +13,109 @@ import 'swiper/css/navigation'
 
 // import required modules
 import { Autoplay } from 'swiper/modules'
-import { computed, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { useMainStore } from '@/stores/main'
+import DateFormatter from '@/utils/DateFormatter'
+
+let intervalId = null
+const mainStore = useMainStore()
+const latestWeatherData = ref({
+  ws: '0',
+  wd: '0',
+  hum: '0',
+  temp: '0',
+  press: '0',
+  rain: '0',
+  solar: '0',
+  uv: '0',
+  tanggal: '01-01-0000',
+  jam: '00:00',
+})
+const listDailySuhu = ref([])
+const listDailyUv = ref([])
+const listDailyHujan = ref([])
+
+const fetchData = async () => {
+  const today = DateFormatter.getLocalIsoDate()
+  const formatted = today.split('T')[0]
+
+  await mainStore.fetch30Minute('weather', formatted, formatted)
+  latestWeatherData.value = mainStore.latestWeather
+
+  mainStore.fetch30Minute('daily', formatted, formatted)
+
+  listDailySuhu.value = mainStore.listDaily30Minute.map((data) => {
+    return {
+      jam: data.jam,
+      suhu: data.temp,
+    }
+  })
+
+  listDailyUv.value = mainStore.listDaily30Minute.map((data) => {
+    return {
+      jam: data.jam,
+      uv: data.uv,
+    }
+  })
+
+  listDailyHujan.value = mainStore.listDaily30Minute.map((data) => {
+    return {
+      jam: data.jam,
+      curah_hujan: data.rain,
+    }
+  })
+}
+
+onMounted(async () => {
+  fetchData()
+
+  intervalId = setInterval(() => {
+    fetchData()
+    // console.log('interval running')
+  }, 300000) //5 menit sekali
+})
+
+watch(
+  [() => mainStore.latestWeather, () => mainStore.listDaily30Minute],
+  ([newLatestWeather, newList30Minute]) => {
+    latestWeatherData.value = newLatestWeather
+
+    listDailySuhu.value = newList30Minute.map((data) => {
+      return {
+        jam: data.jam,
+        suhu: data.temp,
+      }
+    })
+
+    listDailyUv.value = newList30Minute.map((data) => {
+      return {
+        jam: data.jam,
+        uv: data.uv,
+      }
+    })
+
+    listDailyHujan.value = newList30Minute.map((data) => {
+      return {
+        jam: data.jam,
+        curah_hujan: data.rain,
+      }
+    })
+  },
+)
+
+onUnmounted(() => {
+  if (intervalId) clearInterval(intervalId)
+})
 
 const modules = [Autoplay]
 
-// 🧠 state untuk menyimpan index slide aktif
 const activeIndex = ref(0)
 
 const title = ['Suhu', 'Curah Hujan', 'UV']
 
-// 🔥 event handler saat swiper berubah
 const onSlideChange = (swiper) => {
   activeIndex.value = swiper.realIndex
-  console.log('Slide aktif:', activeIndex.value)
+  // console.log('Slide aktif:', activeIndex.value)
 }
 
 const currentTitle = computed(() => title[activeIndex.value])
@@ -38,14 +128,14 @@ const currentTitle = computed(() => title[activeIndex.value])
       <div class="border border-zinc-500 mt-4"></div>
 
       <div class="grid grid-cols-4 p-2 gap-2 gap-y-4 h-full">
-        <CardTextGas name="Kec. Angin" value="120" unit="mph" />
-        <CardTextGas name="Arah Angin" value="120" unit="selatan" />
-        <CardTextGas name="Suhu" value="120" unit="°C" />
-        <CardTextGas name="Kelembapan" value="120" unit="%" />
-        <CardTextGas name="Tekanan" value="120" unit="mBar" />
-        <CardTextGas name="Curah Hujan" value="120" unit="mm/jam" />
-        <CardTextGas name="Solar Radiasi" value="120" unit="W/m2" />
-        <CardTextGas name="UV" value="120" unit="index" />
+        <CardTextGas name="Kec. Angin" :value="Number(latestWeatherData?.ws)" unit="mph" />
+        <CardTextGas name="Arah Angin" :value="Number(latestWeatherData?.wd)" unit="selatan" />
+        <CardTextGas name="Suhu" :value="Number(latestWeatherData?.temp)" unit="°C" />
+        <CardTextGas name="Kelembapan" :value="Number(latestWeatherData?.hum)" unit="%" />
+        <CardTextGas name="Tekanan" :value="Number(latestWeatherData?.press)" unit="mBar" />
+        <CardTextGas name="Curah Hujan" :value="Number(latestWeatherData?.rain)" unit="mm/jam" />
+        <CardTextGas name="Solar Radiasi" :value="Number(latestWeatherData?.solar)" unit="W/m2" />
+        <CardTextGas name="UV" :value="Number(latestWeatherData?.uv)" unit="index" />
       </div>
     </div>
     <div class="w-[48vw] h-1/2 bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
@@ -71,9 +161,11 @@ const currentTitle = computed(() => title[activeIndex.value])
             @slideChange="onSlideChange"
             class="mySwiper h-[25vh]"
           >
-            <swiper-slide><LineChart /></swiper-slide>
-            <swiper-slide><LineChart /></swiper-slide>
-            <swiper-slide><LineChart /></swiper-slide>
+            <swiper-slide><LineChart param="suhu" :listData="listDailySuhu" /></swiper-slide>
+            <swiper-slide
+              ><LineChart param="curah_hujan" :listData="listDailyHujan"
+            /></swiper-slide>
+            <swiper-slide><LineChart param="uv" :listData="listDailyUv" /></swiper-slide>
           </swiper>
         </div>
       </div>
