@@ -1,4 +1,5 @@
 <script setup>
+import { useDarkModeStore } from '@/stores/darkMode'
 import CardBox from './CardBox.vue'
 
 const props = defineProps({
@@ -9,8 +10,10 @@ const props = defineProps({
   speed: {
     type: Number,
     default: 0,
-  }
+  },
 })
+
+const darkMode = useDarkModeStore()
 </script>
 
 <template>
@@ -23,6 +26,10 @@ const props = defineProps({
             <!-- Arrow -->
             <svg
               class="compass__arrow"
+              :class="[
+                'transition-colors duration-300',
+                darkMode.isEnabled ? 'fill-red-500' : 'fill-red-600',
+              ]"
               :style="`transform: rotate(${props.degrees}deg);`"
               width="37px"
               height="36px"
@@ -37,7 +44,7 @@ const props = defineProps({
                     <rect id="Rectangle" opacity="0" x="0.5" y="0" width="36" height="36"></rect>
                     <polygon
                       id="Rectangle"
-                      fill="#FFFFFF"
+                      :fill="darkMode.isEnabled ? '#FFFFFF' : '#dddddd'"
                       points="14 18 18.5 7 23 18 18.5292306 29"
                     ></polygon>
                     <polygon
@@ -54,6 +61,10 @@ const props = defineProps({
             <!-- BG dots -->
             <svg
               class="compass__background"
+              :class="[
+                'transition-colors duration-300',
+                darkMode.isEnabled ? 'text-white' : 'text-slate-900',
+              ]"
               width="37px"
               height="36px"
               viewBox="0 0 37 36"
@@ -62,7 +73,12 @@ const props = defineProps({
               xmlns:xlink="http://www.w3.org/1999/xlink"
             >
               <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <g font-family="sans-serif" font-size="4" fill="#FFFFFF" text-anchor="middle">
+                <g
+                  font-family="sans-serif"
+                  font-size="4"
+                  :fill="darkMode.isEnabled ? '#fff' : '#0f172b'"
+                  text-anchor="middle"
+                >
                   <!-- Utama -->
                   <text x="18.5" y="5">N</text>
                   <text x="18.5" y="35">S</text>
@@ -82,7 +98,7 @@ const props = defineProps({
         <div class="flex flex-col gap-4 w-1/3">
           <div class="flex flex-col font-poppins">
             <p class="font-medium text-lg text-zinc-400">Arah</p>
-            <p class="font-bold text-lg">{{props.degrees}}°</p>
+            <p class="font-bold text-lg">{{ props.degrees }}°</p>
           </div>
           <div class="flex flex-col font-poppins">
             <p class="font-medium text-lg text-zinc-400">Kecepatan</p>
