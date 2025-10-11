@@ -112,7 +112,7 @@ watch(
             {{ data.temp }}
           </td>
           <td data-label="humd">
-            {{ data.humd }}
+            {{ data.hum }}
           </td>
           <td data-label="press">
             {{ data.press }}
@@ -121,7 +121,7 @@ watch(
             {{ data.rain }}
           </td>
           <td data-label="sr">
-            {{ data.sr }}
+            {{ data.solar }}
           </td>
           <td data-label="uv">
             {{ data.uv }}
