@@ -31,8 +31,8 @@ const dewPoint = computed(() => dewPointMagnus(props.suhu, props.humd))
   <CardBox class="">
     <div class="flex flex-col gap-5">
       <p class="font-poppins">Suhu (°C)</p>
-      <div class="flex w-full justify-between gap-5 px-4">
-        <div class="w-2/3">
+      <div class="flex flex-col sm:flex-row w-full justify-between gap-5 px-4">
+        <div class="sm:w-2/3 flex sm:inline justify-center">
           <div
             class="flex flex-col items-center justify-center h-40 w-40 rounded-full dark:bg-blue-950 bg-zinc-100 outline-5 outline-emerald-400"
           >
@@ -42,7 +42,7 @@ const dewPoint = computed(() => dewPointMagnus(props.suhu, props.humd))
             </p>
           </div>
         </div>
-        <div class="flex flex-col gap-4 w-1/3">
+        <div class="flex sm:flex-col gap-4 justify-between sm:justify-start w-full sm:w-1/3">
           <div class="flex flex-col font-poppins">
             <p class="font-medium text-lg text-zinc-400">Titik Embun</p>
             <p class="font-bold text-lg">{{ dewPoint }} °C</p>

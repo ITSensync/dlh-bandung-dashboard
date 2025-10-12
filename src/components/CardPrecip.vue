@@ -13,8 +13,8 @@ const props = defineProps({
   <CardBox>
     <div class="flex flex-col gap-4">
       <p class="font-poppins">Curah Hujan</p>
-      <div class="flex flex-row w-full justify-between items-center gap-5 px-4">
-        <div class="w-2/3 flex pl-8">
+      <div class="flex flex-col sm:flex-row w-full justify-between gap-5 px-4">
+        <div class="sm:w-2/3 flex sm:inline justify-center sm:pl-8">
           <div class="water-tank">
             <div class="liquid">
               <svg
@@ -66,7 +66,7 @@ const props = defineProps({
             <!-- <div class="label">57%</div> -->
           </div>
         </div>
-        <div class="flex flex-col font-poppins w-1/3">
+        <div class="flex flex-col items-center sm:items-start font-poppins sm:w-1/3">
           <p class="font-medium text-lg text-zinc-400">Rasio saat ini</p>
           <p class="font-bold text-lg">{{ props.waterLevel }} mm/jam</p>
         </div>

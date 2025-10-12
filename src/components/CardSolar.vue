@@ -65,8 +65,8 @@ const chartOptions = ref({
   <CardBox>
     <div class="flex flex-col gap-4">
       <p class="font-poppins">Solar Radiasi</p>
-      <div class="flex flex-row justify-between items-center gap-5 px-4">
-        <div class="2/3">
+      <div class="flex flex-col sm:flex-row w-full justify-between gap-5 px-4">
+        <div class="sm:w-2/3 flex sm:inline justify-center">
           <VueApexCharts
             type="radialBar"
             height="200"
@@ -76,7 +76,7 @@ const chartOptions = ref({
             :series="series"
           />
         </div>
-        <div class="flex flex-col w-1/3 font-poppins">
+        <div class="flex flex-col items-center sm:items-start font-poppins sm:w-1/3">
           <p class="font-medium text-lg text-zinc-400">Rasio Saat ini</p>
           <p class="font-bold text-lg">{{ props.val }} watt/m2</p>
         </div>

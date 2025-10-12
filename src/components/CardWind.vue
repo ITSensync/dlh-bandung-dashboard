@@ -20,8 +20,8 @@ const darkMode = useDarkModeStore()
   <CardBox>
     <div class="flex flex-col h-full gap-2">
       <p class="font-poppins">Angin</p>
-      <div class="w-full h-full flex flex-row justify-between items-center gap-5 px-4">
-        <div class="w-2/3">
+      <div class="flex flex-col sm:flex-row w-full justify-between gap-5 px-4">
+        <div class="sm:w-2/3 flex sm:inline justify-center">
           <div class="compass">
             <!-- Arrow -->
             <svg
@@ -95,7 +95,7 @@ const darkMode = useDarkModeStore()
             </svg>
           </div>
         </div>
-        <div class="flex flex-col gap-4 w-1/3">
+        <div class="flex sm:flex-col gap-4 justify-between sm:justify-start w-full sm:w-1/3">
           <div class="flex flex-col font-poppins">
             <p class="font-medium text-lg text-zinc-400">Arah</p>
             <p class="font-bold text-lg">{{ props.degrees }}°</p>

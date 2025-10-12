@@ -63,7 +63,7 @@ function handleBtnExcel() {
       />
 
       <component :is="'form'" class="-mb-4 font-poppins" @submit.prevent="handleSubmit">
-        <div class="flex flex-row items-center gap-5">
+        <div class="flex flex-col sm:flex-row items-center gap-5">
           <FormField help="Jangan isi tanggal akhir jika untuk range data satu hari" class="w-full">
             <FormControl
               label="Tanggal Awal"
@@ -79,7 +79,7 @@ function handleBtnExcel() {
               placeholder="Tanggal Akhir"
             ></FormControl>
           </FormField>
-          <div class="w-fit gap-4 flex justify-end -mt-5">
+          <div class="w-full sm:w-fit gap-4 flex flex-col sm:flex-row justify-end -mt-5">
             <BaseButton type="submit" color="info" label="Submit" />
             <BaseButton type="reset" color="danger" outline label="Reset" :onclick="handleReset" />
           </div>

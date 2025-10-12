@@ -11,7 +11,7 @@ const param = defineProps({
 
 <template>
   <CardBox class="h-full w-full" rounded="rounded-lg">
-    <div class="flex flex-row items-center justify-center w-full h-full gap-10">
+    <div class="flex flex-col sm:flex-row items-center justify-center w-full h-full sm:gap-10">
       <GaugeSpeedometer :name=param.name :value=param.value />
       <div class="font-poppins">
         <p class="font-medium text-2xl text-zinc-400">{{ param.name }}</p>

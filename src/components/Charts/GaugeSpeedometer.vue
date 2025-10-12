@@ -11,8 +11,8 @@ const props = defineProps({
 <template>
   <div class="flex items-center justify-center w-fit h-full p-0 m-0 overflow-hidden">
     <VueSpeedometer
-      :width="350"
-      :height="250"
+      :width="300"
+      :height="200"
       :needle-height-ratio="0.7"
       :max-segment-labels="6"
       :ring-width="35"
@@ -28,7 +28,7 @@ const props = defineProps({
       :needle-transition-duration="2000"
       needle-transition="easeElastic"
       needle-color="grey"
-      class="xl:h-[30vh] lg:h-[45vh] md:h-[60vh] h-[90vh]"
+      class=""
     />
   </div>
 </template>

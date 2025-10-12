@@ -61,8 +61,8 @@ const generateStatus = (val) => {
     <div class="flex flex-col gap-4">
       <p class="font-poppins">UV</p>
 
-      <div class="flex flex-row justify-between items-center gap-5 px-4">
-        <div class="w-2/3">
+      <div class="flex flex-col sm:flex-row w-full justify-between gap-5 px-4">
+        <div class="sm:w-2/3 flex sm:inline justify-center">
           <svg
             width="162px"
             height="136px"
@@ -81,7 +81,7 @@ const generateStatus = (val) => {
             </g>
           </svg>
         </div>
-        <div class="flex flex-col gap-4 w-1/3">
+        <div class="flex sm:flex-col gap-4 justify-between sm:justify-start w-full sm:w-1/3">
           <div class="flex flex-col font-poppins">
             <p class="font-medium text-lg text-zinc-400">Rasio UV</p>
             <p class="font-bold text-lg">{{ props.solarRadiation }}</p>
