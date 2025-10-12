@@ -118,13 +118,13 @@ function getIspuStats(data, key = 'pm25') {
 
 function generateColorIspu(value) {
   switch (true) {
-    case value > 0 && value < 50:
+    case value > 0 && value <= 50:
       return 'bg-emerald-400'
-    case value > 51 && value < 100:
+    case value > 51 && value <= 100:
       return 'bg-blue-400'
-    case value > 101 && value < 200:
+    case value > 101 && value <= 200:
       return 'bg-amber-400'
-    case value > 201 && value < 300:
+    case value > 201 && value <= 300:
       return 'bg-red-400'
     case value > 300:
       return 'bg-zinc-900'
@@ -135,13 +135,13 @@ function generateColorIspu(value) {
 
 function generateIcon(value) {
   switch (true) {
-    case value > 0 && value < 50:
+    case value > 0 && value <= 50:
       return '😇'
-    case value > 51 && value < 100:
+    case value > 51 && value <= 100:
       return '😐'
-    case value > 101 && value < 200:
+    case value > 101 && value <= 200:
       return '😷'
-    case value > 201 && value < 300:
+    case value > 201 && value <= 300:
       return '🤧'
     case value > 300:
       return '☠️'
