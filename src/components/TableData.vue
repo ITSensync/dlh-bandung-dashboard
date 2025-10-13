@@ -57,9 +57,9 @@ watch(
         <th>PM2.5</th>
         <th>HC</th>
         <th>CO</th>
-        <th>O3</th>
-        <th>SO2</th>
-        <th>NO2</th>
+        <th>O³</th>
+        <th>SO²</th>
+        <th>NO²</th>
         <template v-if="props.type !== 'ispu'">
           <th>Kec. Angin</th>
           <th>Arah Angin</th>

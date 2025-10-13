@@ -51,9 +51,9 @@ onUnmounted(() => {
     <div class="grid grid-rows-5 px-4 mt-4 gap-2">
       <CardTextGas name="HC" :value="Number(latestGasData?.hc)" unit="µg/m³" />
       <CardTextGas name="CO" :value="Number(latestGasData?.co)" unit="µg/m³" />
-      <CardTextGas name="O3" :value="Number(latestGasData?.o3)" unit="µg/m³" />
-      <CardTextGas name="SO2" :value="Number(latestGasData?.so2)" unit="µg/m³" />
-      <CardTextGas name="NO2" :value="Number(latestGasData?.no2)" unit="µg/m³" />
+      <CardTextGas name="O³" :value="Number(latestGasData?.o3)" unit="µg/m³" />
+      <CardTextGas name="SO²" :value="Number(latestGasData?.so2)" unit="µg/m³" />
+      <CardTextGas name="NO²" :value="Number(latestGasData?.no2)" unit="µg/m³" />
     </div>
   </div>
 </template>

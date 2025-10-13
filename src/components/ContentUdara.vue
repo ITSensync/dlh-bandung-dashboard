@@ -97,7 +97,6 @@ onUnmounted(() => {
   if (intervalId) clearInterval(intervalId)
 })
 
-
 function getMaxIspu(data) {
   const keys = ['pm25', 'pm10', 'so2', 'no2', 'co', 'o3', 'hc']
   const maxParam = keys.reduce((a, b) => (Number(data[a]) > Number(data[b]) ? a : b))
@@ -135,7 +134,7 @@ function generateColorIspu(value) {
 
 function generateIcon(value) {
   switch (true) {
-    case value > 0 && value <= 50:
+    case value >= 0 && value <= 50:
       return '😇'
     case value > 51 && value <= 100:
       return '😐'
@@ -171,7 +170,9 @@ function generateIcon(value) {
         class="w-1/2 bg-dlh_blue_dark flex flex-col items-center justify-center font-poppins py-2"
       >
         <p class="font-semibold">Parameter Tertinggi</p>
-        <p class="font-bold text-yellow-300">{{ maxIspu.param }}</p>
+        <p class="font-bold text-yellow-300">
+          {{ maxIspu.param === 'pm25' ? 'PM2.5' : maxIspu.param.toUpperCase() }}
+        </p>
       </div>
     </div>
 
@@ -207,7 +208,7 @@ function generateIcon(value) {
           </div>
         </div>
         <div class="">
-          <LineChart param="pm10" :listData="listPm10"/>
+          <LineChart param="pm10" :listData="listPm10" />
         </div>
       </div>
       <div class="w-full bg-dlh_blue_dark p-4 font-poppins mt-4">
@@ -220,7 +221,7 @@ function generateIcon(value) {
           </div>
         </div>
         <div>
-          <LineChart param="pm25" :listData="listPm25"/>
+          <LineChart param="pm25" :listData="listPm25" />
         </div>
       </div>
     </div>

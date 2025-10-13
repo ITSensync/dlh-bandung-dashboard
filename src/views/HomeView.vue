@@ -101,21 +101,21 @@ onUnmounted(() => {
           color="text-sky-500"
           :icon="mdiMolecule"
           :number="Number(summaryToday?.o3 || 0)"
-          label="O3"
+          label="O³"
         />
         <CardBoxWidget
           class="h-fit"
           color="text-amber-500"
           :icon="mdiFactory"
           :number="Number(summaryToday?.so2 || 0)"
-          label="SO2"
+          label="SO²"
         />
         <CardBoxWidget
           class="h-fit"
           color="text-rose-500"
           :icon="mdiCar"
           :number="Number(summaryToday?.no2 || 0)"
-          label="NO2"
+          label="NO²"
         />
       </div>
 
