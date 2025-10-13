@@ -10,18 +10,20 @@ onMounted(() => {
 
 <template>
   <div class="flex flex-row justify-between bg-dlh_blue_dark pl-2">
-    <div class="flex flex-row gap-4 items-center py-2 justify-center">
+    <div class="flex flex-row gap-4 items-center py-2 justify-center w-full sm:w-fit">
       <a href="/login">
-        <img src="/dlh.png" alt="DLH LOGO" height="20" class="h-12" />
+        <img src="/dlh.png" alt="DLH LOGO" height="20" class="h-12 sm:h-12" />
       </a>
-      <div class="flex-1">
-        <a class="text-xl font-poppins font-extrabold">Pemantauan Kualitas Udara Kota Bandung</a>
+      <div class="hidden sm:flex-1 sm:flex sm:flex-col">
+        <a class="text-xs sm:text-xl font-poppins font-extrabold"
+          >Pemantauan Kualitas Udara Kota Bandung</a
+        >
         <div class="flex flex-row gap-2 font-poppins font-semibold">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            class="size-6 fill-dlh_green"
+            class="size-4 sm:size-6 fill-dlh_green"
           >
             <path
               fill-rule="evenodd"
@@ -34,7 +36,7 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div class="flex flex-col items-center justify-center bg-dlh_green font-poppins px-2">
+    <div class="hidden sm:flex flex-col items-center justify-center bg-dlh_green font-poppins px-2">
       <p class="font-bold text-xl">{{ timeStore.time }} WIB</p>
       <p>{{ timeStore.date }}</p>
     </div>

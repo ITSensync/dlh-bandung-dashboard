@@ -4,14 +4,13 @@ import ContentUdara from '@/components/ContentUdara.vue'
 import ContentWeather from '@/components/ContentWeather.vue'
 import NavbarGuest from '@/components/NavbarGuest.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
-
 </script>
 
 <template>
   <LayoutGuest>
     <div class="min-h-screen bg-zinc-800 text-white">
       <NavbarGuest />
-      <div class="flex flex-row h-full p-4 gap-4">
+      <div class="flex flex-col sm:flex-row h-full p-4 gap-4">
         <ContentUdara />
         <ContentGas />
         <ContentWeather />

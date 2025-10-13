@@ -151,7 +151,7 @@ function generateIcon(value) {
 </script>
 
 <template>
-  <div class="w-[35vw] bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
+  <div class="w-full sm:w-[35vw] bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
     <div></div>
     <p class="font-poppins text-lg font-semibold text-center mt-2">Kualitas Udara</p>
     <div class="border border-zinc-500 mt-4"></div>
@@ -159,7 +159,7 @@ function generateIcon(value) {
     <!-- HEADER NILAI -->
     <div class="flex flex-row mt-1 gap-2">
       <div
-        class="w-1/2 bg-dlh_blue_dark flex flex-col items-center justify-center font-poppins py-2"
+        class="w-1/2 bg-dlh_blue_dark flex flex-col items-center justify-center font-poppins py-2 text-center"
       >
         <p class="font-semibold">Update</p>
         <p class="font-bold text-yellow-300">
@@ -167,7 +167,7 @@ function generateIcon(value) {
         </p>
       </div>
       <div
-        class="w-1/2 bg-dlh_blue_dark flex flex-col items-center justify-center font-poppins py-2"
+        class="w-1/2 bg-dlh_blue_dark flex flex-col items-center justify-center font-poppins py-2 text-center"
       >
         <p class="font-semibold">Parameter Tertinggi</p>
         <p class="font-bold text-yellow-300">
@@ -189,9 +189,9 @@ function generateIcon(value) {
         </div>
       </div>
 
-      <div class="w-1/2 flex flex-col items-center justify-center gap-2">
-        <p class="text-6xl">{{ generateIcon(maxIspu.value) }}</p>
-        <p class="font-poppins font-bold text-2xl">{{ ispuLatestData?.status }}</p>
+      <div class="w-1/2 flex flex-col items-center justify-center gap-2 p-2">
+        <p class="text-4xl sm:text-6xl">{{ generateIcon(maxIspu.value) }}</p>
+        <p class="font-poppins font-bold text-xl sm:text-3xl">{{ ispuLatestData?.status }}</p>
         <p class="font-poppins font-normal text-xs text-center">{{ ispuLatestData?.ket }}</p>
       </div>
     </div>
@@ -199,28 +199,28 @@ function generateIcon(value) {
     <!-- GRAPH PM10 -->
     <div class="h-full">
       <div class="w-full bg-dlh_blue_dark p-4 font-poppins">
-        <div class="flex flex-row justify-between">
+        <div class="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0">
           <p class="font-bold text-sm">ISPU PM10 <span class="font-normal">(24 Jam)</span></p>
-          <div class="flex flex-row gap-4 font-bold text-xs">
+          <div class="flex flex-row gap-4 font-bold text-xs whitespace-nowrap">
             <div class="badge badge-error">MAX: {{ maxDailyPm10 }}</div>
             <div class="badge badge-accent">MIN: {{ minDailyPm10 }}</div>
             <div class="badge badge-success">AVG: {{ avgDailyPm10 }}</div>
           </div>
         </div>
-        <div class="">
+        <div class="mt-4 sm:mt-0">
           <LineChart param="pm10" :listData="listPm10" />
         </div>
       </div>
       <div class="w-full bg-dlh_blue_dark p-4 font-poppins mt-4">
-        <div class="flex flex-row justify-between">
+        <div class="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0">
           <p class="font-bold text-sm">ISPU PM2.5 <span class="font-normal">(24 Jam)</span></p>
-          <div class="flex flex-row gap-4 font-bold text-xs">
+          <div class="flex flex-row gap-4 font-bold text-xs whitespace-nowrap">
             <div class="badge badge-error">MAX: {{ maxDailyPm25 }}</div>
             <div class="badge badge-accent">MIN: {{ minDailyPm25 }}</div>
             <div class="badge badge-success">AVG: {{ avgDailyPm25 }}</div>
           </div>
         </div>
-        <div>
+        <div class="mt-4 sm:mt-0">
           <LineChart param="pm25" :listData="listPm25" />
         </div>
       </div>

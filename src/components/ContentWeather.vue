@@ -150,12 +150,11 @@ function generateWindDirection(windData) {
 
 <template>
   <div class="flex flex-col gap-4">
-    <div class="w-[48vw] h-1/2 bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
+    <div class="sm:w-[48vw] h-1/2 bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
       <p class="font-poppins text-lg font-semibold text-center mt-2">Cuaca</p>
       <div class="border border-zinc-500 mt-4"></div>
-      F
 
-      <div class="grid grid-cols-4 p-2 gap-2 gap-y-4 h-full">
+      <div class="grid grid-cols-2 sm:grid-cols-4 p-2 gap-2 gap-y-4 h-full">
         <CardTextGas name="Kec. Angin" :value="Number(latestWeatherData?.ws)" unit="mph" />
         <CardTextGas
           name="Arah Angin"
@@ -170,7 +169,7 @@ function generateWindDirection(windData) {
         <CardTextGas name="UV" :value="Number(latestWeatherData?.uv)" unit="index" />
       </div>
     </div>
-    <div class="w-[48vw] h-1/2 bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
+    <div class="sm:w-[48vw] h-1/2 bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
       <p class="font-poppins text-lg font-semibold text-center mt-2">Trend Cuaca</p>
       <div class="border border-zinc-500 mt-4"></div>
 
