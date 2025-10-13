@@ -78,7 +78,7 @@ const chartOptions = ref({
         </div>
         <div class="flex flex-col items-center sm:items-start font-poppins sm:w-1/3">
           <p class="font-medium text-lg text-zinc-400">Rasio Saat ini</p>
-          <p class="font-bold text-lg">{{ props.val }} watt/m2</p>
+          <p class="font-bold text-lg">{{ props.val }} watt/m<sup>2</sup></p>
         </div>
       </div>
     </div>

@@ -3,12 +3,6 @@
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { useMainStore } from '@/stores/main'
 import {
-  mdiAccountMultiple,
-  mdiChartTimelineVariant,
-  mdiCalendar,
-  mdiCalendarMonth,
-  mdiLightbulbOutline,
-  mdiWeatherDust,
   mdiSmog,
   mdiGasCylinder,
   mdiFlaskOutline,
@@ -18,25 +12,17 @@ import {
   mdiCar,
   mdiWeatherCloudy,
 } from '@mdi/js'
-import * as chartConfig from '@/components/Charts/chart.config.js'
 import SectionMain from '@/components/SectionMain.vue'
 import CardBoxWidget from '@/components/CardBoxWidget.vue'
-import CardBox from '@/components/CardBox.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
-import TableListPresence from '@/components/TableListPresence.vue'
-import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'
-import CardName from '@/components/CardName.vue'
-import SectionTitle from '@/components/SectionTitle.vue'
 import CardGauge from '@/components/CardGauge.vue'
-import CardWeather from '@/components/CardTemperature.vue'
 import CardTemperature from '@/components/CardTemperature.vue'
 import CardWind from '@/components/CardWind.vue'
 import CardPressure from '@/components/CardPressure.vue'
 import CardUv from '@/components/CardUv.vue'
 import CardPrecip from '@/components/CardPrecip.vue'
 import CardSolar from '@/components/CardSolar.vue'
-import DateFormatter from '@/utils/DateFormatter'
 
 const mainStore = useMainStore()
 const summaryToday = ref({})

@@ -36,7 +36,7 @@ const dewPoint = computed(() => dewPointMagnus(props.suhu, props.humd))
           <div
             class="flex flex-col items-center justify-center h-40 w-40 rounded-full dark:bg-blue-950 bg-zinc-100 outline-5 outline-emerald-400"
           >
-            <p class="font-poppins font-medium text-xl">Current</p>
+            <p class="font-poppins font-medium text-xl">Saat Ini</p>
             <p class="font-poppins font-bold text-5xl text-emerald-400 items-start flex">
               {{ props.suhu }} <span class="text-xl">°</span>
             </p>
