@@ -117,7 +117,7 @@ function getIspuStats(data, key = 'pm25') {
 
 function generateColorIspu(value) {
   switch (true) {
-    case value > 0 && value <= 50:
+    case value >= 0 && value <= 50:
       return 'bg-emerald-400'
     case value > 51 && value <= 100:
       return 'bg-blue-400'
