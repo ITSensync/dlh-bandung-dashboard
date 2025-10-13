@@ -76,26 +76,32 @@ watch(
   ([newLatestWeather, newList30Minute]) => {
     latestWeatherData.value = newLatestWeather
 
-    listDailySuhu.value = newList30Minute.map((data) => {
-      return {
-        jam: data.jam,
-        suhu: data.temp,
-      }
-    }).reverse()
+    listDailySuhu.value = newList30Minute
+      .map((data) => {
+        return {
+          jam: data.jam,
+          suhu: data.temp,
+        }
+      })
+      .reverse()
 
-    listDailyUv.value = newList30Minute.map((data) => {
-      return {
-        jam: data.jam,
-        uv: data.uv,
-      }
-    }).reverse()
+    listDailyUv.value = newList30Minute
+      .map((data) => {
+        return {
+          jam: data.jam,
+          uv: data.uv,
+        }
+      })
+      .reverse()
 
-    listDailyHujan.value = newList30Minute.map((data) => {
-      return {
-        jam: data.jam,
-        curah_hujan: data.rain,
-      }
-    }).reverse()
+    listDailyHujan.value = newList30Minute
+      .map((data) => {
+        return {
+          jam: data.jam,
+          curah_hujan: data.rain,
+        }
+      })
+      .reverse()
   },
 )
 
@@ -115,6 +121,31 @@ const onSlideChange = (swiper) => {
 }
 
 const currentTitle = computed(() => title[activeIndex.value])
+
+function generateWindDirection(windData) {
+  switch (true) {
+    case windData >= 0 && windData <= 23:
+      return 'Utara'
+    case windData >= 24 && windData <= 67:
+      return 'Timur Laut'
+    case windData >= 68 && windData <= 115:
+      return 'Timur'
+    case windData >= 116 && windData <= 167:
+      return 'Tenggara'
+    case windData >= 168 && windData <= 205:
+      return 'Selatan'
+    case windData >= 206 && windData <= 248:
+      return 'Barat Daya'
+    case windData >= 249 && windData <= 282:
+      return 'Barat'
+    case windData >= 283 && windData <= 334:
+      return 'Barat Laut'
+    case windData >= 335 && windData <= 360:
+      return 'Utara'
+    default:
+      return '-'
+  }
+}
 </script>
 
 <template>
@@ -122,10 +153,15 @@ const currentTitle = computed(() => title[activeIndex.value])
     <div class="w-[48vw] h-1/2 bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
       <p class="font-poppins text-lg font-semibold text-center mt-2">Cuaca</p>
       <div class="border border-zinc-500 mt-4"></div>
+      F
 
       <div class="grid grid-cols-4 p-2 gap-2 gap-y-4 h-full">
         <CardTextGas name="Kec. Angin" :value="Number(latestWeatherData?.ws)" unit="mph" />
-        <CardTextGas name="Arah Angin" :value="Number(latestWeatherData?.wd)" unit="selatan" />
+        <CardTextGas
+          name="Arah Angin"
+          :value="Number(latestWeatherData?.wd)"
+          :unit="generateWindDirection(Number(latestWeatherData?.wd))"
+        />
         <CardTextGas name="Suhu" :value="Number(latestWeatherData?.temp)" unit="°C" />
         <CardTextGas name="Kelembapan" :value="Number(latestWeatherData?.hum)" unit="%" />
         <CardTextGas name="Tekanan" :value="Number(latestWeatherData?.press)" unit="mBar" />
