@@ -18,7 +18,6 @@ const latestGasData = ref({
 const fetchData = async () => {
   await mainStore.fetch30Minute('gas')
   latestGasData.value = mainStore.latestGas
-
 }
 
 onMounted(async () => {
@@ -43,12 +42,12 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="sm:w-[13vw] h-full bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
+  <div class="lg:w-[13vw] h-full bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
     <p class="font-poppins text-lg font-semibold text-center mt-2">Gas</p>
     <div class="border border-zinc-500 mt-4"></div>
 
     <!-- CARD GAS -->
-    <div class="grid grid-rows-5 px-4 mt-4 gap-2">
+    <div class="px-4 mt-4 flex flex-col h-full gap-2">
       <CardTextGas name="HC" :value="Number(latestGasData?.hc)" unit="µg/m³" />
       <CardTextGas name="CO" :value="Number(latestGasData?.co)" unit="µg/m³" />
       <CardTextGas name="O³" :value="Number(latestGasData?.o3)" unit="µg/m³" />

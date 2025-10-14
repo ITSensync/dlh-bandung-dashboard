@@ -10,7 +10,7 @@ import LayoutGuest from '@/layouts/LayoutGuest.vue'
   <LayoutGuest>
     <div class="min-h-screen bg-zinc-800 text-white">
       <NavbarGuest />
-      <div class="flex flex-col sm:flex-row h-full p-4 gap-4">
+      <div class="flex flex-col md:grid md:grid-cols-3 lg:flex lg:flex-row h-full p-4 gap-4">
         <ContentUdara />
         <ContentGas />
         <ContentWeather />

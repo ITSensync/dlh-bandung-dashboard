@@ -151,7 +151,7 @@ function generateIcon(value) {
 </script>
 
 <template>
-  <div class="w-full sm:w-[35vw] bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
+  <div class="w-full md:col-span-2 lg:w-[35vw] bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
     <div></div>
     <p class="font-poppins text-lg font-semibold text-center mt-2">Kualitas Udara</p>
     <div class="border border-zinc-500 mt-4"></div>
@@ -180,7 +180,7 @@ function generateIcon(value) {
     <div class="flex flex-row gap-2">
       <div class="w-1/2 items-center py-5 flex justify-center">
         <div
-          class="rounded-full h-[15vh] w-[15vh] flex justify-center items-center"
+          class="rounded-full h-[20vh] w-[20vh] sm:h-[15vh] sm:w-[15vh] flex justify-center items-center"
           :class="generateColorIspu(maxIspu.value)"
         >
           <p class="font-poppins font-extrabold text-6xl text-center text-shadow-lg">
