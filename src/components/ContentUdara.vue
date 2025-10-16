@@ -1,8 +1,9 @@
 <script setup>
 import { useMainStore } from '@/stores/main'
-import LineChart from './LineChart.vue'
+// import LineChart from './LineChart.vue'
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import DateFormatter from '@/utils/DateFormatter'
+import IspuChart from './Charts/IspuChart.vue'
 
 let intervalId = null
 const mainStore = useMainStore()
@@ -148,11 +149,21 @@ function generateIcon(value) {
       return 'ICON'
   }
 }
+
+const bars = [
+  { label: 'PM10', value: 62, color: 'bg-blue-500' },
+  { label: 'PM2.5', value: 20, color: 'bg-blue-700' },
+  { label: 'SO2', value: 10, color: 'bg-green-600' },
+  { label: 'CO', value: 18, color: 'bg-green-600' },
+  { label: 'O3', value: 300, color: 'bg-green-600' },
+  { label: 'NO2', value: 12, color: 'bg-green-600' },
+  { label: 'HC', value: 1, color: 'bg-green-600' },
+]
 </script>
 
 <template>
   <div class="w-full md:col-span-2 lg:w-[35vw] bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
-    <div></div>
+    <!-- <div></div> -->
     <p class="font-poppins text-lg font-semibold text-center mt-2">Kualitas Udara</p>
     <div class="border border-zinc-500 mt-4"></div>
 
@@ -196,8 +207,18 @@ function generateIcon(value) {
       </div>
     </div>
 
+    <div class="mt-4">
+      <div class="w-full h-full bg-dlh_blue_dark p-2 sm:p-4 font-poppins items-center flex flex-col gap-2">
+        <p class="font-bold">Indeks Standar Pencemaran Udara</p>
+        <div class="w-full h-full flex gap-3 sm:gap-4">
+          
+          <IspuChart :dataIspu="bars" />
+        </div>
+      </div>
+    </div>
+
     <!-- GRAPH PM10 -->
-    <div class="h-full">
+    <!-- <div class="h-full">
       <div class="w-full bg-dlh_blue_dark p-4 font-poppins">
         <div class="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0">
           <p class="font-bold text-sm">ISPU PM10 <span class="font-normal">(24 Jam)</span></p>
@@ -224,7 +245,7 @@ function generateIcon(value) {
           <LineChart param="pm25" :listData="listPm25" />
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
