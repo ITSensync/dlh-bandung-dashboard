@@ -59,8 +59,32 @@
         melanjutkan.</strong
       >
     </noscript>
-    <div id="app"></div>
+    <div id="app">
+      <div id="preloader" style="
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+        background-color:#00425e;
+      ">
+        <div style="
+          width:70px;
+          height:70px;
+          border:10px solid #ffffff;
+          border-top-color:transparent;
+          border-radius:50%;
+          animation:spin 1s linear infinite;
+        "></div>
+      </div>
+    </div>
     <script type="module" src="/src/main.js"></script>
     <!-- built files will be auto injected -->
   </body>
+
+  <style>
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  </style>
 </html>

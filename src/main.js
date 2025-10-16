@@ -13,6 +13,10 @@ const pinia = createPinia()
 // Create Vue app
 createApp(App).use(router).use(pinia).mount('#app')
 
+// preloader
+const preloader = document.getElementById('preloader')
+if (preloader) preloader.remove()
+
 // Init main store
 const mainStore = useMainStore(pinia)
 
