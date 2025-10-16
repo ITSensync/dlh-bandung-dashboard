@@ -9,7 +9,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-row justify-between bg-dlh_blue_dark pl-2">
+  <div class="sticky top-0 z-50 flex flex-row justify-between bg-dlh_blue_dark pl-2 shadow-2xl">
     <div class="flex flex-row gap-4 items-center py-2 justify-center w-full sm:w-fit">
       <a href="/login">
         <img src="/dlh.png" alt="DLH LOGO" height="20" class="h-12 sm:h-12" />
