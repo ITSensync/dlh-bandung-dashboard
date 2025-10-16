@@ -40,7 +40,7 @@ const listKategori = [
 </script>
 
 <template>
-  <div class="flex flex-col font-poppins text-center text-[10px] sm:text-sm w-1/5 sm:w-1/3">
+  <div class="flex flex-col font-poppins text-center text-[10px] md:text-sm w-1/5 md:w-1/3">
     <div
       v-for="(kategori, i) in listKategori"
       :key="i"
@@ -51,11 +51,11 @@ const listKategori = [
     </div>
     <p class="text-center mt-4">Kategori</p>
   </div>
-  <div class="flex items-end justify-between h-full gap-0 sm:gap-4 w-4/5 sm:w-2/3">
+  <div class="flex items-end justify-between h-full gap-0 sm:gap-4 w-4/5 md:w-2/3">
     <div
       v-for="(data, i) in props.dataIspu"
       :key="i"
-      class="flex flex-col items-center justify-end gap-1 sm:gap-2 w-5 sm:w-10"
+      class="flex flex-col items-center justify-end gap-1 sm:gap-2 w-5 md:w-10"
     >
       <!-- VALUE -->
       <div class="relative flex flex-col justify-end bg-gray-500 w-full h-[40vh] overflow-hidden">

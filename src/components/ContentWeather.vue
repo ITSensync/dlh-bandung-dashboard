@@ -149,8 +149,8 @@ function generateWindDirection(windData) {
 </script>
 
 <template>
-  <div class="flex flex-col md:col-span-3 gap-4">
-    <div class="lg:w-[48vw] lg:h-1/2 bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
+  <div class="flex flex-col md:col-span-3 gap-4 h-full">
+    <div class="lg:w-[48vw] lg:h-full bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
       <p class="font-poppins text-lg font-semibold text-center mt-2">Cuaca</p>
       <div class="border border-zinc-500 mt-4"></div>
 
@@ -173,7 +173,7 @@ function generateWindDirection(windData) {
       <p class="font-poppins text-lg font-semibold text-center mt-2">Trend Cuaca</p>
       <div class="border border-zinc-500 mt-4"></div>
 
-      <div class="w-full h-full bg-dlh_blue_dark p-4 font-poppins mt-4">
+      <div class="w-full h-fit bg-dlh_blue_dark p-4 font-poppins mt-4">
         <div class="flex flex-row justify-center mb-4">
           <p class="font-bold text-sm">
             {{ currentTitle }} <span class="font-normal">(24 Jam)</span>
