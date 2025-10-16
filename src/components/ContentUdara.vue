@@ -1,7 +1,7 @@
 <script setup>
 import { useMainStore } from '@/stores/main'
 // import LineChart from './LineChart.vue'
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 import DateFormatter from '@/utils/DateFormatter'
 import IspuChart from './Charts/IspuChart.vue'
 
@@ -22,6 +22,7 @@ const ispuLatestData = ref({
 })
 const listPm10 = ref([])
 const listPm25 = ref([])
+const bars = ref([])
 const maxDailyPm10 = ref(0)
 const minDailyPm10 = ref(0)
 const avgDailyPm10 = ref(0)
@@ -57,6 +58,17 @@ const fetchData = async () => {
     minDailyPm25.value = statsPm25.min
     avgDailyPm25.value = statsPm25.avg
   }
+
+  const data = ispuLatestData.value || {}
+  bars.value = [
+    { label: 'PM10', value: Number(data.pm10) || 0 },
+    { label: 'PM2.5', value: Number(data.pm25) || 0 },
+    { label: 'SO2', value: Number(data.so2) || 0 },
+    { label: 'CO', value: Number(data.co) || 0 },
+    { label: 'O3', value: Number(data.o3) || 0 },
+    { label: 'NO2', value: Number(data.no2) || 0 },
+    { label: 'HC', value: Number(data.hc) || 0 },
+  ]
 }
 
 onMounted(async () => {
@@ -74,6 +86,15 @@ watch(
     if (newIspuLatest) {
       ispuLatestData.value = newIspuLatest
       maxIspu.value = getMaxIspu(newIspuLatest)
+      bars.value = [
+        { label: 'PM10', value: Number(newIspuLatest.pm10) || 0 },
+        { label: 'PM2.5', value: Number(newIspuLatest.pm25) || 0 },
+        { label: 'SO2', value: Number(newIspuLatest.so2) || 0 },
+        { label: 'CO', value: Number(newIspuLatest.co) || 0 },
+        { label: 'O3', value: Number(newIspuLatest.o3) || 0 },
+        { label: 'NO2', value: Number(newIspuLatest.no2) || 0 },
+        { label: 'HC', value: Number(newIspuLatest.hc) || 0 },
+      ]
     }
 
     if (newListIspuPm10) {
@@ -150,15 +171,6 @@ function generateIcon(value) {
   }
 }
 
-const bars = computed(() => [
-  { label: 'PM10', value: ispuLatestData.value.pm10 ?? 0 },
-  { label: 'PM2.5', value: ispuLatestData.value.pm25 ?? 0 },
-  { label: 'SO2', value: ispuLatestData.value.so2 ?? 0 },
-  { label: 'CO', value: ispuLatestData.value.co ?? 0 },
-  { label: 'O3', value: ispuLatestData.value.o3 ?? 0 },
-  { label: 'NO2', value: ispuLatestData.value.no2 ?? 0 },
-  { label: 'HC', value: ispuLatestData.value.hc ?? 0 },
-])
 </script>
 
 <template>
