@@ -8,11 +8,11 @@ const props = defineProps({
 
 // fungsi untuk menentukan warna berdasarkan nilai
 const getColor = (val) => {
-  if (val <= 50) return 'bg-green-500'
-  if (val <= 100) return 'bg-blue-500'
-  if (val <= 200) return 'bg-yellow-400'
-  if (val <= 300) return 'bg-red-500'
-  return 'bg-black'
+  if (val <= 50) return 'bg-emerald-500'
+  if (val <= 100) return 'bg-sky-600'
+  if (val <= 200) return 'bg-yellow-500'
+  if (val <= 300) return 'bg-red-600'
+  return 'bg-zinc-900'
 }
 
 // fungsi untuk menentukan tinggi relatif berdasarkan nilai maksimum
