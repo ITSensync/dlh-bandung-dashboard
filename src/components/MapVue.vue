@@ -1,6 +1,6 @@
 <script setup>
 import L from 'leaflet'
-import { onMounted, watch, ref } from 'vue'
+import { onMounted, watch } from 'vue'
 
 const props = defineProps({
   value: { type: Number, default: 0 },
