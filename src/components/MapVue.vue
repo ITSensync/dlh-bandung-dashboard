@@ -7,7 +7,7 @@ const props = defineProps({
   name: { type: String, default: '' },
 })
 
-const map = ref(null)
+let map = null
 let marker = null
 
 function generateColorIspu(value) {
@@ -28,9 +28,9 @@ function generateColorIspu(value) {
 }
 
 function createMarker() {
-  if (!map.value) return
+  if (!map) return
   if (marker) {
-    map.value.removeLayer(marker)
+    map.removeLayer(marker)
   }
 
   const color = generateColorIspu(props.value)
@@ -66,24 +66,30 @@ function createMarker() {
       "></div>
     </div>
   `,
-    iconSize: [50, 60],
-    iconAnchor: [25, 55],
+    iconSize: [45, 60],
+    iconAnchor: [22.5, 60],
   })
 
   marker = L.marker([-6.858189893364737, 107.59426700036065], { icon })
-    .addTo(map.value)
+    .addTo(map)
     .bindPopup(
       `AMDK PDAM BANDUNG, Jl. Sersan Bajuri No.5, Isola, Kec. Sukasari, Kota Bandung, Jawa Barat 40154`,
     )
 }
 
 onMounted(() => {
-  map.value = L.map('map').setView([-6.858189893364737, 107.59426700036065], 15)
+  map = L.map('map', {
+    center: [-6.858189893364737, 107.59426700036065],
+    zoom: 15,
+    minZoom: 10,
+    maxZoom: 18,
+    zoomControl: true,
+  })
 
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  }).addTo(map.value)
+  }).addTo(map)
 
   createMarker()
 })
