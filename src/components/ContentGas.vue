@@ -42,17 +42,25 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="lg:w-[13vw] h-full bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
+  <div class="grid grid-cols-3 gap-2 py-4">
+    <CardTextGas name="HC" :value="Number(latestGasData?.hc)" unit="µg/m³" />
+    <CardTextGas name="CO" :value="Number(latestGasData?.co)" unit="µg/m³" />
+    <CardTextGas name="O³" :value="Number(latestGasData?.o3)" unit="µg/m³" />
+    <div class="flex flex-row gap-2 col-span-3">
+      <CardTextGas name="SO²" :value="Number(latestGasData?.so2)" unit="µg/m³" />
+      <CardTextGas name="NO²" :value="Number(latestGasData?.no2)" unit="µg/m³" />
+    </div>
+  </div>
+  <!-- <div class="lg:w-1/3 h-full bg-slate-900/70 rounded-xl flex flex-col pt-2 pb-4">
     <p class="font-poppins text-lg font-semibold text-center mt-2">Gas</p>
     <div class="border border-zinc-500 mt-4"></div>
 
-    <!-- CARD GAS -->
-    <div class="px-4 mt-4 flex flex-col h-full gap-2">
+    <div class="px-4 mt-4 grid grid-cols-3 h-full gap-2">
       <CardTextGas name="HC" :value="Number(latestGasData?.hc)" unit="µg/m³" />
       <CardTextGas name="CO" :value="Number(latestGasData?.co)" unit="µg/m³" />
       <CardTextGas name="O³" :value="Number(latestGasData?.o3)" unit="µg/m³" />
       <CardTextGas name="SO²" :value="Number(latestGasData?.so2)" unit="µg/m³" />
       <CardTextGas name="NO²" :value="Number(latestGasData?.no2)" unit="µg/m³" />
     </div>
-  </div>
+  </div> -->
 </template>

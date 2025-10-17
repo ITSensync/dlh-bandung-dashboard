@@ -1,7 +1,5 @@
 <script setup>
 import CardTextGas from './CardTextGas.vue'
-import LineChart from './LineChart.vue'
-import { Swiper, SwiperSlide } from 'swiper/vue'
 
 // Import Swiper styles
 import 'swiper/css'
@@ -12,8 +10,7 @@ import 'swiper/css/navigation'
 // import './style.css'
 
 // import required modules
-import { Autoplay } from 'swiper/modules'
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { useMainStore } from '@/stores/main'
 
 let intervalId = null
@@ -109,7 +106,7 @@ onUnmounted(() => {
   if (intervalId) clearInterval(intervalId)
 })
 
-const modules = [Autoplay]
+/* const modules = [Autoplay]
 
 const activeIndex = ref(0)
 
@@ -120,7 +117,7 @@ const onSlideChange = (swiper) => {
   // console.log('Slide aktif:', activeIndex.value)
 }
 
-const currentTitle = computed(() => title[activeIndex.value])
+const currentTitle = computed(() => title[activeIndex.value]) */
 
 function generateWindDirection(windData) {
   switch (true) {
@@ -149,8 +146,22 @@ function generateWindDirection(windData) {
 </script>
 
 <template>
-  <div class="flex flex-col md:col-span-3 gap-4 h-full">
-    <div class="lg:w-[48vw] lg:h-full bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
+  <div class="grid grid-cols-4 py-4 gap-2">
+    <CardTextGas name="Kec. Angin" :value="Number(latestWeatherData?.ws)" unit="mph" />
+    <CardTextGas
+      name="Arah Angin"
+      :value="Number(latestWeatherData?.wd)"
+      :unit="generateWindDirection(Number(latestWeatherData?.wd))"
+    />
+    <CardTextGas name="Suhu" :value="Number(latestWeatherData?.temp)" unit="°C" />
+    <CardTextGas name="Kelembapan" :value="Number(latestWeatherData?.hum)" unit="%" />
+    <CardTextGas name="Tekanan" :value="Number(latestWeatherData?.press)" unit="mBar" />
+    <CardTextGas name="Curah Hujan" :value="Number(latestWeatherData?.rain)" unit="mm/jam" />
+    <CardTextGas name="Solar Radiasi" :value="Number(latestWeatherData?.solar)" unit="W/m2" />
+    <CardTextGas name="UV" :value="Number(latestWeatherData?.uv)" unit="index" />
+  </div>
+  <!-- <div class="flex flex-col md:col-span-3 gap-4 h-full  w-1/3">
+    <div class="bg-slate-900/70 rounded-xl flex flex-col pt-2 pb-4">
       <p class="font-poppins text-lg font-semibold text-center mt-2">Cuaca</p>
       <div class="border border-zinc-500 mt-4"></div>
 
@@ -169,37 +180,5 @@ function generateWindDirection(windData) {
         <CardTextGas name="UV" :value="Number(latestWeatherData?.uv)" unit="index" />
       </div>
     </div>
-    <div class="lg:w-[48vw] lg:h-1/2 bg-dlh_blue rounded-xl flex flex-col pt-2 pb-4">
-      <p class="font-poppins text-lg font-semibold text-center mt-2">Trend Cuaca</p>
-      <div class="border border-zinc-500 mt-4"></div>
-
-      <div class="w-full h-fit bg-dlh_blue_dark p-4 font-poppins mt-4">
-        <div class="flex flex-row justify-center mb-4">
-          <p class="font-bold text-sm">
-            {{ currentTitle }} <span class="font-normal">(24 Jam)</span>
-          </p>
-        </div>
-        <div class="h-full">
-          <swiper
-            :slidesPerView="1"
-            :spaceBetween="30"
-            :loop="true"
-            :autoplay="{
-              delay: 5000,
-              disableOnInteraction: false,
-            }"
-            :modules="modules"
-            @slideChange="onSlideChange"
-            class="mySwiper h-[25vh]"
-          >
-            <swiper-slide><LineChart param="suhu" :listData="listDailySuhu" /></swiper-slide>
-            <swiper-slide
-              ><LineChart param="curah_hujan" :listData="listDailyHujan"
-            /></swiper-slide>
-            <swiper-slide><LineChart param="uv" :listData="listDailyUv" /></swiper-slide>
-          </swiper>
-        </div>
-      </div>
-    </div>
-  </div>
+  </div> -->
 </template>

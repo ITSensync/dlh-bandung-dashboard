@@ -9,11 +9,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="sticky top-0 z-50 flex flex-row justify-between bg-dlh_blue_dark pl-2 shadow-2xl">
+  <div class="flex flex-row justify-between bg-slate-900/70 pl-2 shadow-2xl">
     <div class="flex flex-row gap-4 items-center py-2 justify-center w-full sm:w-fit">
-      <a href="/login">
-        <img src="/dlh.png" alt="DLH LOGO" height="20" class="h-12 sm:h-12" />
-      </a>
+      <img src="/dlh.png" alt="DLH LOGO" height="20" class="h-12 sm:h-12" />
       <div class="hidden sm:flex-1 sm:flex sm:flex-col">
         <a class="text-xs sm:text-xl font-poppins font-extrabold"
           >Pemantauan Kualitas Udara Kota Bandung</a

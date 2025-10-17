@@ -18,15 +18,15 @@ const getColor = (val) => {
 // fungsi untuk menentukan tinggi relatif berdasarkan nilai maksimum
 const getHeight = (val) => {
   if (val <= 50) {
-    return `${(val / 50) * 8}vh`
+    return `${(val / 50) * 7}vh`
   } else if (val <= 100) {
-    return `${8 + ((val - 50) / 50) * 8}vh`
+    return `${7 + ((val - 50) / 50) * 7}vh`
   } else if (val <= 200) {
-    return `${16 + ((val - 100) / 100) * 8}vh`
+    return `${14 + ((val - 100) / 100) * 7}vh`
   } else if (val <= 300) {
-    return `${24 + ((val - 200) / 100) * 8}vh`
+    return `${21 + ((val - 200) / 100) * 7}vh`
   } else {
-    return `${32 + ((val - 300) / 100) * 8}vh`
+    return `${28 + ((val - 300) / 100) * 7}vh`
   }
 }
 
@@ -44,7 +44,7 @@ const listKategori = [
     <div
       v-for="(kategori, i) in listKategori"
       :key="i"
-      class="h-[8vh] flex items-center justify-center"
+      class="h-[7vh] flex items-center justify-center"
       :class="kategori.color"
     >
       <p>{{ kategori.label }}</p>
@@ -58,7 +58,7 @@ const listKategori = [
       class="flex flex-col items-center justify-end gap-1 sm:gap-2 w-5 md:w-10"
     >
       <!-- VALUE -->
-      <div class="relative flex flex-col justify-end bg-gray-500 w-full h-[40vh] overflow-hidden">
+      <div class="relative flex flex-col justify-end bg-gray-500 w-full h-[35vh] overflow-hidden">
         <!-- BAR WARNA -->
         <div class="w-full text-[10px] sm:text-xs text-center font-bold text-white py-0.5">
           {{ data.value }}

@@ -24,6 +24,7 @@ export const useMainStore = defineStore('main', () => {
   const clients = ref([])
   const history = ref([])
   const ispuLatest = ref()
+  const latestPm = ref()
   const latestGas = ref()
   const latestWeather = ref()
   const listIspuPM10 = ref([]);
@@ -141,7 +142,18 @@ export const useMainStore = defineStore('main', () => {
         }
 
         latestWeather.value = formattedResponse;
-      } else {
+      } else if (param === 'pm') {
+        const latestData = data[0];
+        const formattedResponse = {
+          pm10: latestData.pm10,
+          pm25: latestData.pm25,
+          tanggal: latestData.tanggal,
+          jam: latestData.jam
+        }
+
+        latestPm.value = formattedResponse;
+      }
+      else {
         const formattedData = data.map((item) => {
           return {
             pm25: item.pm25,
@@ -199,6 +211,7 @@ export const useMainStore = defineStore('main', () => {
     clients,
     history,
     ispuLatest,
+    latestPm,
     latestGas,
     latestWeather,
     listDailyIspu,
