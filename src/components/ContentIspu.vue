@@ -69,8 +69,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="lg:w-1/3 h-full bg-slate-900/70 rounded-xl flex flex-col items-center gap-4 p-4">
-    <p class="font-bold font-poppins">Indeks Standar Pencemaran Udara</p>
+  <div class="md:col-span-2 xl:col-span-1 min-h-full bg-slate-900/70 rounded-xl flex flex-col items-center gap-4 p-4">
+    <p class="font-bold font-poppins text-center">Indeks Standar Pencemaran Udara</p>
     <div class="w-full h-full flex gap-3 sm:gap-4">
       <IspuChart :dataIspu="bars" />
     </div>

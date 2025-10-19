@@ -42,7 +42,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="grid grid-cols-3 gap-2 py-4">
+  <div class="grid grid-cols-3 gap-2 xl:py-4">
     <CardTextGas name="HC" :value="Number(latestGasData?.hc)" unit="µg/m³" />
     <CardTextGas name="CO" :value="Number(latestGasData?.co)" unit="µg/m³" />
     <CardTextGas name="O³" :value="Number(latestGasData?.o3)" unit="µg/m³" />

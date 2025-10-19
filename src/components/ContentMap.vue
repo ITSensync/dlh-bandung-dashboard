@@ -57,7 +57,7 @@ function getMaxIspu(data) {
 </script>
 
 <template>
-  <div class="w-1/3 bg-slate-900/70 rounded-xl flex flex-col min-h-full">
+  <div class="bg-slate-900/70 rounded-xl flex flex-col sm:min-h-full">
     <MapVue :name="maxIspu.param" :value="maxIspu.value" />
   </div>
 </template>

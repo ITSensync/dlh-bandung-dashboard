@@ -39,7 +39,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="w-full h-full grid grid-cols-2 gap-2 py-4">
+  <div class="w-full h-full grid grid-cols-2 gap-2 xl:py-4">
     <CardTextGas
       name="PM10"
       :value="Number(latestPmData.pm10)"

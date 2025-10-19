@@ -109,6 +109,12 @@ watch(
 <style scoped>
 #map {
   width: 100%;
-  height: 100%;
+  height: 30vh;
+}
+
+@media (min-width: 768px) {
+  #map {
+    height: 100%;
+  }
 }
 </style>

@@ -51,16 +51,16 @@ const listKategori = [
     </div>
     <p class="text-center mt-4">Kategori</p>
   </div>
-  <div class="flex items-end justify-between h-full gap-0 sm:gap-4 w-4/5 md:w-2/3">
+  <div class="flex items-start justify-between h-full gap-0 sm:gap-4 w-4/5 md:w-2/3">
     <div
       v-for="(data, i) in props.dataIspu"
       :key="i"
-      class="flex flex-col items-center justify-end gap-1 sm:gap-2 w-5 md:w-10"
+      class="flex flex-col items-center justify-end gap-1 sm:gap-2 w-5 md:w-10 xl:w-5 2xl:w-20"
     >
       <!-- VALUE -->
       <div class="relative flex flex-col justify-end bg-gray-500 w-full h-[35vh] overflow-hidden">
         <!-- BAR WARNA -->
-        <div class="w-full text-[10px] sm:text-xs text-center font-bold text-white py-0.5">
+        <div class="w-full text-[5px] sm:text-xs text-center font-bold text-white py-0.5">
           {{ data.value }}
         </div>
         <div
