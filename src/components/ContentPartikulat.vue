@@ -42,7 +42,7 @@ onUnmounted(() => {
   <div class="w-full h-full grid grid-cols-2 gap-2 xl:py-4">
     <CardTextGas
       name="PM10"
-      :value="Number(latestPmData.pm10)"
+      :value="Number(latestPmData?.pm10) || 0"
       unit="µg/m³"
       class_name="text-2xl"
       class_value="text-5xl"
@@ -50,7 +50,7 @@ onUnmounted(() => {
     />
     <CardTextGas
       name="PM2.5"
-      :value="Number(latestPmData.pm25)"
+      :value="Number(latestPmData?.pm25) || 0"
       unit="µg/m³"
       class_name="text-2xl"
       class_value="text-5xl"

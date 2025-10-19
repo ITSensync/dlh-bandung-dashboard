@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import { defineAsyncComponent, ref } from 'vue'
 import CardBox from './CardBox.vue'
-import VueApexCharts from 'vue3-apexcharts'
+const VueApexCharts = defineAsyncComponent(() => import('vue3-apexcharts'))
 
 const props = defineProps({
   val: {

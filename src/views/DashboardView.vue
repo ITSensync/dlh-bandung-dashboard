@@ -2,7 +2,9 @@
 // import ContentGas from '@/components/ContentGas.vue'
 import ContentGas from '@/components/ContentGas.vue'
 import ContentIspu from '@/components/ContentIspu.vue'
-import ContentMap from '@/components/ContentMap.vue'
+import { defineAsyncComponent } from 'vue'
+
+const ContentMap = defineAsyncComponent(() => import('@/components/ContentMap.vue'))
 import ContentPartikulat from '@/components/ContentPartikulat.vue'
 import ContentUdara from '@/components/ContentUdara.vue'
 import ContentWeather from '@/components/ContentWeather.vue'
@@ -14,10 +16,17 @@ import LayoutGuest from '@/layouts/LayoutGuest.vue'
 <template>
   <LayoutGuest>
     <NavbarGuest />
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 p-4 gap-4"
-    >
-      <ContentMap />
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 p-4 gap-4">
+      <Suspense>
+        <template #default>
+          <ContentMap />
+        </template>
+        <template #fallback>
+          <div class="flex items-center justify-center bg-slate-800 rounded-xl h-64">
+            <p class="text-zinc-300">Memuat peta...</p>
+          </div>
+        </template>
+      </Suspense>
       <ContentUdara />
       <ContentIspu />
     </div>

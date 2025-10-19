@@ -1,6 +1,8 @@
 <script setup>
+import { defineAsyncComponent } from 'vue';
 import CardBox from './CardBox.vue'
-import GaugeSpeedometer from './Charts/GaugeSpeedometer.vue'
+const GaugeSpeedometer = defineAsyncComponent(() => import('./Charts/GaugeSpeedometer.vue'))
+
 
 const param = defineProps({
   name: String,

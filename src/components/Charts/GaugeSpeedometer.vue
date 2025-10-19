@@ -1,5 +1,10 @@
 <script setup>
-import VueSpeedometer from 'vue-speedometer'
+import { defineAsyncComponent } from 'vue';
+
+const VueSpeedometer = defineAsyncComponent(() =>
+  import('vue-speedometer')
+)
+
 
 const props = defineProps({
   name: String,

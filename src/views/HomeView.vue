@@ -1,6 +1,6 @@
 <!-- eslint-disable no-unused-vars -->
 <script setup>
-import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { defineAsyncComponent, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useMainStore } from '@/stores/main'
 import {
   mdiSmog,
@@ -16,13 +16,14 @@ import SectionMain from '@/components/SectionMain.vue'
 import CardBoxWidget from '@/components/CardBoxWidget.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
-import CardGauge from '@/components/CardGauge.vue'
-import CardTemperature from '@/components/CardTemperature.vue'
-import CardWind from '@/components/CardWind.vue'
-import CardPressure from '@/components/CardPressure.vue'
-import CardUv from '@/components/CardUv.vue'
-import CardPrecip from '@/components/CardPrecip.vue'
-import CardSolar from '@/components/CardSolar.vue'
+
+const CardGauge = defineAsyncComponent(() => import('@/components/CardGauge.vue'))
+const CardTemperature = defineAsyncComponent(() => import('@/components/CardTemperature.vue'))
+const CardWind = defineAsyncComponent(() => import('@/components/CardWind.vue'))
+const CardPressure = defineAsyncComponent(() => import('@/components/CardPressure.vue'))
+const CardPrecip = defineAsyncComponent(() => import('@/components/CardPrecip.vue'))
+const CardUv = defineAsyncComponent(() => import('@/components/CardUv.vue'))
+const CardSolar = defineAsyncComponent(() => import('@/components/CardSolar.vue'))
 
 const mainStore = useMainStore()
 const summaryToday = ref({})
