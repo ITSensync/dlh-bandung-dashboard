@@ -10,9 +10,9 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   // base: "/dashboard/",
   preview: {
-    host: true,
     port: 5004,
-    allowedHosts: ['absensi.getsensync.com']
+    host: true,
+    allowedHosts: ['aqmsbandung.info', 'www.aqmsbandung.info'],
   },
   plugins: [vue(), vueDevTools(), tailwindcss()],
   resolve: {
