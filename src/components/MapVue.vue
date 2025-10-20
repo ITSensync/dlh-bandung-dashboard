@@ -201,7 +201,7 @@ watch(
       createWindLayer(Number(newVal.ws), Number(newVal.wd))
     }
   },
-  { immediate: true }, // ⬅️ ini penting
+  { immediate: true },
 )
 </script>
 
