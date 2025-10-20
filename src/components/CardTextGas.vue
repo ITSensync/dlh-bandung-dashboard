@@ -3,7 +3,7 @@ import BaseIcon from './BaseIcon.vue'
 
 const param = defineProps({
   name: String,
-  value: Number,
+  value: String,
   unit: String,
   icon: String,
   class_name: String,

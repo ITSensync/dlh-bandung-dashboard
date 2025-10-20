@@ -50,7 +50,7 @@ export const useMainStore = defineStore('main', () => {
       const latestIspu = {
         pm25: latestData.ispu_pm25,
         pm10: latestData.ispu_pm10,
-        hc: latestData.ispu_hc || '0',
+        hc: latestData.ispu_hc,
         co: latestData.ispu_co,
         o3: latestData.ispu_o3,
         no2: latestData.ispu_no2,

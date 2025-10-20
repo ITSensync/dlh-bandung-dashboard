@@ -1,12 +1,12 @@
 <script setup>
 import { useMainStore } from '@/stores/main'
 // import LineChart from './LineChart.vue'
-import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed } from 'vue'
 import DateFormatter from '@/utils/DateFormatter'
 
-let intervalId = null
+// let intervalId = null
 const mainStore = useMainStore()
-const ispuLatestData = ref({
+/* const ispuLatestData = ref({
   pm25: '0',
   pm10: '0',
   hc: '0',
@@ -19,20 +19,24 @@ const ispuLatestData = ref({
   tanggal: '01-01-0001',
   jam: '00:00:00',
 })
-const listPm10 = ref([])
-const listPm25 = ref([])
-const bars = ref([])
-const maxIspu = ref({ param: '-', value: 0 })
 
-const fetchData = async () => {
+const bars = ref([])
+const maxIspu = ref({ param: '-', value: 0 }) */
+
+const ispuLatestData = computed(() => mainStore.ispuLatest)
+
+const maxIspu = computed(() => {
+  const data = ispuLatestData.value
+  if (!data) return { param: '-', value: 0 }
+
+  const keys = ['pm25', 'pm10', 'so2', 'no2', 'co', 'o3', 'hc']
+  const maxParam = keys.reduce((a, b) => (Number(data[a]) > Number(data[b]) ? a : b))
+  return { param: maxParam, value: Number(data[maxParam]) }
+})
+
+/* const fetchData = async () => {
   await mainStore.fetchIspuLatest()
   ispuLatestData.value = mainStore.ispuLatest
-
-  mainStore.fetchIspuDaily('pm10')
-  listPm10.value = mainStore.listIspuPM10
-
-  mainStore.fetchIspuDaily('pm25')
-  listPm25.value = mainStore.listIspuPM25
 
   if (ispuLatestData.value) {
     maxIspu.value = getMaxIspu(ispuLatestData.value)
@@ -48,9 +52,9 @@ const fetchData = async () => {
     { label: 'NO2', value: Number(data.no2) || 0 },
     { label: 'HC', value: Number(data.hc) || 0 },
   ]
-}
+} */
 
-onMounted(async () => {
+/* onMounted(async () => {
   fetchData()
 
   intervalId = setInterval(() => {
@@ -80,13 +84,13 @@ watch(
 
 onUnmounted(() => {
   if (intervalId) clearInterval(intervalId)
-})
+}) */
 
-function getMaxIspu(data) {
+/* function getMaxIspu(data) {
   const keys = ['pm25', 'pm10', 'so2', 'no2', 'co', 'o3', 'hc']
   const maxParam = keys.reduce((a, b) => (Number(data[a]) > Number(data[b]) ? a : b))
   return { param: maxParam, value: Number(data[maxParam]) }
-}
+} */
 
 /* function getIspuStats(data, key = 'pm25') {
   const values = data.map((item) => Number(item[key])).filter((val) => !isNaN(val))

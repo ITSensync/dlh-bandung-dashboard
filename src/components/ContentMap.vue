@@ -1,11 +1,11 @@
 <script setup>
-import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed } from 'vue'
 import MapVue from './MapVue.vue'
 import { useMainStore } from '@/stores/main'
 
-let intervalId = null
+// let intervalId = null
 const mainStore = useMainStore()
-const ispuLatestData = ref({
+/* const ispuLatestData = ref({
   pm25: '0',
   pm10: '0',
   hc: '0',
@@ -17,20 +17,32 @@ const ispuLatestData = ref({
   status: '-',
   tanggal: '01-01-0001',
   jam: '00:00:00',
-})
-const maxIspu = ref({ param: '-', value: 0 })
+}) */
+// const maxIspu = ref({ param: '-', value: 0 })
 
-const fetchData = async () => {
+const ispuLatestData = computed(() => mainStore.ispuLatest)
+const maxIspu = computed(() => {
+  const data = ispuLatestData.value
+  if (!data) return { param: '-', value: 0 }
+
+  const keys = ['pm25', 'pm10', 'so2', 'no2', 'co', 'o3', 'hc']
+  const maxParam = keys.reduce((a, b) => (Number(data[a]) > Number(data[b]) ? a : b))
+  return { param: maxParam, value: Number(data[maxParam]) }
+})
+
+/* const fetchData = async () => {
   await mainStore.fetchIspuLatest()
   ispuLatestData.value = mainStore.ispuLatest
 
   if (ispuLatestData.value) {
     maxIspu.value = getMaxIspu(ispuLatestData.value)
   }
-}
+} */
 
-onMounted(async () => {
-  fetchData()
+/* onMounted(async () => {
+  // fetchData()
+
+  getMaxIspu(ispuLatestData.value)
 
   intervalId = setInterval(() => {
     fetchData()
@@ -47,13 +59,13 @@ watch([() => mainStore.ispuLatest], ([newIspuLatest]) => {
 
 onUnmounted(() => {
   if (intervalId) clearInterval(intervalId)
-})
+}) */
 
-function getMaxIspu(data) {
+/* function getMaxIspu(data) {
   const keys = ['pm25', 'pm10', 'so2', 'no2', 'co', 'o3', 'hc']
   const maxParam = keys.reduce((a, b) => (Number(data[a]) > Number(data[b]) ? a : b))
   return { param: maxParam, value: Number(data[maxParam]) }
-}
+} */
 </script>
 
 <template>

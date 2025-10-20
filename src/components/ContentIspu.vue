@@ -1,12 +1,12 @@
 <script setup>
-import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed } from 'vue'
 import IspuChart from './Charts/IspuChart.vue'
 import { useMainStore } from '@/stores/main'
 import LegendIspu from './LegendIspu.vue'
 
-let intervalId = null
+// let intervalId = null
 const mainStore = useMainStore()
-const bars = ref([])
+/* const bars = ref([])
 const ispuLatestData = ref({
   pm25: '0',
   pm10: '0',
@@ -19,9 +19,20 @@ const ispuLatestData = ref({
   status: '-',
   tanggal: '01-01-0001',
   jam: '00:00:00',
-})
+}) */
 
-const fetchData = async () => {
+const ispuLatestData = computed(() => mainStore.ispuLatest)
+const bars = computed(() => [
+  { label: 'PM10', value: Number(ispuLatestData.value?.pm10) || 0 },
+  { label: 'PM2.5', value: Number(ispuLatestData.value?.pm25) || 0 },
+  { label: 'SO2', value: Number(ispuLatestData.value?.so2) || 0 },
+  { label: 'CO', value: Number(ispuLatestData.value?.co) || 0 },
+  { label: 'O3', value: Number(ispuLatestData.value?.o3) || 0 },
+  { label: 'NO2', value: Number(ispuLatestData.value?.no2) || 0 },
+  { label: 'HC', value: Number(ispuLatestData.value?.hc) || 0 },
+])
+
+/* const fetchData = async () => {
   await mainStore.fetchIspuLatest()
   ispuLatestData.value = mainStore.ispuLatest
 
@@ -66,7 +77,7 @@ watch(
 
 onUnmounted(() => {
   if (intervalId) clearInterval(intervalId)
-})
+}) */
 </script>
 
 <template>

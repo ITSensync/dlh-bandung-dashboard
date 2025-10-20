@@ -2,21 +2,45 @@
 import CardTextGas from './CardTextGas.vue'
 
 // Import Swiper styles
-import 'swiper/css'
+// import 'swiper/css'
 
-import 'swiper/css/pagination'
-import 'swiper/css/navigation'
+// import 'swiper/css/pagination'
+// import 'swiper/css/navigation'
 
 // import './style.css'
 
 // import required modules
-import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed } from 'vue'
 import { useMainStore } from '@/stores/main'
-import { mdiCompass, mdiGauge, mdiSunWirelessOutline, mdiThermometer, mdiWaterPercent, mdiWeatherRainy, mdiWeatherWindy, mdiWhiteBalanceSunny } from '@mdi/js'
+import {
+  mdiCompass,
+  mdiGauge,
+  mdiSunWirelessOutline,
+  mdiThermometer,
+  mdiWaterPercent,
+  mdiWeatherRainy,
+  mdiWeatherWindy,
+  mdiWhiteBalanceSunny,
+} from '@mdi/js'
 
-let intervalId = null
+// let intervalId = null
 const mainStore = useMainStore()
-const latestWeatherData = ref({
+const latestWeatherData = computed(() => {
+  const firstData = mainStore.listDaily30Minute?.[0] || {}
+  return {
+    tanggal: firstData.tanggal ?? '01-01-0001',
+    jam: firstData.jam ?? '00:00',
+    ws: firstData.ws ?? '-',
+    wd: firstData.wd ?? '-',
+    hum: firstData.hum ?? '-',
+    temp: firstData.temp ?? '-',
+    press: firstData.press ?? '-',
+    rain: firstData.rain ?? '-',
+    solar: firstData.solar ?? '-',
+    uv: firstData.uv ?? '-',
+  }
+})
+/* const latestWeatherData = ref({
   ws: '0',
   wd: '0',
   hum: '0',
@@ -28,36 +52,12 @@ const latestWeatherData = ref({
   tanggal: '01-01-0000',
   jam: '00:00',
 })
-const listDailySuhu = ref([])
-const listDailyUv = ref([])
-const listDailyHujan = ref([])
 
 const fetchData = async () => {
   await mainStore.fetch30Minute('weather')
   latestWeatherData.value = mainStore.latestWeather
 
   mainStore.fetch30Minute('daily')
-
-  listDailySuhu.value = mainStore.listDaily30Minute.map((data) => {
-    return {
-      jam: data.jam,
-      suhu: data.temp,
-    }
-  })
-
-  listDailyUv.value = mainStore.listDaily30Minute.map((data) => {
-    return {
-      jam: data.jam,
-      uv: data.uv,
-    }
-  })
-
-  listDailyHujan.value = mainStore.listDaily30Minute.map((data) => {
-    return {
-      jam: data.jam,
-      curah_hujan: data.rain,
-    }
-  })
 }
 
 onMounted(async () => {
@@ -69,43 +69,13 @@ onMounted(async () => {
   }, 300000) //5 menit sekali
 })
 
-watch(
-  [() => mainStore.latestWeather, () => mainStore.listDaily30Minute],
-  ([newLatestWeather, newList30Minute]) => {
-    latestWeatherData.value = newLatestWeather
-
-    listDailySuhu.value = newList30Minute
-      .map((data) => {
-        return {
-          jam: data.jam,
-          suhu: data.temp,
-        }
-      })
-      .reverse()
-
-    listDailyUv.value = newList30Minute
-      .map((data) => {
-        return {
-          jam: data.jam,
-          uv: data.uv,
-        }
-      })
-      .reverse()
-
-    listDailyHujan.value = newList30Minute
-      .map((data) => {
-        return {
-          jam: data.jam,
-          curah_hujan: data.rain,
-        }
-      })
-      .reverse()
-  },
-)
+watch([() => mainStore.latestWeather], ([newLatestWeather]) => {
+  latestWeatherData.value = newLatestWeather
+})
 
 onUnmounted(() => {
   if (intervalId) clearInterval(intervalId)
-})
+}) */
 
 /* const modules = [Autoplay]
 
@@ -151,49 +121,49 @@ function generateWindDirection(windData) {
     <CardTextGas
       name="Kec. Angin"
       :icon="mdiWeatherWindy"
-      :value="Number(latestWeatherData?.ws)"
+      :value="latestWeatherData?.ws"
       unit="mph"
     />
     <CardTextGas
       name="Arah Angin"
       :icon="mdiCompass"
-      :value="Number(latestWeatherData?.wd)"
+      :value="latestWeatherData?.wd"
       :unit="generateWindDirection(Number(latestWeatherData?.wd))"
     />
     <CardTextGas
       name="Suhu"
       :icon="mdiThermometer"
-      :value="Number(latestWeatherData?.temp)"
+      :value="latestWeatherData?.temp"
       unit="°C"
     />
     <CardTextGas
       name="Kelembapan"
       :icon="mdiWaterPercent"
-      :value="Number(latestWeatherData?.hum)"
+      :value="latestWeatherData?.hum"
       unit="%"
     />
     <CardTextGas
       name="Tekanan"
       :icon="mdiGauge"
-      :value="Number(latestWeatherData?.press)"
+      :value="latestWeatherData?.press"
       unit="mBar"
     />
     <CardTextGas
       name="Curah Hujan"
       :icon="mdiWeatherRainy"
-      :value="Number(latestWeatherData?.rain)"
+      :value="latestWeatherData?.rain"
       unit="mm/jam"
     />
     <CardTextGas
       name="Solar Radiasi"
       :icon="mdiWhiteBalanceSunny"
-      :value="Number(latestWeatherData?.solar)"
+      :value="latestWeatherData?.solar"
       unit="W/m²"
     />
     <CardTextGas
       name="UV"
       :icon="mdiSunWirelessOutline"
-      :value="Number(latestWeatherData?.uv)"
+      :value="latestWeatherData?.uv"
       unit="index"
     />
   </div>

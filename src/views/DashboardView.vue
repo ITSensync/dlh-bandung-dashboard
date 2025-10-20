@@ -2,7 +2,7 @@
 // import ContentGas from '@/components/ContentGas.vue'
 import ContentGas from '@/components/ContentGas.vue'
 import ContentIspu from '@/components/ContentIspu.vue'
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, onMounted, onUnmounted } from 'vue'
 
 const ContentMap = defineAsyncComponent(() => import('@/components/ContentMap.vue'))
 import ContentPartikulat from '@/components/ContentPartikulat.vue'
@@ -11,6 +11,35 @@ import ContentWeather from '@/components/ContentWeather.vue'
 // import ContentWeather from '@/components/ContentWeather.vue'
 import NavbarGuest from '@/components/NavbarGuest.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
+import { useMainStore } from '@/stores/main'
+
+let intervalId = null
+const mainStore = useMainStore()
+
+onMounted(() => {
+  mainStore.fetchIspuLatest()
+  mainStore.fetch30Minute()
+
+  intervalId = setInterval(() => {
+    mainStore.fetchIspuLatest()
+    mainStore.fetch30Minute()
+    console.log('interval running')
+  }, 60000)
+})
+
+onUnmounted(() => {
+  if (intervalId) clearInterval(intervalId)
+})
+
+
+/* watch(
+  () => mainStore.ispuLatest,
+  (newVal, oldVal) => {
+    console.log('Data lama:', oldVal)
+    console.log('Data baru:', newVal)
+  },
+  { deep: true } // opsional: supaya nested object ikut terdeteksi
+) */
 </script>
 
 <template>
