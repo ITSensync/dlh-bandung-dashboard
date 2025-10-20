@@ -30,4 +30,6 @@
 
 @theme {
   --font-poppins: 'Poppins';
+  --breakpoint-3xl: 120rem; /* 1920px */
+  --breakpoint-4xl: 150rem; /* 2400px */
 }

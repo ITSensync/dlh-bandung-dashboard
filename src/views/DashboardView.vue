@@ -30,11 +30,11 @@ import LayoutGuest from '@/layouts/LayoutGuest.vue'
       <ContentUdara />
       <ContentIspu />
     </div>
-    <div class="px-4 2xl:h-[40vh]">
+    <div class="px-4 h-full">
       <div class="flex flex-col justify-center bg-slate-900/70 rounded-xl h-full">
-        <p class="font-poppins text-lg font-semibold text-center mt-2">Konsentrasi</p>
+        <p class="font-poppins text-lg 2xl:text-2xl font-semibold text-center mt-2">Konsentrasi</p>
         <div class="border border-zinc-500 mt-4"></div>
-        <div class="grid xl:grid-cols-3 gap-6 xl:gap-2 px-4 h-full">
+        <div class="grid xl:grid-cols-3 xl:gap-2 px-4 h-full">
           <ContentPartikulat />
           <ContentGas />
           <ContentWeather />

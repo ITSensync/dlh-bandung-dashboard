@@ -16,6 +16,7 @@
     "axios": "^1.8.1",
     "chart.js": "^4.5.0",
     "leaflet": "^1.9.4",
+    "leaflet-velocity": "^2.1.4",
     "numeral": "^2.0.6",
     "pinia": "^3.0.1",
     "swiper": "^12.0.2",

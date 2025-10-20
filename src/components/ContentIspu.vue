@@ -2,6 +2,7 @@
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import IspuChart from './Charts/IspuChart.vue'
 import { useMainStore } from '@/stores/main'
+import LegendIspu from './LegendIspu.vue'
 
 let intervalId = null
 const mainStore = useMainStore()
@@ -69,10 +70,19 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="md:col-span-2 xl:col-span-1 min-h-full bg-slate-900/70 rounded-xl flex flex-col items-center gap-4 p-4">
-    <p class="font-bold font-poppins text-center">Indeks Standar Pencemaran Udara</p>
-    <div class="w-full h-full flex gap-3 sm:gap-4">
+  <div
+    class="md:col-span-2 xl:col-span-1 min-h-full bg-slate-900/70 rounded-xl flex flex-col items-center gap-4 pb-4 pt-2"
+  >
+    <p class="font-poppins text-lg 2xl:text-2xl font-semibold text-center mt-2">
+      Indeks Standar Pencemaran Udara (ISPU)
+    </p>
+    <div class="border border-zinc-500 w-full"></div>
+    <div class="w-full h-full flex gap-3 sm:gap-4 px-2">
       <IspuChart :dataIspu="bars" />
+    </div>
+    <LegendIspu />
+    <div class="w-full flex items-start px-2">
+      <p class="text-xs"><span class="text-red-700">*</span> Perhitungan berdasarkan Permen LHK No. 14 Tahun 2020</p>
     </div>
   </div>
 </template>

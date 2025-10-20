@@ -8,7 +8,7 @@ const year = new Date().getFullYear()
 <template>
   <footer class="py-4 px-6 flex justify-center font-poppins" :class="containerMaxW">
     <BaseLevel>
-      <div class="text-center md:text-left">
+      <div class="text-center md:text-center">
         <b>&copy;{{ year }}.</b>
         <slot />
       </div>

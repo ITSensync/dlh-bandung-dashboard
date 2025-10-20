@@ -47,7 +47,7 @@ const listKategori = [
       class="h-[7vh] flex items-center justify-center"
       :class="kategori.color"
     >
-      <p>{{ kategori.label }}</p>
+      <p class="font-bold">{{ kategori.label }}</p>
     </div>
     <p class="text-center mt-4">Kategori</p>
   </div>

@@ -12,6 +12,7 @@ import 'swiper/css/navigation'
 // import required modules
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { useMainStore } from '@/stores/main'
+import { mdiCompass, mdiGauge, mdiSunWirelessOutline, mdiThermometer, mdiWaterPercent, mdiWeatherRainy, mdiWeatherWindy, mdiWhiteBalanceSunny } from '@mdi/js'
 
 let intervalId = null
 const mainStore = useMainStore()
@@ -146,39 +147,54 @@ function generateWindDirection(windData) {
 </script>
 
 <template>
-  <div class="grid grid-cols-2 sm:grid-cols-4 xl:py-4 gap-2">
-    <CardTextGas name="Kec. Angin" :value="Number(latestWeatherData?.ws)" unit="mph" />
+  <div class="grid grid-cols-2 sm:grid-cols-4 py-4 gap-2">
+    <CardTextGas
+      name="Kec. Angin"
+      :icon="mdiWeatherWindy"
+      :value="Number(latestWeatherData?.ws)"
+      unit="mph"
+    />
     <CardTextGas
       name="Arah Angin"
+      :icon="mdiCompass"
       :value="Number(latestWeatherData?.wd)"
       :unit="generateWindDirection(Number(latestWeatherData?.wd))"
     />
-    <CardTextGas name="Suhu" :value="Number(latestWeatherData?.temp)" unit="°C" />
-    <CardTextGas name="Kelembapan" :value="Number(latestWeatherData?.hum)" unit="%" />
-    <CardTextGas name="Tekanan" :value="Number(latestWeatherData?.press)" unit="mBar" />
-    <CardTextGas name="Curah Hujan" :value="Number(latestWeatherData?.rain)" unit="mm/jam" />
-    <CardTextGas name="Solar Radiasi" :value="Number(latestWeatherData?.solar)" unit="W/m2" />
-    <CardTextGas name="UV" :value="Number(latestWeatherData?.uv)" unit="index" />
+    <CardTextGas
+      name="Suhu"
+      :icon="mdiThermometer"
+      :value="Number(latestWeatherData?.temp)"
+      unit="°C"
+    />
+    <CardTextGas
+      name="Kelembapan"
+      :icon="mdiWaterPercent"
+      :value="Number(latestWeatherData?.hum)"
+      unit="%"
+    />
+    <CardTextGas
+      name="Tekanan"
+      :icon="mdiGauge"
+      :value="Number(latestWeatherData?.press)"
+      unit="mBar"
+    />
+    <CardTextGas
+      name="Curah Hujan"
+      :icon="mdiWeatherRainy"
+      :value="Number(latestWeatherData?.rain)"
+      unit="mm/jam"
+    />
+    <CardTextGas
+      name="Solar Radiasi"
+      :icon="mdiWhiteBalanceSunny"
+      :value="Number(latestWeatherData?.solar)"
+      unit="W/m²"
+    />
+    <CardTextGas
+      name="UV"
+      :icon="mdiSunWirelessOutline"
+      :value="Number(latestWeatherData?.uv)"
+      unit="index"
+    />
   </div>
-  <!-- <div class="flex flex-col md:col-span-3 gap-4 h-full  w-1/3">
-    <div class="bg-slate-900/70 rounded-xl flex flex-col pt-2 pb-4">
-      <p class="font-poppins text-lg font-semibold text-center mt-2">Cuaca</p>
-      <div class="border border-zinc-500 mt-4"></div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 p-2 gap-2 gap-y-4 h-full">
-        <CardTextGas name="Kec. Angin" :value="Number(latestWeatherData?.ws)" unit="mph" />
-        <CardTextGas
-          name="Arah Angin"
-          :value="Number(latestWeatherData?.wd)"
-          :unit="generateWindDirection(Number(latestWeatherData?.wd))"
-        />
-        <CardTextGas name="Suhu" :value="Number(latestWeatherData?.temp)" unit="°C" />
-        <CardTextGas name="Kelembapan" :value="Number(latestWeatherData?.hum)" unit="%" />
-        <CardTextGas name="Tekanan" :value="Number(latestWeatherData?.press)" unit="mBar" />
-        <CardTextGas name="Curah Hujan" :value="Number(latestWeatherData?.rain)" unit="mm/jam" />
-        <CardTextGas name="Solar Radiasi" :value="Number(latestWeatherData?.solar)" unit="W/m2" />
-        <CardTextGas name="UV" :value="Number(latestWeatherData?.uv)" unit="index" />
-      </div>
-    </div>
-  </div> -->
 </template>

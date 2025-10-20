@@ -2,6 +2,7 @@
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import CardTextGas from './CardTextGas.vue'
 import { useMainStore } from '@/stores/main'
+import { mdiWeatherDust } from '@mdi/js'
 
 let intervalId = null
 const mainStore = useMainStore()
@@ -39,9 +40,10 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="w-full h-full grid grid-cols-2 gap-2 xl:py-4">
+  <div class="w-full h-full grid grid-cols-2 gap-2 py-4">
     <CardTextGas
       name="PM10"
+      :icon="mdiWeatherDust"
       :value="Number(latestPmData?.pm10) || 0"
       unit="µg/m³"
       class_name="text-2xl"
@@ -50,6 +52,7 @@ onUnmounted(() => {
     />
     <CardTextGas
       name="PM2.5"
+      :icon="mdiWeatherDust"
       :value="Number(latestPmData?.pm25) || 0"
       unit="µg/m³"
       class_name="text-2xl"
