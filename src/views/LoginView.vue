@@ -10,7 +10,9 @@ import BaseButton from '@/components/BaseButton.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
 import NotificationBar from '@/components/NotificationBar.vue'
 import AuthToken from '@/utils/AuthToken'
+import { useAuthStore } from '@/stores/auth'
 
+const authStore = useAuthStore()
 const form = reactive({
   login: '',
   pass: '',
@@ -20,12 +22,22 @@ const error = ref(false)
 
 const router = useRouter()
 
-const submit = () => {
-  if (form.login === 'adminDLH' && form.pass === 'aqmsKotaBandung') {
+const submit = async () => {
+  const result = await authStore.login({
+    username: form.login,
+    password: form.pass,
+  })
+
+  if (result.status === 'success') {
+    const authToken = AuthToken.generateToken()
+
+    localStorage.setItem('role', result.user.role)
+    localStorage.setItem('username', result.user.username)
+    AuthToken.setAuthToken('auth-token', authToken, 10800000) //3 hours
+
     router.push('/summary')
-    AuthToken.setAuthToken('auth-token', 'oqkwfqnfqwne2312341fmamsd', 10800000) //3 hours
   } else {
-    error.value = true
+    error.value = result.message
     form.login = ''
     form.pass = ''
   }
@@ -37,7 +49,7 @@ const submit = () => {
     <SectionFullScreen v-slot="{ cardClass }" bg="">
       <CardBox :class="cardClass" is-form @submit.prevent="submit">
         <div class="w-full flex flex-col gap-2 items-center justify-center mb-4">
-          <img src="/dlh2.png" class="h-16"/>
+          <img src="/dlh2.png" class="h-16" />
           <p class="font-poppins font-extrabold text-xl">AQMS KOTA BANDUNG</p>
         </div>
         <FormField label="Login" help="Please enter your username">

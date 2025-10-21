@@ -14,7 +14,7 @@ import { useTimeStore } from '@/stores/time'
 import AuthToken from '@/utils/AuthToken'
 import { useUiStore } from '@/stores/ui'
 
-const layoutAsidePadding = '3xl:pl-60'
+const layoutAsidePadding = '5xl:pl-60'
 
 const darkModeStore = useDarkModeStore()
 
@@ -59,12 +59,12 @@ onMounted(() => {
     }"
   >
     <div
-      :class="[layoutAsidePadding, { 'ml-60 3xl:ml-0': ui.isAsideMobileExpanded }]"
+      :class="[layoutAsidePadding, { 'ml-60': ui.isAsideMobileExpanded }]"
       class="flex flex-col pt-14 min-h-screen w-screen transition-position lg:w-auto bg-gray-50 dark:bg-slate-800 dark:text-slate-100"
     >
       <NavBar
         :menu="menuNavBar"
-        :class="[layoutAsidePadding, { 'ml-60 3xl:ml-0': ui.isAsideMobileExpanded }]"
+        :class="[layoutAsidePadding, { 'ml-60': ui.isAsideMobileExpanded }]"
         @menu-click="menuClick"
       >
         <NavBarItemPlain
@@ -73,7 +73,7 @@ onMounted(() => {
         >
           <BaseIcon :path="ui.isAsideMobileExpanded ? mdiBackburger : mdiForwardburger" size="24" />
         </NavBarItemPlain>
-        <NavBarItemPlain display="hidden 3xl:flex" @click.prevent="ui.isAsideLgActive = true">
+        <NavBarItemPlain display="hidden" @click.prevent="ui.isAsideLgActive = true">
           <BaseIcon :path="mdiMenu" size="24" />
         </NavBarItemPlain>
         <NavBarItemPlain use-margin class="p-4 dark:hover:text-white font-poppins">

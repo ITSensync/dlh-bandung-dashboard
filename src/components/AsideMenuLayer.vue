@@ -3,6 +3,8 @@ import { mdiLogout } from '@mdi/js'
 import { computed } from 'vue'
 import AsideMenuList from '@/components/AsideMenuList.vue'
 import AsideMenuItem from '@/components/AsideMenuItem.vue'
+import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
 
 defineProps({
   menu: {
@@ -12,6 +14,8 @@ defineProps({
 })
 
 const emit = defineEmits(['menu-click', 'aside-lg-close-click'])
+const authStore = useAuthStore()
+const router = useRouter()
 
 const logoutItem = computed(() => ({
   to: '/login',
@@ -22,7 +26,15 @@ const logoutItem = computed(() => ({
 }))
 
 const menuClick = (event, item) => {
-  emit('menu-click', event, item)
+  if (item.isLogout) {
+    if (confirm('Apakah Anda yakin ingin logout?')) {
+      authStore.logout()
+      router.push('/login')
+    }
+    return
+  } else {
+    emit('menu-click', event, item)
+  }
 }
 
 /* const asideLgCloseClick = (event) => {
@@ -33,9 +45,9 @@ const menuClick = (event, item) => {
 <template>
   <aside
     id="aside"
-    class="3xl:py-2 3xl:pl-2 w-60 fixed flex z-40 top-0 h-screen transition-position overflow-hidden"
+    class="5xl:py-2 5xl:pl-2 w-60 fixed flex z-40 top-0 h-screen transition-position overflow-hidden"
   >
-    <div class="aside 3xl:rounded-2xl flex-1 flex flex-col overflow-hidden dark:bg-slate-900">
+    <div class="aside 5xl:rounded-2xl flex-1 flex flex-col overflow-hidden dark:bg-slate-900">
       <div class="aside-brand flex flex-row h-14 items-center justify-between dark:bg-slate-900">
         <div class="text-center flex-1 lg:text-center lg:pl-0">
           <a href="/">
