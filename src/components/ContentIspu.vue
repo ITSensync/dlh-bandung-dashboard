@@ -92,7 +92,7 @@ onUnmounted(() => {
       <IspuChart :dataIspu="bars" />
     </div>
     <LegendIspu />
-    <div class="w-full flex items-start px-2">
+    <div class="w-full h-full flex items-end px-2">
       <p class="text-xs"><span class="text-red-700">*</span> Perhitungan berdasarkan Permen LHK No. 14 Tahun 2020</p>
     </div>
   </div>
