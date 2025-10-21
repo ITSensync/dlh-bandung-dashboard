@@ -58,7 +58,8 @@ export const useMainStore = defineStore('main', () => {
         ket: latestData.keterangan,
         status: latestData.status_kategori,
         tanggal: latestData.tanggal,
-        jam: latestData.jam
+        jam: latestData.jam,
+        rekomendasi: latestData.rekomendasi.kelompok
       }
 
       ispuLatest.value = latestIspu;

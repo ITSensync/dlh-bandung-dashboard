@@ -217,19 +217,10 @@ function generateIcon(value) {
       <div
         class="h-45 w-full 3xl:h-50 4xl:h-60 p-4 font-poppins rounded-xl mx-4 overflow-y-scroll bg-slate-950 mt-2 3xl:mt-4"
       >
-        <p class="font-bold md:text-lg text-yellow-300 mb-2">Rekomendasi yang perlu dilakukan</p>
-        <div class="mb-2">
-          <p class="font-bold text-sm md:text-base 2xl:text-lg">Penderita Penyakit jantung</p>
-          <p class="text-xs md:text-sm">Hindari keluar pada siang hari bla bla bla bla bla bla</p>
-        </div>
-        <div>
-          <p class="font-bold text-sm md:text-base 2xl:text-lg">Masyarakat</p>
-          <p class="text-xs md:text-sm">
-            Hindari aktivitas diluar ruangan berlebih bla bla bla bla
-          </p>
-          <p class="text-xs md:text-sm">
-            Hindari aktivitas diluar ruangan berlebih bla bla bla bla
-          </p>
+        <p class="font-bold text-yellow-300 mb-2">Rekomendasi yang perlu dilakukan</p>
+        <div class="mb-2" v-for="(rekomendasi, index) in ispuLatestData?.rekomendasi" :key="index">
+          <p class="font-bold text-sm md:text-base">{{ rekomendasi.nama }}</p>
+          <p class="text-xs">{{ rekomendasi.saran }}</p>
         </div>
       </div>
     </div>
