@@ -10,7 +10,7 @@ const props = defineProps({
   },
 })
 
-const series = ref([props.val])
+const series = ref([(props.val / 1000) * 100])
 
 const chartOptions = ref({
   chart: {
