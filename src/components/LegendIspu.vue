@@ -2,7 +2,7 @@
 
 <template>
   <div
-    class="grid grid-cols-5 gap-10 px-6 lg:px-10 md:pb-6 xl:pb-2 mt-4 md:mt-10 xl:mt-4 w-full text-center"
+    class="grid grid-cols-5 gap-10 px-6 lg:px-10 md:pb-6 xl:pb-2 mt-4 md:mt-10 xl:mt-4 w-full text-center bg-red-300"
   >
     <div class="flex flex-col w-full gap-3 items-center">
       <div className="bg-emerald-500 rounded-full py-2 text-center w-15 md:w-25 lg:w-30 xl:w-20">

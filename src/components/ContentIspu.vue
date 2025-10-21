@@ -88,7 +88,7 @@ onUnmounted(() => {
       Indeks Standar Pencemaran Udara (ISPU)
     </p>
     <div class="border border-zinc-500 w-full"></div>
-    <div class="w-full h-full flex gap-3 sm:gap-4 px-2">
+    <div class="w-full h-fit flex gap-3 sm:gap-4 px-2 bg-amber-200">
       <IspuChart :dataIspu="bars" />
     </div>
     <LegendIspu />

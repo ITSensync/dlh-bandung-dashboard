@@ -215,7 +215,7 @@ function generateIcon(value) {
     <!-- REKOMENDASI PERLAKUAN -->
     <div class="h-full flex items-center">
       <div
-        class="h-45 w-full 3xl:h-55 4xl:h-60 p-4 font-poppins rounded-xl mx-4 overflow-y-scroll bg-slate-950 mt-2 3xl:mt-4"
+        class="h-45 w-full 3xl:h-50 4xl:h-60 p-4 font-poppins rounded-xl mx-4 overflow-y-scroll bg-slate-950 mt-2 3xl:mt-4"
       >
         <p class="font-bold md:text-lg text-yellow-300 mb-2">Rekomendasi yang perlu dilakukan</p>
         <div class="mb-2">
