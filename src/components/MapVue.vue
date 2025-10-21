@@ -19,6 +19,21 @@ let map = null
 let marker = null
 let velocityLayer = null
 
+const isMobile = window.innerWidth < 768
+const gradientDirection = isMobile ? 'to left' : 'to bottom'
+const barStyle = `
+  ${isMobile ? 'width: 80px; height: 10px;' : 'width: 20px; height: 150px;'}
+  border-radius: 6px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(${gradientDirection},
+    #ff0000 0%,
+    #ff3300 20%,
+    #ffcc00 40%,
+    #66ff66 60%,
+    #0099ff 80%,
+    #0033cc 100%);
+`
+
 function generateColorIspu(value) {
   switch (true) {
     case value >= 0 && value <= 50:
@@ -159,21 +174,64 @@ function createWindLayer(ws, wd) {
   velocityLayer.addTo(map)
 }
 
+function addWindLegend() {
+  if (!map) return
+
+  // Hapus legend lama jika sudah ada
+  const existing = document.querySelector('.wind-legend')
+  if (existing) existing.remove()
+
+  const legend = L.control({ position: 'bottomleft' })
+
+  legend.onAdd = function () {
+    const div = L.DomUtil.create('div', 'wind-legend')
+    div.innerHTML = `
+      <div
+        class='flex flex-col items-center justify-center bg-white/90 p-1 gap-1 rounded-lg shadow-md'
+      >
+        <div class='flex flex-row-reverse md:flex-col gap-1 md:gap-2 items-center justify-center'> 
+          <p class='font-poppins text-zinc-900 text-center text-[6px] md:text-xs font-medium'>Cepat</p>
+  
+          <div
+            id="gradient-bar"
+            style='${barStyle}'
+          ></div>
+  
+          <p class='font-poppins text-zinc-900 text-center text-[6px] md:text-xs font-medium'>Lambat</p>
+        </div>
+
+        <div class="text-center font-poppins text-zinc-950 font-bold flex flex-row md:flex-col text-[6px] md:text-[9px]">
+          <p class="">Kec. Angin</p>
+          <p class="italic font-semibold">(m/s)</p>
+        </div>
+      </div>
+
+    `
+    return div
+  }
+
+  legend.addTo(map)
+}
+
 onMounted(async () => {
   map = L.map('map', {
     center: [-6.858189893364737, 107.59426700036065],
-    zoom: 16,
-    minZoom: 10,
+    zoom: 17,
+    minZoom: 15,
     maxZoom: 18,
     zoomControl: true,
   })
 
-  L.tileLayer(
+  /* L.tileLayer(
     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     {
       attribution: '',
     },
-  ).addTo(map)
+  ).addTo(map) */
+
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '',
+  }).addTo(map)
 
   createMarker()
 
@@ -185,6 +243,7 @@ onMounted(async () => {
   }
 
   createWindLayer(Number(weatherLatestData.value?.ws), Number(weatherLatestData.value?.wd))
+  addWindLegend()
 })
 
 watch(
@@ -213,6 +272,26 @@ watch(
 #map {
   width: 100%;
   height: 30vh;
+}
+
+@media (min-width: 768px) {
+  div[style*='display: flex'] {
+    flex-direction: column !important;
+  }
+
+  #gradient-bar {
+    width: 20px !important;
+    height: 150px !important;
+    background: linear-gradient(
+      to bottom,
+      #ff0000 0%,
+      #ff3300 20%,
+      #ffcc00 40%,
+      #66ff66 60%,
+      #0099ff 80%,
+      #0033cc 100%
+    ) !important;
+  }
 }
 
 @media (min-width: 768px) {

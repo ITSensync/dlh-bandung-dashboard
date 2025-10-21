@@ -39,7 +39,7 @@ const pmParam = ['PM10', 'PM2.5']
     </div>
     <p
       class="font-bold text-yellow-300 text-2xl sm:text-4xl"
-      :class="`${param.class_value} ${param.name.includes('PM') ? 'xl:text-6xl 2xl:text-7xl' : 'xl:text-4xl 2xl:text-5xl'}`"
+      :class="`${param.class_value} ${pmParam.includes(param.name) ? 'xl:text-6xl 2xl:text-7xl' : weatherParam.includes(param.name) ? 'xl:text-xl 2xl:text-3xl' : 'xl:text-4xl 2xl:text-5xl'}`"
     >
       {{ param.value }}
     </p>

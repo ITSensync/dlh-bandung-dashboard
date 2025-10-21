@@ -183,14 +183,14 @@ function generateIcon(value) {
     </div>
 
     <!-- NILAI -->
-    <div class="flex flex-row gap-2 mt-2 h-fit">
+    <div class="flex flex-row gap-2 mt-2 h-fit xl:h-60 2xl:h-fit 4xl:h-100">
       <div class="w-1/2 items-center py-5 flex justify-center">
         <div
-          class="rounded-full w-[17vh] h-[17vh] sm:h-[15vh] sm:w-[15vh] md:w-[17vw] md:h-[17vw] lg:w-[20vh] lg:h-[20vh] flex justify-center items-center"
+          class="rounded-full w-40 h-40 sm:h-40 sm:w-40 md:w-40 md:h-40 lg:w-[20vw] lg:h-[20vw] xl:w-40 xl:h-40 2xl:w-50 2xl:h-50 4xl:w-70 4xl:h-70 flex justify-center items-center"
           :class="generateColorIspu(maxIspu.value)"
         >
           <p
-            class="font-poppins font-extrabold text-5xl sm:text-8xl md:text-6xl xl:text-5xl 2xl:text-6xl 3xl:text-7xl 4xl:text-8xl text-center text-shadow-lg"
+            class="font-poppins font-extrabold text-5xl sm:text-6xl md:text-6xl xl:text-5xl 2xl:text-7xl 3xl:text-7xl 4xl:text-8xl text-center text-shadow-lg"
           >
             {{ maxIspu.value }}
           </p>
@@ -200,15 +200,37 @@ function generateIcon(value) {
       <div class="w-1/2 flex flex-col items-center justify-center gap-2 p-2 text-center">
         <div v-html="generateIcon(maxIspu.value)" class="flex justify-center"></div>
         <p
-          class="font-poppins font-bold text-xl sm:text-3xl xl:text-xl 2xl:text-2xl 3xl:text-3xl 4xl:text-5xl"
+          class="font-poppins font-bold text-xl sm:text-3xl md:text-2xl xl:text-xl 2xl:text-2xl 3xl:text-3xl 4xl:text-5xl"
         >
           {{ ispuLatestData?.status }}
         </p>
         <p
-          class="font-poppins font-normal text-md xl:text-xs text-center 2xl:text-lg 3xl:text-sm 4xl:text-2xl"
+          class="font-poppins font-normal text-center text-xs xl:text-xs 2xl:text-lg 3xl:text-sm 4xl:text-2xl"
         >
           {{ ispuLatestData?.ket }}
         </p>
+      </div>
+    </div>
+
+    <!-- REKOMENDASI PERLAKUAN -->
+    <div class="h-full flex items-center">
+      <div
+        class="h-45 w-full 3xl:h-55 4xl:h-60 p-4 font-poppins rounded-xl mx-4 overflow-y-scroll bg-slate-950 mt-2 3xl:mt-4"
+      >
+        <p class="font-bold md:text-lg text-yellow-300 mb-2">Rekomendasi yang perlu dilakukan</p>
+        <div class="mb-2">
+          <p class="font-bold text-sm md:text-base 2xl:text-lg">Penderita Penyakit jantung</p>
+          <p class="text-xs md:text-sm">Hindari keluar pada siang hari bla bla bla bla bla bla</p>
+        </div>
+        <div>
+          <p class="font-bold text-sm md:text-base 2xl:text-lg">Masyarakat</p>
+          <p class="text-xs md:text-sm">
+            Hindari aktivitas diluar ruangan berlebih bla bla bla bla
+          </p>
+          <p class="text-xs md:text-sm">
+            Hindari aktivitas diluar ruangan berlebih bla bla bla bla
+          </p>
+        </div>
       </div>
     </div>
   </div>
