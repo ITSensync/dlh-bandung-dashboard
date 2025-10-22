@@ -243,6 +243,7 @@ onMounted(async () => {
   }
 
   createWindLayer(Number(weatherLatestData.value?.ws), Number(weatherLatestData.value?.wd))
+  // createWindLayer(5, 90)
   addWindLegend()
 })
 
@@ -271,7 +272,7 @@ watch(
 <style scoped>
 #map {
   width: 100%;
-  height: 30vh;
+  height: 250px;
 }
 
 @media (min-width: 768px) {

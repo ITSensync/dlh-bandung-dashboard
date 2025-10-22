@@ -13,17 +13,17 @@ export default [
   },
   {
     to: '/ispu',
-    label: 'ISPU Per Jam',
+    label: 'ISPU',
     icon: mdiGauge,
   },
   {
-    to: '/history',
-    label: 'Data 30 Menit',
+    to: '/konsentrasi',
+    label: 'Konsentrasi',
     icon: mdiClockOutline,
   },
   {
-    to: '/harian',
-    label: 'Per Hari',
+    to: '/laporan',
+    label: 'Laporan',
     icon: mdiCalendarToday,
   },
   // {

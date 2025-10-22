@@ -1,6 +1,6 @@
 <!-- eslint-disable no-unused-vars -->
 <script setup>
-import { defineAsyncComponent, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useMainStore } from '@/stores/main'
 import {
   mdiSmog,
@@ -16,6 +16,7 @@ import SectionMain from '@/components/SectionMain.vue'
 import CardBoxWidget from '@/components/CardBoxWidget.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
+import { useAuthStore } from '@/stores/auth'
 
 const CardGauge = defineAsyncComponent(() => import('@/components/CardGauge.vue'))
 const CardTemperature = defineAsyncComponent(() => import('@/components/CardTemperature.vue'))
@@ -26,6 +27,7 @@ const CardUv = defineAsyncComponent(() => import('@/components/CardUv.vue'))
 const CardSolar = defineAsyncComponent(() => import('@/components/CardSolar.vue'))
 
 const mainStore = useMainStore()
+const authStore = useAuthStore()
 const summaryToday = ref({})
 
 let intervalId = null
@@ -33,6 +35,7 @@ const fetchData = () => {
   mainStore.fetch30Minute('daily')
   summaryToday.value = mainStore.listDaily30Minute[0]
 }
+const role = computed(() => authStore.role)
 
 watch([() => mainStore.listDaily30Minute], ([newSummaryToday]) => {
   summaryToday.value = newSummaryToday[0]
@@ -66,41 +69,49 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <SectionTitleLineWithButton :icon="mdiGasCylinder" title="Gas (µg/m³)" class="" />
+      <SectionTitleLineWithButton :icon="mdiGasCylinder" title="Gas" class="" />
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:grid-cols-5 mb-3 font-poppins">
+      <div class="grid grid-cols-1 md:grid-cols-5 w-full gap-4 mb-3 font-poppins">
+        <!-- <CardGauge class="" name="HC" :value="Number(summaryToday?.pm10 || 0)" unit="µg/m³" />
+        <CardGauge class="" name="CO" :value="Number(summaryToday?.pm10 || 0)" unit="µg/m³" />
+        <CardGauge class="lg:col-span-2 xl:col-auto" name="O3" :value="Number(summaryToday?.pm10 || 0)" unit="µg/m³" />
+        <div class="flex flex-col  lg:flex-row gap-4 w-full md:col-end-2 lg:col-span-3">
+          <CardGauge class="" name="NO2" :value="Number(summaryToday?.pm10 || 0)" unit="µg/m³" />
+          <CardGauge class="" name="SO2" :value="Number(summaryToday?.pm10 || 0)" unit="µg/m³" />
+        </div> -->
+
         <CardBoxWidget
           class="h-fit"
           color="text-violet-500"
-          :icon="mdiFlaskOutline"
+          :icon="role == 'admin' ? mdiFlaskOutline : ''"
           :number="Number(summaryToday?.hc || 0)"
           label="HC"
         />
         <CardBoxWidget
           class="h-fit"
           color="text-slate-500"
-          :icon="mdiMoleculeCo"
+          :icon="role == 'admin' ? mdiMoleculeCo : ''"
           :number="Number(summaryToday?.co || 0)"
           label="CO"
         />
         <CardBoxWidget
           class="h-fit"
           color="text-sky-500"
-          :icon="mdiMolecule"
+          :icon="role == 'admin' ? mdiMolecule : ''"
           :number="Number(summaryToday?.o3 || 0)"
           label="O³"
         />
         <CardBoxWidget
           class="h-fit"
           color="text-amber-500"
-          :icon="mdiFactory"
+          :icon="role == 'admin' ? mdiFactory : ''"
           :number="Number(summaryToday?.so2 || 0)"
           label="SO²"
         />
         <CardBoxWidget
           class="h-fit"
           color="text-rose-500"
-          :icon="mdiCar"
+          :icon="role == 'admin' ? mdiCar : ''"
           :number="Number(summaryToday?.no2 || 0)"
           label="NO²"
         />

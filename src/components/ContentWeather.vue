@@ -117,7 +117,7 @@ function generateWindDirection(windData) {
 </script>
 
 <template>
-  <div class="grid grid-cols-2 sm:grid-cols-4 py-4 gap-2">
+  <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 py-4 xl:pb-4 xl:pt-0 gap-2">
     <CardTextGas
       name="Kec. Angin"
       :icon="mdiWeatherWindy"

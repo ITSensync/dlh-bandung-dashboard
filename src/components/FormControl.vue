@@ -139,7 +139,7 @@ if (props.ctrlKFocus) {
 
 <template>
   <div class="relative">
-    <p v-if="label" class="text-sm font-bold mb-1 -mt-1">{{ label }}</p>
+    <p v-if="label" class="text-sm font-semibold mb-1 -mt-1">{{ label }}</p>
     <select
       v-if="computedType === 'select'"
       :id="id"
@@ -147,9 +147,13 @@ if (props.ctrlKFocus) {
       :name="name"
       :class="inputElClass"
     >
-      <option value="" disabled selected hidden>Pilih Opsi</option>
-      <option v-for="option in options" :key="option.id ?? option" :value="option">
-        {{ option.label ?? option }}
+      <option value="" disabled selected hidden>{{ placeholder }}</option>
+      <option
+        v-for="option in options"
+        :key="option.id ?? option.value ?? option"
+        :value="option.value ?? option"
+      >
+        {{ option.label ?? option.value ?? option }}
       </option>
     </select>
     <textarea

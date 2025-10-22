@@ -86,7 +86,7 @@ function handleBtnExcel() {
         </div>
       </component>
 
-      <SectionTitleLineWithButton :icon="mdiTable" title="Konsentrasi - Interval 30 Menit">
+      <SectionTitleLineWithButton :icon="mdiTable" title="Konsentrasi">
         <BaseButton
           @click="handleBtnExcel"
           target="_blank"

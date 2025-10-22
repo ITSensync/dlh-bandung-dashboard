@@ -64,10 +64,10 @@ onUnmounted(() => {
           Konsentrasi & Cuaca
         </p>
         <div class="border border-zinc-500 mt-4"></div>
-        <div class="grid xl:grid-cols-3 xl:gap-2 px-4 h-full">
+        <div class="grid xl:grid-cols-2 gap-x-2 xl:gap-x-2 px-4 h-full">
           <ContentPartikulat />
           <ContentGas />
-          <ContentWeather />
+          <ContentWeather class="xl:col-span-2"/>
         </div>
       </div>
     </div>

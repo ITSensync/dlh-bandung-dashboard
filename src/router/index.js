@@ -36,24 +36,24 @@ const routes = [
       title: 'ISPU',
     },
     path: '/ispu',
-    name: 'ISPU Per Jam',
+    name: 'ISPU',
     component: () => import('@/views/IspuView.vue'),
   },
   {
     meta: {
-      title: 'History',
+      title: 'Konsentrasi',
     },
-    path: '/history',
-    name: 'history',
-    component: () => import('@/views/DataView.vue'),
+    path: '/konsentrasi',
+    name: 'konsentrasi',
+    component: () => import('@/views/KonsentrasiView.vue'),
   },
   {
     meta: {
-      title: 'Harian',
+      title: 'Laporan',
     },
-    path: '/harian',
-    name: 'Per Hari',
-    component: () => import('@/views/HarianView.vue'),
+    path: '/laporan',
+    name: 'laporan',
+    component: () => import('@/views/LaporanView.vue'),
   },
   /* {
     meta: {

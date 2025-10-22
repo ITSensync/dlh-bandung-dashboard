@@ -31,6 +31,7 @@ export const useMainStore = defineStore('main', () => {
   const listIspuPM25 = ref([]);
   const listDailyIspu = ref([])
   const listDaily30Minute = ref([]);
+  const reportKonsentrasiDaily = ref([]);
 
   function setUser(payload) {
     if (payload.name) {
@@ -68,7 +69,7 @@ export const useMainStore = defineStore('main', () => {
 
   function fetchIspuDaily(param, start = formatted, end = formatted) {
     axios.get(`${apiUrl}/get-ispu-filter.php?start=${start}&end=${end}`).then((result) => {
-      const data = result.data.data || []
+      const data = result.data.data_ispu || []
 
       if (param === 'pm10') {
         const pm10Data = data.map((item) => {
@@ -102,6 +103,7 @@ export const useMainStore = defineStore('main', () => {
             o3: item.ispu_o3,
             no2: item.ispu_no2,
             so2: item.ispu_so2,
+            persentase: item.persentase,
           }
         })
 
@@ -182,27 +184,14 @@ export const useMainStore = defineStore('main', () => {
     })
   }
 
-  function fetchSampleClients() {
-    axios
-      .get(`data-sources/clients.json?v=3`)
-      .then((result) => {
-        clients.value = result?.data?.data
-      })
-      .catch((error) => {
-        alert(error.message)
-      })
+  function fetchKonsentrasiDaily(date = formatted) {
+    axios.get(`${apiUrl}/laporan/konsentrasi-harian.php?tanggal=${date}`).then((result) => {
+      const data = result.data.data || []
+
+      reportKonsentrasiDaily.value = data
+    })
   }
 
-  function fetchSampleHistory() {
-    axios
-      .get(`data-sources/history.json`)
-      .then((result) => {
-        history.value = result?.data?.data
-      })
-      .catch((error) => {
-        alert(error.message)
-      })
-  }
 
   return {
     userName,
@@ -219,11 +208,11 @@ export const useMainStore = defineStore('main', () => {
     listIspuPM10,
     listIspuPM25,
     listDaily30Minute,
+    reportKonsentrasiDaily,
     setUser,
     fetchIspuLatest,
     fetchIspuDaily,
     fetch30Minute,
-    fetchSampleClients,
-    fetchSampleHistory,
+    fetchKonsentrasiDaily,
   }
 })

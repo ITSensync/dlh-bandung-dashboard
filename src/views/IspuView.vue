@@ -86,7 +86,7 @@ function handleBtnExcel() {
         </div>
       </component>
 
-      <SectionTitleLineWithButton :icon="mdiTable" title="ISPU - Interval 1 Jam">
+      <SectionTitleLineWithButton :icon="mdiTable" title="ISPU">
         <BaseButton
           @click="handleBtnExcel"
           target="_blank"
