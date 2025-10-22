@@ -2,6 +2,8 @@
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import { useMainStore } from '@/stores/main'
 import FormControlIcon from '@/components/FormControlIcon.vue'
+import { EyeOff } from 'lucide-vue-next'
+import { Eye } from 'lucide-vue-next'
 
 const props = defineProps({
   name: {
@@ -54,6 +56,7 @@ const props = defineProps({
   ctrlKFocus: Boolean,
 })
 
+const showPassword = ref(false)
 const emit = defineEmits(['update:modelValue', 'setRef'])
 
 const computedValue = computed({
@@ -77,6 +80,13 @@ const inputElClass = computed(() => {
   }
 
   return base
+})
+
+const computedInputType = computed(() => {
+  if (props.type === 'password') {
+    return showPassword.value ? 'text' : 'password'
+  }
+  return computedType.value
 })
 
 const computedType = computed(() => (props.options ? 'select' : props.type))
@@ -152,20 +162,33 @@ if (props.ctrlKFocus) {
       :placeholder="placeholder"
       :required="required"
     />
-    <input
-      v-else
-      :id="id"
-      ref="inputEl"
-      v-model="computedValue"
-      :name="name"
-      :maxlength="maxlength"
-      :inputmode="inputmode"
-      :autocomplete="autocomplete"
-      :required="required"
-      :placeholder="placeholder"
-      :type="computedType"
-      :class="inputElClass"
-    />
+    <div v-else class="relative">
+      <input
+        :id="id"
+        ref="inputEl"
+        v-model="computedValue"
+        :name="name"
+        :maxlength="maxlength"
+        :inputmode="inputmode"
+        :autocomplete="autocomplete"
+        :required="required"
+        :placeholder="placeholder"
+        :type="computedInputType"
+        :class="inputElClass"
+      />
+
+      <!-- Tombol Mata -->
+      <button
+        v-if="props.type === 'password'"
+        type="button"
+        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+        @click="showPassword = !showPassword"
+      >
+        <component :is="showPassword ? EyeOff : Eye" class="w-5 h-5" />
+      </button>
+
+      <FormControlIcon v-if="icon" :icon="icon" :h="controlIconH" />
+    </div>
     <FormControlIcon v-if="icon" :icon="icon" :h="controlIconH" />
   </div>
 </template>
