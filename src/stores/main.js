@@ -68,8 +68,9 @@ export const useMainStore = defineStore('main', () => {
   }
 
   function fetchIspuDaily(param, start = formatted, end = formatted) {
-    axios.get(`${apiUrl}/get-ispu-filter.php?start=${start}&end=${end}`).then((result) => {
+    axios.get(`${apiUrl}/get-ispu-filter.php?start=${start}&end=${end ?  end : start}`).then((result) => {
       const data = result.data.data_ispu || []
+      // console.log(data);
 
       if (param === 'pm10') {
         const pm10Data = data.map((item) => {
@@ -92,6 +93,7 @@ export const useMainStore = defineStore('main', () => {
 
         listIspuPM25.value = pm25Data
       } else {
+        console.log(data)
         const dailyData = data.map((item) => {
           return {
             tanggal: item.tanggal,

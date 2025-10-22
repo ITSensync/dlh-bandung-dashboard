@@ -1,8 +1,4 @@
 <script setup>
-import BaseButton from '@/components/BaseButton.vue'
-import CardBox from '@/components/CardBox.vue'
-import FormControl from '@/components/FormControl.vue'
-import FormField from '@/components/FormField.vue'
 import FormReportIspu from '@/components/FormReportIspu.vue'
 import FormReportKonsentrasi from '@/components/FormReportKonsentrasi.vue'
 import FormReportWeather from '@/components/FormReportWeather.vue'
