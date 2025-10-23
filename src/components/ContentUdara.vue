@@ -27,11 +27,28 @@ const ispuLatestData = computed(() => mainStore.ispuLatest)
 
 const maxIspu = computed(() => {
   const data = ispuLatestData.value
-  if (!data) return { param: '-', value: 0 }
+  if (!data) return { param: [], value: 0 }
 
   const keys = ['pm25', 'pm10', 'so2', 'no2', 'co', 'o3', 'hc']
-  const maxParam = keys.reduce((a, b) => (Number(data[a]) > Number(data[b]) ? a : b))
-  return { param: maxParam, value: Number(data[maxParam]) }
+
+  const values = keys.map((k) => Number(data[k] || 0))
+  const maxValue = Math.max(...values)
+
+  const maxParams = keys.filter((k) => Number(data[k]) === maxValue)
+
+  const labelMap = {
+    pm25: 'PM2.5',
+    pm10: 'PM10',
+    so2: 'SO₂',
+    no2: 'NO₂',
+    co: 'CO',
+    o3: 'O₃',
+    hc: 'HC',
+  }
+
+  const displayParams = maxParams.map((k) => labelMap[k] || k.toUpperCase())
+
+  return { param: displayParams, value: maxValue }
 })
 
 /* const fetchData = async () => {
@@ -177,7 +194,7 @@ function generateIcon(value) {
       >
         <p class="font-semibold">Parameter Tertinggi</p>
         <p class="font-bold text-yellow-300">
-          {{ maxIspu.param === 'pm25' ? 'PM2.5' : maxIspu.param.toUpperCase() }}
+          {{ maxIspu.param.join(', ') }}
         </p>
       </div>
     </div>
