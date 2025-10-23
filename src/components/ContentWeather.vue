@@ -122,7 +122,7 @@ function generateWindDirection(windData) {
       name="Kec. Angin"
       :icon="mdiWeatherWindy"
       :value="latestWeatherData?.ws"
-      unit="mph"
+      unit="m/s"
     />
     <CardTextGas
       name="Arah Angin"

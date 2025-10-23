@@ -165,7 +165,7 @@ onUnmounted(() => {
         <CardBoxWidget
           class="h-fit"
           :number="Number(summaryToday?.humd || 0)"
-          suffix=" mph"
+          suffix=" m/s"
           label="Kec. Angin"
         />
         <CardBoxWidget

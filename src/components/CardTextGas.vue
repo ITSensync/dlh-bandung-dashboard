@@ -22,8 +22,8 @@ const pmParam = ['PM10', 'PM2.5']
     <div class="flex items-center gap-2 h-fit">
       <BaseIcon v-if="icon" :path="icon" size="30" w="" h="" />
       <p
-        class="font-semibold text-xs sm:text-md break-all"
-        :class="`${param.class_name} ${pmParam.includes(param.name) ? 'xl:text-2xl 2xl:text-3xl 3xl:text-4xl' : 'xl:text-lg 2xl:text-lg 3xl:text-xl'}`"
+        class="font-semibold text-xs sm:text-base break-all"
+        :class="`${param.class_name} ${pmParam.includes(param.name) ? 'xl:text-2xl 2xl:text-3xl 3xl:text-4xl' : 'xl:text-sm 2xl:text-lg 3xl:text-xl'}`"
         v-html="param.name"
       ></p>
     </div>

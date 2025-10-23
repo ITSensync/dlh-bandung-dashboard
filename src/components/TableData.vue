@@ -119,7 +119,7 @@ watch(
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(data, index) in itemsPaginated" :key="index" class="text-sm">
+      <tr v-for="(data, index) in itemsPaginated" :key="index" class="text-xs">
         <td data-label="No">
           {{ index + 1 }}
         </td>
