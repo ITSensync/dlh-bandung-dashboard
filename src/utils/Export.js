@@ -67,7 +67,7 @@ async function konsentrasiHarian(data, statistik, tanggal) {
 
   header.eachCell((cell) => {
     cell.font = { bold: true }
-    cell.alignment = { horizontal: 'center' }
+    cell.alignment = { horizontal: 'center', vertical: 'middle' }
     cell.fill = {
       type: 'pattern',
       pattern: 'solid',
@@ -80,6 +80,35 @@ async function konsentrasiHarian(data, statistik, tanggal) {
       right: { style: 'thin' },
     }
   })
+
+  const header2 = worksheet.addRow([
+    'Waktu',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+  ])
+
+  header2.eachCell((cell) => {
+    cell.font = { bold: true }
+    cell.alignment = { horizontal: 'center', vertical: 'middle' }
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'D9D9D9' },
+    }
+    cell.border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' },
+    }
+  })
+
+  worksheet.mergeCells(`A${header.number}:A${header2.number}`)
 
   data.forEach((item) => {
     const row = worksheet.addRow([
