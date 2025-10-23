@@ -25,6 +25,11 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  function initialize() {
+    username.value = localStorage.getItem('username') || '';
+    role.value = localStorage.getItem('role') || '';
+  }
+
   function logout() {
     role.value = ''
     username.value = ''
@@ -38,5 +43,6 @@ export const useAuthStore = defineStore('auth', () => {
     role,
     login,
     logout,
+    initialize,
   }
 })

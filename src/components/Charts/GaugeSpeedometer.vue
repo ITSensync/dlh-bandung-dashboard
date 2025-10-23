@@ -1,4 +1,5 @@
 <script setup>
+import { useDarkModeStore } from '@/stores/darkMode'
 import { computed, defineAsyncComponent } from 'vue'
 
 const VueSpeedometer = defineAsyncComponent(() => import('vue-speedometer'))
@@ -8,6 +9,10 @@ const props = defineProps({
   value: Number,
 })
 
+const darkModeStore = useDarkModeStore()
+const isDark = computed(() => darkModeStore.isEnabled)
+
+const textColor = computed(() => (isDark.value ? '#ffffff' : '#1e293b'))
 // Buat gradasi dinamis
 /* const segmentStops = computed(() => {
   if (props.name === 'PM10') {
@@ -34,7 +39,7 @@ const segmentColors = [
 const maxValue = computed(() => {
   switch (true) {
     case props.name.includes('PM'):
-      return 1000;
+      return 1000
     case props.name === 'HC':
       return 648
     case props.name === 'NO2':
@@ -46,7 +51,7 @@ const maxValue = computed(() => {
     case props.name === 'SO2':
       return 1200
     default:
-      return 100;
+      return 100
   }
 })
 </script>
@@ -54,6 +59,7 @@ const maxValue = computed(() => {
 <template>
   <div class="flex items-center justify-center w-fit h-full p-0 m-0 overflow-hidden">
     <VueSpeedometer
+      :key="isDark"
       :width="300"
       :height="200"
       :needle-height-ratio="0.7"
@@ -63,7 +69,7 @@ const maxValue = computed(() => {
       :value="props.value"
       :min-value="0"
       :max-value="maxValue"
-      text-color="#d8dee9"
+      :textColor="textColor"
       current-value-text="Konsentrasi"
       :needle-transition-duration="2000"
       needle-transition="easeElastic"

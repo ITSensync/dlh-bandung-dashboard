@@ -5,8 +5,19 @@ import FormReportWeather from '@/components/FormReportWeather.vue'
 import SectionMain from '@/components/SectionMain.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
+import { useAuthStore } from '@/stores/auth'
 import { mdiGraph, mdiTestTube, mdiWeatherCloudy } from '@mdi/js'
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
+
+onMounted(() => {
+  const role = useAuthStore().role
+  if (role === 'spv') {
+    router.push('/error')
+  }
+})
 </script>
 
 <template>

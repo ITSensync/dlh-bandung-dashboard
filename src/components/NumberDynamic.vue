@@ -59,5 +59,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>{{ prefix }}{{ newValueFormatted }}{{ suffix }}</div>
+  <div>{{ prefix }}{{ newValueFormatted }}<span class="text-sm">{{ suffix }}</span></div>
 </template>

@@ -42,6 +42,7 @@ watch([() => mainStore.listDaily30Minute], ([newSummaryToday]) => {
 })
 
 onMounted(() => {
+  authStore.initialize()
   fetchData() // fetch pertama kali saat page render
 
   // ulangi setiap 2 menit (300000 ms)
@@ -62,14 +63,26 @@ onUnmounted(() => {
 
       <div class="flex flex-col lg:flex-row w-full gap-4">
         <div class="flex flex-col h-fit w-full">
-          <CardGauge class="" name="PM10" :value="Number(summaryToday?.pm10 || 0)" unit="µg/m³" />
+          <CardGauge
+            class=""
+            name="PM10"
+            :value="Number(summaryToday?.pm10 || 0)"
+            unit="µg/m³"
+            :role="role"
+          />
         </div>
         <div class="flex flex-col h-fit w-full">
-          <CardGauge class="" name="PM2.5" :value="Number(summaryToday?.pm25 || 0)" unit="µg/m³" />
+          <CardGauge
+            class=""
+            name="PM2.5"
+            :value="Number(summaryToday?.pm25 || 0)"
+            unit="µg/m³"
+            :role="role"
+          />
         </div>
       </div>
 
-      <SectionTitleLineWithButton :icon="mdiGasCylinder" title="Gas" class="" />
+      <SectionTitleLineWithButton :icon="mdiGasCylinder" title="Gas (µg/m³)" class="" />
 
       <div class="grid grid-cols-1 md:grid-cols-5 w-full gap-4 mb-3 font-poppins">
         <!-- <CardGauge class="" name="HC" :value="Number(summaryToday?.pm10 || 0)" unit="µg/m³" />
@@ -119,7 +132,7 @@ onUnmounted(() => {
 
       <SectionTitleLineWithButton :icon="mdiWeatherCloudy" title="Cuaca" class="" />
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" v-if="role === 'admin'">
         <CardTemperature
           :suhu="Number(summaryToday?.temp || 0)"
           :humd="Number(summaryToday?.humd || 0)"
@@ -129,6 +142,56 @@ onUnmounted(() => {
         <CardPrecip :water-level="Number(summaryToday?.rain || 0)" />
         <CardUv :solarRadiation="Number(summaryToday?.uv || 0)" />
         <CardSolar :val="Number(summaryToday?.solar) || 0" />
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-4" v-else>
+        <CardBoxWidget
+          class="h-fit"
+          :number="Number(summaryToday?.temp || 0)"
+          suffix=" °C"
+          label="Suhu"
+        />
+        <CardBoxWidget
+          class="h-fit"
+          :number="Number(summaryToday?.humd || 0)"
+          suffix=" %"
+          label="Kelembapan"
+        />
+        <CardBoxWidget
+          class="h-fit"
+          :number="Number(summaryToday?.humd || 0)"
+          suffix=" °"
+          label="Arah Angin"
+        />
+        <CardBoxWidget
+          class="h-fit"
+          :number="Number(summaryToday?.humd || 0)"
+          suffix=" mph"
+          label="Kec. Angin"
+        />
+        <CardBoxWidget
+          class="h-fit"
+          :number="Number(summaryToday?.humd || 0)"
+          suffix=" mBar"
+          label="Tekanan"
+        />
+        <CardBoxWidget
+          class="h-fit"
+          :number="Number(summaryToday?.humd || 0)"
+          suffix=" mm/jam"
+          label="Curah Hujan"
+        />
+        <CardBoxWidget
+          class="h-fit"
+          :number="Number(summaryToday?.humd || 0)"
+          suffix=" W/m²"
+          label="Solar radiasi"
+        />
+        <CardBoxWidget
+          class="h-fit"
+          :number="Number(summaryToday?.humd || 0)"
+          suffix=" index"
+          label="UV"
+        />
       </div>
     </SectionMain>
   </LayoutAuthenticated>

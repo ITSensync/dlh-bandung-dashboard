@@ -177,7 +177,7 @@ watch(
           </td>
         </template>
         <template v-else>
-          <td class="bg-zinc-900"></td>
+          <td class="bg-zinc-400 dark:bg-slate-950"></td>
           <td data-label="%PM10">
             {{ data.persentase.pm10 }}
           </td>

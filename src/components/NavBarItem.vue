@@ -45,7 +45,7 @@ const componentClass = computed(() => {
 })
 
 const itemLabel = computed(() =>
-  props.item.isCurrentUser ? useAuthStore().role : props.item.label,
+  props.item.isCurrentUser ? useAuthStore().role.toUpperCase() : props.item.label,
 )
 
 const isDropdownActive = ref(false)
