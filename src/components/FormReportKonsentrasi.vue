@@ -226,7 +226,7 @@ const yearOptions = [
               type="select"
               :options="monthOptions"
               v-model="formMingguan.month"
-              placeholder="Bulan ke -"
+              placeholder="Pilih Bulan"
             ></FormControl>
             <FormControl
               label="Tahun"
