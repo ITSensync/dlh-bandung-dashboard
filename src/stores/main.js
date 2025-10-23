@@ -7,6 +7,7 @@ export const useMainStore = defineStore('main', () => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const today = DateFormatter.getLocalIsoDate()
   const formatted = today.split('T')[0]
+  const [yearNow, monthNow] = formatted.split('-')
 
   const userName = ref('Admin')
   const userEmail = ref('doe.doe.doe@example.com')
@@ -31,7 +32,6 @@ export const useMainStore = defineStore('main', () => {
   const listIspuPM25 = ref([]);
   const listDailyIspu = ref([])
   const listDaily30Minute = ref([]);
-  const reportKonsentrasiDaily = ref([]);
 
   function setUser(payload) {
     if (payload.name) {
@@ -68,7 +68,7 @@ export const useMainStore = defineStore('main', () => {
   }
 
   function fetchIspuDaily(param, start = formatted, end = formatted) {
-    axios.get(`${apiUrl}/get-ispu-filter.php?start=${start}&end=${end ?  end : start}`).then((result) => {
+    axios.get(`${apiUrl}/get-ispu-filter.php?start=${start}&end=${end ? end : start}`).then((result) => {
       const data = result.data.data_ispu || []
       // console.log(data);
 
@@ -186,13 +186,43 @@ export const useMainStore = defineStore('main', () => {
     })
   }
 
-  function fetchKonsentrasiDaily(date = formatted) {
-    axios.get(`${apiUrl}/laporan/konsentrasi-harian.php?tanggal=${date}`).then((result) => {
-      const data = result.data.data || []
+  async function fetchKonsentrasiDaily(date = formatted) {
+    const res = await axios.get(`${apiUrl}/laporan/konsentrasi-harian.php?tanggal=${date}`)
 
-      reportKonsentrasiDaily.value = data
-    })
+    return res.data
   }
+
+  async function fetchKonsentrasiMonthly(month = monthNow, year = yearNow, sensor = 'pm10') {
+    const res = await axios.get(`${apiUrl}/laporan/konsentrasi-bulanan.php?bulan=${month}&tahun=${year}&parameter=${sensor}`)
+
+    return res.data
+  }
+
+  async function fetchReportIspuDaily(date = formatted) {
+    const res = await axios.get(`${apiUrl}/laporan/ispu-harian.php?tanggal=${date}`)
+
+    return res.data
+  }
+
+  async function fetchReportIspuMonthly(month = monthNow, year = yearNow) {
+    const res = await axios.get(`${apiUrl}/laporan/ispu-bulanan.php?bulan=${month}&tahun=${year}`)
+
+    return res.data
+  }
+
+  async function fetchReportWeatherDaily(date = formatted) {
+    const res = await axios.get(`${apiUrl}/laporan/cuaca-harian.php?tanggal=${date}`)
+
+    return res.data
+  }
+
+  async function fetchReportWeatherMonthly(month = monthNow, year = yearNow, sensor = 'ws') {
+    const res = await axios.get(`${apiUrl}/laporan/cuaca-bulanan.php?bulan=${month}&tahun=${year}&parameter=${sensor}`)
+
+    return res.data
+  }
+
+
 
 
   return {
@@ -210,11 +240,15 @@ export const useMainStore = defineStore('main', () => {
     listIspuPM10,
     listIspuPM25,
     listDaily30Minute,
-    reportKonsentrasiDaily,
     setUser,
     fetchIspuLatest,
     fetchIspuDaily,
     fetch30Minute,
     fetchKonsentrasiDaily,
+    fetchKonsentrasiMonthly,
+    fetchReportIspuDaily,
+    fetchReportIspuMonthly,
+    fetchReportWeatherDaily,
+    fetchReportWeatherMonthly
   }
 })

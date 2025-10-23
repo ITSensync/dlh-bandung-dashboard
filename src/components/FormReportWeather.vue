@@ -4,8 +4,9 @@ import CardBox from '@/components/CardBox.vue'
 import FormControl from '@/components/FormControl.vue'
 import FormField from '@/components/FormField.vue'
 import { useMainStore } from '@/stores/main'
+import Export from '@/utils/Export'
 // import Export from '@/utils/Export'
-import { onMounted, reactive, ref, watch } from 'vue'
+import { reactive } from 'vue'
 
 const formHarian = reactive({
   date: '',
@@ -13,31 +14,21 @@ const formHarian = reactive({
 const formBulanan = reactive({
   month: '',
   year: '',
+  sensor: '',
 })
 const formTahunan = reactive({
   year: '',
+  sensor: '',
 })
 
 const mainStore = useMainStore()
-const tableData = ref([])
-
-onMounted(() => {
-  mainStore.fetch30Minute('daily')
-  tableData.value = mainStore.listDaily30Minute
-})
-
-watch(
-  () => mainStore.listDaily30Minute,
-  (newVal) => {
-    tableData.value = newVal
-  },
-)
 
 // HARIAN
-function handleSubmitHarian() {
+async function handleSubmitHarian() {
   if (!formHarian.date) return alert('Tanggal harus diisi!')
-  console.log('Download Harian:', formHarian)
-  mainStore.fetch30Minute('daily', formHarian.date)
+
+  const result = await mainStore.fetchReportWeatherDaily(formHarian.date)
+  Export.cuacaHarian(result.data, result.statistik, formHarian.date)
 }
 
 function handleResetHarian() {
@@ -45,10 +36,16 @@ function handleResetHarian() {
 }
 
 // BULANAN
-function handleSubmitBulanan() {
+async function handleSubmitBulanan() {
   if (!formBulanan.month || !formBulanan.year) return alert('Lengkapi semua field Bulanan!')
-  console.log('Download Bulanan:', formBulanan)
+  // console.log('Download Bulanan:', formBulanan)
   //   mainStore.fetch30Minute('monthly', formBulanan)
+  const result = await mainStore.fetchReportWeatherMonthly(
+    formBulanan.month,
+    formBulanan.year,
+    formBulanan.sensor,
+  )
+  Export.cuacaBulanan(result.data, result.bulan, result.tahun, result.parameter)
 }
 
 function handleResetBulanan() {
@@ -87,6 +84,49 @@ const yearOptions = [
   { id: 2, label: '2026', value: '2026' },
   { id: 3, label: '2027', value: '2027' },
   { id: 4, label: '2028', value: '2028' },
+]
+
+const sensorOptions = [
+  {
+    id: 1,
+    label: 'Kec. Angin',
+    value: 'ws',
+  },
+  {
+    id: 2,
+    label: 'Arah Angin',
+    value: 'wd',
+  },
+  {
+    id: 3,
+    label: 'Kelembapan',
+    value: 'humidity',
+  },
+  {
+    id: 4,
+    label: 'Suhu',
+    value: 'temperature',
+  },
+  {
+    id: 5,
+    label: 'Tekanan',
+    value: 'pressure',
+  },
+  {
+    id: 6,
+    label: 'Curah Hujan',
+    value: 'rain_intensity',
+  },
+  {
+    id: 7,
+    label: 'Solar Radiasi',
+    value: 'sr',
+  },
+  {
+    id: 8,
+    label: 'UV',
+    value: 'uv',
+  },
 ]
 /* function handleBtnExcel() {
   Export.exportToExcel(tableData.value, `30Menit_${form.startDate}-${form.endDate}.xlsx`)
@@ -142,6 +182,13 @@ const yearOptions = [
               placeholder="Pilih Tahun"
               :options="yearOptions"
             ></FormControl>
+            <FormControl
+              label="Parameter"
+              type="select"
+              v-model="formBulanan.sensor"
+              placeholder="Pilih Parameter"
+              :options="sensorOptions"
+            ></FormControl>
           </FormField>
           <div class="w-full sm:w-fit gap-4 flex flex-col sm:flex-row justify-end -mt-5">
             <BaseButton
@@ -168,6 +215,13 @@ const yearOptions = [
               v-model="formTahunan.year"
               placeholder="Pilih Tahun"
               :options="yearOptions"
+            ></FormControl>
+            <FormControl
+              label="Parameter"
+              type="select"
+              v-model="formTahunan.sensor"
+              placeholder="Pilih Parameter"
+              :options="sensorOptions"
             ></FormControl>
           </FormField>
           <div class="w-full sm:w-fit gap-4 flex flex-col sm:flex-row justify-end -mt-5">

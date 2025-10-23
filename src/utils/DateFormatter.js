@@ -35,6 +35,16 @@ function getNamaBulan(bulan) {
   return namaBulan[parseInt(bulan) - 1]
 }
 
+function formatIDDate(tanggal) {
+  const bulan = [
+    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+  ]
+
+  const [tahun, bulanIndex, hari] = tanggal.split('-')
+  return `${parseInt(hari)} ${bulan[parseInt(bulanIndex) - 1]} ${tahun}`
+}
+
 function convertToNamedMonth(isoMonth) {
   const date = new Date(isoMonth + "-01")
   const options = { year: 'numeric', month: 'long' }
@@ -96,5 +106,7 @@ export default {
   getTodayMonth,
   formatToDate,
   getDifferenceHour,
-  getLocalIsoDate
+  getLocalIsoDate,
+  formatIDDate,
+  getNamaBulan,
 }

@@ -4,8 +4,9 @@ import CardBox from '@/components/CardBox.vue'
 import FormControl from '@/components/FormControl.vue'
 import FormField from '@/components/FormField.vue'
 import { useMainStore } from '@/stores/main'
+import Export from '@/utils/Export'
 // import Export from '@/utils/Export'
-import { onMounted, reactive, ref, watch } from 'vue'
+import { reactive } from 'vue'
 
 const formHarian = reactive({
   date: '',
@@ -33,29 +34,18 @@ const formAvgTahun = reactive({
 })
 
 const mainStore = useMainStore()
-const tableData = ref([])
-
-onMounted(() => {
-  mainStore.fetch30Minute('daily')
-  tableData.value = mainStore.listDaily30Minute
-})
-
-watch(
-  () => mainStore.listDaily30Minute,
-  (newVal) => {
-    tableData.value = newVal
-  },
-)
 
 // ==================================================
 //  HANDLER UNTUK SETIAP FORM
 // ==================================================
 
 // HARIAN
-function handleSubmitHarian() {
+async function handleSubmitHarian() {
   if (!formHarian.date) return alert('Tanggal harus diisi!')
-  console.log('Download Harian:', formHarian)
-  mainStore.fetch30Minute('daily', formHarian.date)
+  // console.log('Download Harian:', formHarian)
+  const result = await mainStore.fetchKonsentrasiDaily(formHarian.date)
+
+  Export.konsentrasiHarian(result.data, result.statistik, formHarian.date)
 }
 
 function handleResetHarian() {
@@ -77,11 +67,17 @@ function handleResetMingguan() {
 }
 
 // BULANAN
-function handleSubmitBulanan() {
+async function handleSubmitBulanan() {
   if (!formBulanan.month || !formBulanan.year || !formBulanan.param)
     return alert('Lengkapi semua field Bulanan!')
-  console.log('Download Bulanan:', formBulanan)
-  //   mainStore.fetch30Minute('monthly', formBulanan)
+
+  const result = await mainStore.fetchKonsentrasiMonthly(
+    formBulanan.month,
+    formBulanan.year,
+    formBulanan.param,
+  )
+
+  Export.konsentrasiBulanan(result.data, result.bulan, result.tahun, result.parameter)
 }
 
 function handleResetBulanan() {
