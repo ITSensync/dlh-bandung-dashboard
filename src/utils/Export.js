@@ -1320,6 +1320,8 @@ async function ispuBulanan(dataBulanan, periode) {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     })
     saveAs(blob, `Laporan_ISPU_${periode}.xlsx`)
+
+    return
   }
 
 
@@ -2118,7 +2120,7 @@ async function cuacaBulanan(dataBulanan, bulan, tahun, parameter) {
     import('exceljs').then(m => m.default),
     import('file-saver')
   ]);
-  
+
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Laporan Cuaca Bulanan');
 
