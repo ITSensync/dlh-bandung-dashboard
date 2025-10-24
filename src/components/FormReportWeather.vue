@@ -5,7 +5,6 @@ import FormControl from '@/components/FormControl.vue'
 import FormField from '@/components/FormField.vue'
 import { useMainStore } from '@/stores/main'
 import Export from '@/utils/Export'
-// import Export from '@/utils/Export'
 import { reactive } from 'vue'
 
 const formHarian = reactive({
@@ -39,8 +38,6 @@ function handleResetHarian() {
 // BULANAN
 async function handleSubmitBulanan() {
   if (!formBulanan.month || !formBulanan.year) return alert('Lengkapi semua field Bulanan!')
-  // console.log('Download Bulanan:', formBulanan)
-  //   mainStore.fetch30Minute('monthly', formBulanan)
   const result = await mainStore.fetchReportWeatherMonthly(
     formBulanan.month,
     formBulanan.year,
@@ -58,9 +55,8 @@ function handleResetBulanan() {
 async function handleSubmitMingguan() {
   if (!formMingguan.year || !formMingguan.week || !formMingguan.month)
     return alert('Lengkapi semua field Mingguann!')
-  //   mainStore.fetch30Minute('yearly', formTahunan)
 
-  const result = await mainStore.fetchReportWeatherWeekly(
+    const result = await mainStore.fetchReportWeatherWeekly(
     formMingguan.week,
     formMingguan.month,
     formMingguan.year,

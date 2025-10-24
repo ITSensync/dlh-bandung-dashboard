@@ -1,6 +1,4 @@
-// import { saveAs } from 'file-saver'
 import DateFormatter from "./DateFormatter";
-// const ExcelJS = await import('exceljs');
 
 async function konsentrasiHarian(data, statistik, tanggal) {
   const [ExcelJS, { saveAs }] = await Promise.all([
@@ -291,7 +289,7 @@ async function konsentrasiMingguan(data, periode) {
     };
   })
 
-  // Row 3: Satuan (jika mau, bisa ubah manual)
+  // Row 3: Satuan
   const satuanMap = {
     pm10: 'µg/m³',
     pm25: 'µg/m³',
@@ -346,9 +344,7 @@ async function konsentrasiMingguan(data, periode) {
   worksheet.getRow(headerParam.number).alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
   worksheet.getRow(headerUnit.number).alignment = { horizontal: 'center', vertical: 'middle' };
 
-  // --- MULAI ISI DATA ---
-
-  // Buat daftar jam unik dari hari pertama (asumsi semua punya jam yang sama)
+  // Buat daftar jam unik dari hari pertama
   const jamList = data[0].jam.length > 0 ? data[0].jam.map((j) => j.jam) : generateJamList();
 
   // Tambahkan setiap baris jam
@@ -378,7 +374,6 @@ async function konsentrasiMingguan(data, periode) {
     })
   });
 
-  // Tambahkan baris statistik (Min, Mean, Maks, P95, P98)
   const stats = ['min', 'mean', 'max', 'p95', 'p98'];
   stats.forEach((key) => {
     const rowData = [key.toUpperCase()]; // kolom pertama nama statistik
@@ -392,7 +387,6 @@ async function konsentrasiMingguan(data, periode) {
 
     const row = worksheet.addRow(rowData);
 
-    // Styling khusus baris statistik
     row.eachCell((cell) => {
       cell.font = { bold: true };
       cell.alignment = { horizontal: 'center', vertical: 'middle' }
@@ -473,7 +467,6 @@ async function konsentrasiBulanan(dataBulanan, bulan, tahun, parameter) {
   titleCellSubHeader.font = { bold: false, size: 12 };
   titleCellSubHeader.alignment = { horizontal: 'center', vertical: 'middle' };
 
-  // === Ambil list jam dari tanggal pertama yang punya data ===
   const firstDataTanggal = Object.keys(dataBulanan)[0];
   const jamList = dataBulanan[firstDataTanggal]?.jam?.map(j => j.jam) || [];
 
@@ -852,8 +845,7 @@ async function avgKonsentrasiBulanan(data, statistik, periode) {
   const stats = ['Min', 'Mean', 'Maks']
 
   stats.forEach((key) => {
-    const values = statistik[key] ?? Array(7).fill(0); // kalau tidak ada di response, isi dengan 0
-
+    const values = statistik[key] ?? Array(7).fill(0); 
     const row = worksheet.addRow([key.toUpperCase(), ...values]);
 
     // Styling
@@ -1026,7 +1018,7 @@ async function avgKonsentrasiTahunan(data, statistik, periode) {
   const stats = ['Min', 'Mean', 'Maks']
 
   stats.forEach((key) => {
-    const values = statistik[key] ?? Array(7).fill(0); // kalau tidak ada di response, isi dengan 0
+    const values = statistik[key] ?? Array(7).fill(0);
 
     const row = worksheet.addRow([key.toUpperCase(), ...values]);
 
@@ -1634,7 +1626,7 @@ async function ispuTahunan(dataTahunan, tahun) {
 
   worksheet.addRow([]);
   const mergeStart = 1; // mulai dari kolom A
-  const mergeEnd = 10;   // sampai kolom E untuk "JUMLAH HARI"
+  const mergeEnd = 10;   // sampai kolom J untuk "JUMLAH HARI"
   worksheet.mergeCells(worksheet.lastRow.number + 1, mergeStart, worksheet.lastRow.number + 1, mergeEnd);
   const jumlahHariCell = worksheet.getRow(worksheet.lastRow.number).getCell(mergeStart);
   jumlahHariCell.value = 'JUMLAH HARI';
@@ -1652,7 +1644,6 @@ async function ispuTahunan(dataTahunan, tahun) {
     left: { style: 'thin' },
   };
 
-  // Tambahkan baris jumlah berdasarkan kategori
   const kategoriRow = worksheet.addRow([
     'Baik',
     '',
@@ -2044,7 +2035,6 @@ async function cuacaMingguan(data, periode) {
 
   // --- MULAI ISI DATA ---
 
-  // Buat daftar jam unik dari hari pertama (asumsi semua punya jam yang sama)
   const jamList = data[0].jam.length > 0 ? data[0].jam.map((j) => j.jam) : generateJamList();
 
   // Tambahkan setiap baris jam

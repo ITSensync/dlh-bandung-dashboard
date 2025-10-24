@@ -93,7 +93,6 @@ export const useMainStore = defineStore('main', () => {
 
         listIspuPM25.value = pm25Data
       } else {
-        console.log(data)
         const dailyData = data.map((item) => {
           return {
             tanggal: item.tanggal,

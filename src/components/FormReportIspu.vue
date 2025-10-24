@@ -80,10 +80,6 @@ const yearOptions = [
   { id: 3, label: '2027', value: '2027' },
   { id: 4, label: '2028', value: '2028' },
 ]
-
-/* function handleBtnExcel() {
-  Export.exportToExcel(tableData.value, `30Menit_${form.startDate}-${form.endDate}.xlsx`)
-} */
 </script>
 
 <template>

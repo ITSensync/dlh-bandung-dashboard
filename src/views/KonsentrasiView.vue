@@ -36,7 +36,7 @@ function handleSubmit() {
   if (!form.startDate) {
     alert('Tanggal Awal harus diisi')
   } else {
-    console.log('Semua tanggal sudah diisi:', form.startDate, form.endDate)
+    // console.log('Semua tanggal sudah diisi:', form.startDate, form.endDate)
     mainStore.fetch30Minute('daily', form.startDate, form.endDate)
   }
 }

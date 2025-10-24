@@ -42,7 +42,6 @@ const mainStore = useMainStore()
 // HARIAN
 async function handleSubmitHarian() {
   if (!formHarian.date) return alert('Tanggal harus diisi!')
-  // console.log('Download Harian:', formHarian)
   const result = await mainStore.fetchKonsentrasiDaily(formHarian.date)
 
   Export.konsentrasiHarian(result.data, result.statistik, formHarian.date)
