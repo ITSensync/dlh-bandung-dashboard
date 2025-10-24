@@ -179,6 +179,244 @@ async function konsentrasiHarian(data, statistik, tanggal) {
   saveAs(blob, `Laporan_Konsentrasi_${tanggal}.xlsx`)
 }
 
+async function konsentrasiMingguan(data, periode) {
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Laporan Konsentrasi Mingguan')
+
+  const leftLogo = await fetch('/dlh2.png')
+    .then((r) => r.arrayBuffer())
+  const rightLogo = await fetch('/pemkot.png')
+    .then((r) => r.arrayBuffer())
+
+  const leftImageId = workbook.addImage({
+    buffer: leftLogo,
+    extension: 'png',
+  })
+  const rightImageId = workbook.addImage({
+    buffer: rightLogo,
+    extension: 'png',
+  })
+
+  worksheet.mergeCells('A2:A5')
+  worksheet.addImage(leftImageId, {
+    tl: {
+      col: 0, row: 1,
+    },
+    ext: { width: 80, height: 80 },
+  })
+
+  worksheet.mergeCells('AX2:AX5')
+
+  // const offsetX = (18 - 77) / 2
+  worksheet.addImage(rightImageId, {
+    tl: { col: 49, row: 1 },
+    ext: { width: 80, height: 80 },
+  })
+
+  worksheet.mergeCells('B3:AW3')
+  const titleCellHeader1 = worksheet.getCell('B3')
+  titleCellHeader1.value = 'LAPORAN KONSENTRASI MINGGUAN'
+  titleCellHeader1.font = { bold: true, size: 16 }
+  titleCellHeader1.alignment = { horizontal: 'center', vertical: 'middle' }
+
+  worksheet.mergeCells('B4:AW4')
+  const [startPeriode, endPeriode] = periode.split(' s/d ')
+  const titleCellSubHeader = worksheet.getCell('B4')
+  titleCellSubHeader.value = `${DateFormatter.formatIDDate(startPeriode, false)} s/d ${DateFormatter.formatIDDate(endPeriode, false)}`
+  titleCellSubHeader.font = { bold: false, size: 12 }
+  titleCellSubHeader.alignment = { horizontal: 'center', vertical: 'middle' }
+
+  // Ambil nama parameter dari jam pertama
+  const hariDenganData = data.find((d) => Array.isArray(d.jam) && d.jam.length > 0);
+
+  let parameters = [];
+  if (hariDenganData) {
+    parameters = Object.keys(hariDenganData.jam[0]).filter((k) => k !== 'jam');
+  } else {
+    // fallback kalau semua kosong — ambil dari statistik
+    parameters = Object.keys(data[0].statistik || {});
+  }
+
+  // Row 1: Header tanggal
+  const header1 = ['Waktu'];
+  data.forEach((item) => {
+    header1.push(new Date(item.tanggal).toLocaleDateString('id-ID', { day: 'numeric', month: 'long' }));
+    for (let i = 1; i < parameters.length; i++) header1.push('');
+  });
+  const headerWaktu = worksheet.addRow(header1);
+
+  headerWaktu.eachCell((cell) => {
+    cell.border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' },
+    }
+
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'D9D9D9' },
+    };
+  })
+
+  // Gabung sel tanggal
+  let startCol = 2;
+  data.forEach(() => {
+    worksheet.mergeCells(1, startCol, 1, startCol + parameters.length - 1);
+    startCol += parameters.length;
+  });
+
+  // Row 2: Header nama parameter
+  const header2 = [''];
+  data.forEach(() => {
+    header2.push(...parameters.map((p) => generateTextParameter(p)));
+  });
+  const headerParam = worksheet.addRow(header2);
+
+  headerParam.eachCell((cell) => {
+    cell.border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' },
+    }
+
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'D9D9D9' },
+    };
+  })
+
+  // Row 3: Satuan (jika mau, bisa ubah manual)
+  const satuanMap = {
+    pm10: 'µg/m³',
+    pm25: 'µg/m³',
+    so2: 'µg/m³',
+    co: 'µg/m³',
+    o3: 'µg/m³',
+    no2: 'µg/m³',
+    hc: 'µg/m³',
+  };
+  const header3 = [''];
+  data.forEach(() => {
+    header3.push(...parameters.map((p) => satuanMap[p] || ''));
+  });
+  const headerUnit = worksheet.addRow(header3);
+
+  headerUnit.eachCell((cell) => {
+    cell.border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' },
+    }
+
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'D9D9D9' },
+    };
+  })
+
+  // GABUNG SEL WAKTU HORIZONTAL
+  worksheet.mergeCells('B6:H6')
+  worksheet.mergeCells('I6:O6')
+  worksheet.mergeCells('P6:V6')
+  worksheet.mergeCells('W6:AC6')
+  worksheet.mergeCells('AD6:AJ6')
+  worksheet.mergeCells('AK6:AQ6')
+  worksheet.mergeCells('AR6:AX6')
+
+  // Gabung sel 'Waktu' secara vertikal
+  worksheet.mergeCells('A6:A8');
+  worksheet.getCell('A6').value = 'Waktu';
+  worksheet.getCell('A6').alignment = { vertical: 'middle', horizontal: 'center' };
+  worksheet.getCell('A8').font = { bold: true };
+
+  // Styling semua header
+  worksheet.getRow(headerWaktu.number).font = { bold: true };
+  worksheet.getRow(headerParam.number).font = { bold: true };
+  worksheet.getRow(headerUnit.number).font = { italic: true };
+
+  worksheet.getRow(headerWaktu.number).alignment = { horizontal: 'center', vertical: 'middle' };
+  worksheet.getRow(headerParam.number).alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
+  worksheet.getRow(headerUnit.number).alignment = { horizontal: 'center', vertical: 'middle' };
+
+  // --- MULAI ISI DATA ---
+
+  // Buat daftar jam unik dari hari pertama (asumsi semua punya jam yang sama)
+  const jamList = data[0].jam.length > 0 ? data[0].jam.map((j) => j.jam) : generateJamList();
+
+  // Tambahkan setiap baris jam
+  jamList.forEach((jam) => {
+    const rowData = [jam]; // kolom pertama: waktu
+
+    data.forEach((hari) => {
+      parameters.forEach((param) => {
+        const nilai = toNumber(hari.jam.find((x) =>
+          x.jam.startsWith(jam) || jam.startsWith(x.jam)
+        )?.[param]);
+
+        rowData.push(nilai);
+      });
+    });
+
+    const row = worksheet.addRow(rowData);
+
+    row.eachCell((cell) => {
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' },
+      }
+      cell.alignment = { horizontal: 'center', vertical: 'middle' }
+    })
+  });
+
+  // Tambahkan baris statistik (Min, Mean, Maks, P95, P98)
+  const stats = ['min', 'mean', 'max', 'p95', 'p98'];
+  stats.forEach((key) => {
+    const rowData = [key.toUpperCase()]; // kolom pertama nama statistik
+
+    data.forEach((hari) => {
+      parameters.forEach((param) => {
+        const val = toNumber(hari.statistik?.[param]?.[key]);
+        rowData.push(val);
+      });
+    });
+
+    const row = worksheet.addRow(rowData);
+
+    // Styling khusus baris statistik
+    row.eachCell((cell) => {
+      cell.font = { bold: true };
+      cell.alignment = { horizontal: 'center', vertical: 'middle' }
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'ECF0F5' },
+      };
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' },
+      };
+    });
+  });
+
+  worksheet.columns = Array.from({ length: 57 }, () => ({ width: 12 }));
+
+  const buffer = await workbook.xlsx.writeBuffer()
+  const blob = new Blob([buffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  })
+  saveAs(blob, `Laporan_Konsentrasi_${periode}.xlsx`)
+}
+
 async function konsentrasiBulanan(dataBulanan, bulan, tahun, parameter) {
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Laporan Konsentrasi Bulanan');
@@ -306,6 +544,504 @@ async function konsentrasiBulanan(dataBulanan, bulan, tahun, parameter) {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   });
   saveAs(blob, `Laporan_Konsentrasi_${generateTextParameter(parameter)}_${DateFormatter.getNamaBulan(bulan)}-${tahun}.xlsx`);
+}
+
+async function konsentrasiTahunan(dataTahunan, tahun, sensor) {
+  const workbook = new ExcelJS.Workbook();
+  const leftLogo = await fetch('/dlh2.png').then((r) => r.arrayBuffer());
+  const rightLogo = await fetch('/pemkot.png').then((r) => r.arrayBuffer());
+
+  const mapBulan = {
+    Januari: 'January',
+    Februari: 'February',
+    Maret: 'March',
+    April: 'April',
+    Mei: 'May',
+    Juni: 'June',
+    Juli: 'July',
+    Agustus: 'August',
+    September: 'September',
+    Oktober: 'October',
+    November: 'November',
+    Desember: 'December',
+  };
+
+  const bulanList = Object.keys(mapBulan);
+
+  const tanggalList = Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, '0'));
+
+  for (const bulan of bulanList) {
+    const isi = dataTahunan[mapBulan[bulan]] || {};
+    const worksheet = workbook.addWorksheet(bulan);
+
+    const leftImageId = workbook.addImage({
+      buffer: leftLogo,
+      extension: 'png',
+    })
+    const rightImageId = workbook.addImage({
+      buffer: rightLogo,
+      extension: 'png',
+    })
+
+    worksheet.mergeCells('A2:A5')
+    worksheet.addImage(leftImageId, {
+      tl: {
+        col: 0, row: 1,
+      },
+      ext: { width: 80, height: 80 },
+    })
+
+    worksheet.mergeCells('AF2:AF5')
+    worksheet.addImage(rightImageId, {
+      tl: { col: 31, row: 1 },
+      ext: { width: 80, height: 80 },
+    })
+
+    worksheet.mergeCells('B3:AE3')
+    const titleCellHeader1 = worksheet.getCell('B3')
+    titleCellHeader1.value = `LAPORAN KONSENTRASI ${tahun}`
+    titleCellHeader1.font = { bold: true, size: 16 }
+    titleCellHeader1.alignment = { horizontal: 'center', vertical: 'middle' }
+
+    worksheet.mergeCells('B4:AE4')
+    const titleCellHeader2 = worksheet.getCell('B4')
+    titleCellHeader2.value = `Parameter: ${sensor}`
+    titleCellHeader2.font = { bold: true, size: 14 }
+    titleCellHeader2.alignment = { horizontal: 'center', vertical: 'middle' }
+
+    worksheet.mergeCells('B5:AE5')
+    const titleCellSubHeader = worksheet.getCell('C5')
+    titleCellSubHeader.value = bulan
+    titleCellSubHeader.font = { bold: false, size: 12 }
+    titleCellSubHeader.alignment = { horizontal: 'center', vertical: 'middle' }
+
+    worksheet.addRow([]);
+
+    // === HEADER KOLOM ===
+    const header = ['Waktu', ...tanggalList];
+    const rowHeader = worksheet.addRow(header);
+    rowHeader.eachCell((cell) => {
+      cell.font = { bold: true };
+      cell.alignment = { horizontal: 'center' };
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'D9D9D9' },
+      };
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' },
+      };
+    });
+
+    // Ambil jam dari tanggal pertama atau generate default
+    const semuaHari = Object.values(isi);
+    const hariPertama = semuaHari.find((h) => h?.jam?.length);
+    const jamList =
+      hariPertama && hariPertama.jam?.length
+        ? hariPertama.jam.map((j) => j.jam)
+        : generateJamList();
+
+    // === ISI DATA PER JAM ===
+    jamList.forEach((jam) => {
+      const row = [jam];
+      tanggalList.forEach((tgl) => {
+        const tanggalKey = Object.keys(isi).find((k) => k.endsWith(`-${tgl}`));
+        const hari = tanggalKey ? isi[tanggalKey] : null;
+        const nilai = hari?.jam?.find((j) => j.jam === jam)?.nilai ?? '';
+        row.push(nilai);
+      });
+      const jamRow = worksheet.addRow(row);
+
+      jamRow.eachCell((cell) => {
+        cell.alignment = {
+          horizontal: "center"
+        }
+        cell.border = {
+          top: { style: 'thin' },
+          bottom: { style: 'thin' },
+          left: { style: 'thin' },
+          right: { style: 'thin' }
+        }
+      })
+    });
+
+    // === TAMBAHKAN STATISTIK DI BAWAH ===
+    const stats = ['min', 'mean', 'max', 'p95', 'p98'];
+    stats.forEach((key) => {
+      const row = [key.toUpperCase()];
+      tanggalList.forEach((tgl) => {
+        const tanggalKey = Object.keys(isi).find((k) => k.endsWith(`-${tgl}`));
+        const val = tanggalKey ? isi[tanggalKey]?.[key] ?? '' : '';
+        row.push(val);
+      });
+
+      const r = worksheet.addRow(row);
+      r.eachCell((c) => {
+        c.font = { bold: true };
+        c.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'ECF0F5' },
+        };
+        c.alignment = { horizontal: 'center', vertical: 'middle' };
+        c.border = {
+          top: { style: 'thin' },
+          left: { style: 'thin' },
+          bottom: { style: 'thin' },
+          right: { style: 'thin' },
+        };
+      });
+    });
+
+    worksheet.columns = Array.from({ length: 32 }, () => ({ width: 12 }));
+  }
+
+  const buffer = await workbook.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  });
+  saveAs(blob, `Laporan_Tahunan_${sensor}.xlsx`);
+}
+
+async function avgKonsentrasiBulanan(data, statistik, periode) {
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Rata-Rata Konsentrasi Bulanan')
+
+  const leftLogo = await fetch('/dlh2.png')
+    .then((r) => r.arrayBuffer())
+  const rightLogo = await fetch('/pemkot.png')
+    .then((r) => r.arrayBuffer())
+
+  const leftImageId = workbook.addImage({
+    buffer: leftLogo,
+    extension: 'png',
+  })
+  const rightImageId = workbook.addImage({
+    buffer: rightLogo,
+    extension: 'png',
+  })
+
+  worksheet.mergeCells('A2:A5')
+  worksheet.addImage(leftImageId, {
+    tl: {
+      col: 0, row: 1,
+    },
+    ext: { width: 80, height: 80 },
+  })
+
+  worksheet.mergeCells('H2:H5')
+  worksheet.addImage(rightImageId, {
+    tl: { col: 7, row: 1 },
+    ext: { width: 80, height: 80 },
+  })
+
+  worksheet.mergeCells('B3:G3')
+  const titleCellHeader1 = worksheet.getCell('B3')
+  titleCellHeader1.value = 'LAPORAN RATA-RATA KONSENTRASI BULANAN'
+  titleCellHeader1.font = { bold: true, size: 16 }
+  titleCellHeader1.alignment = { horizontal: 'center', vertical: 'middle' }
+
+  const [startPeriode, endPeriode] = periode.split(' s.d ')
+  worksheet.mergeCells('B4:G4')
+  const titleCellSubHeader = worksheet.getCell('B4')
+  titleCellSubHeader.value = `${DateFormatter.formatIDDate(startPeriode, false)} s.d ${DateFormatter.formatIDDate(endPeriode, false)}`
+  titleCellSubHeader.font = { bold: false, size: 12 }
+  titleCellSubHeader.alignment = { horizontal: 'center', vertical: 'middle' }
+
+  const header = worksheet.addRow([
+    'Waktu',
+    'PM₁₀',
+    'PM₂.₅',
+    'SO₂',
+    'CO',
+    'O₃',
+    'NO₂',
+    'HC',
+  ])
+
+  header.eachCell((cell) => {
+    cell.font = { bold: true }
+    cell.alignment = { horizontal: 'center', vertical: 'middle' }
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'D9D9D9' },
+    }
+    cell.border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' },
+    }
+  })
+
+  const header2 = worksheet.addRow([
+    'Waktu',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+  ])
+
+  header2.eachCell((cell) => {
+    cell.font = { bold: true }
+    cell.alignment = { horizontal: 'center', vertical: 'middle' }
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'D9D9D9' },
+    }
+    cell.border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' },
+    }
+  })
+
+  worksheet.mergeCells(`A${header.number}:A${header2.number}`)
+
+  data.forEach((item) => {
+    const row = worksheet.addRow([
+      item.tanggal,
+      item.pm10,
+      item.pm25,
+      item.so2,
+      item.co,
+      item.o3,
+      item.no2,
+      item.hc,
+    ])
+    row.eachCell((cell) => {
+      cell.alignment = {
+        horizontal: 'center',
+        vertical: 'middle'
+      }
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' },
+      }
+    })
+  })
+
+  const stats = ['Min', 'Mean', 'Maks']
+
+  stats.forEach((key) => {
+    const values = statistik[key] ?? Array(7).fill(0); // kalau tidak ada di response, isi dengan 0
+
+    const row = worksheet.addRow([key.toUpperCase(), ...values]);
+
+    // Styling
+    row.eachCell((cell) => {
+      // cell.alignment = { horizontal: 'center' }
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' },
+      }
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'ECF0F5' },
+      }
+      cell.font = { bold: true }
+    })
+  })
+
+  worksheet.columns = [
+    { width: 12 },
+    { width: 12 },
+    { width: 12 },
+    { width: 12 },
+    { width: 12 },
+    { width: 12 },
+    { width: 12 },
+    { width: 12 },
+  ]
+
+  const buffer = await workbook.xlsx.writeBuffer()
+  const blob = new Blob([buffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  })
+  saveAs(blob, `Laporan_Rata-Rata_Konsentrasi_${periode}.xlsx`)
+}
+
+async function avgKonsentrasiTahunan(data, statistik, periode) {
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Rata-Rata Konsentrasi Tahunan')
+
+  const leftLogo = await fetch('/dlh2.png')
+    .then((r) => r.arrayBuffer())
+  const rightLogo = await fetch('/pemkot.png')
+    .then((r) => r.arrayBuffer())
+
+  const leftImageId = workbook.addImage({
+    buffer: leftLogo,
+    extension: 'png',
+  })
+  const rightImageId = workbook.addImage({
+    buffer: rightLogo,
+    extension: 'png',
+  })
+
+  worksheet.mergeCells('A2:A5')
+  worksheet.addImage(leftImageId, {
+    tl: {
+      col: 0, row: 1,
+    },
+    ext: { width: 80, height: 80 },
+  })
+
+  worksheet.mergeCells('H2:H5')
+  worksheet.addImage(rightImageId, {
+    tl: { col: 7, row: 1 },
+    ext: { width: 80, height: 80 },
+  })
+
+  worksheet.mergeCells('B3:G3')
+  const titleCellHeader1 = worksheet.getCell('B3')
+  titleCellHeader1.value = 'LAPORAN RATA-RATA KONSENTRASI TAHUNAN'
+  titleCellHeader1.font = { bold: true, size: 16 }
+  titleCellHeader1.alignment = { horizontal: 'center', vertical: 'middle' }
+
+  const [startPeriode, endPeriode] = periode.split(' s.d ')
+  worksheet.mergeCells('B4:G4')
+  const titleCellSubHeader = worksheet.getCell('B4')
+  titleCellSubHeader.value = `${DateFormatter.formatIDDate(startPeriode, true)} s.d ${DateFormatter.formatIDDate(endPeriode, true)}`
+  titleCellSubHeader.font = { bold: false, size: 12 }
+  titleCellSubHeader.alignment = { horizontal: 'center', vertical: 'middle' }
+
+  const header = worksheet.addRow([
+    'Waktu',
+    'PM₁₀',
+    'PM₂.₅',
+    'SO₂',
+    'CO',
+    'O₃',
+    'NO₂',
+    'HC',
+  ])
+
+  header.eachCell((cell) => {
+    cell.font = { bold: true }
+    cell.alignment = { horizontal: 'center', vertical: 'middle' }
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'D9D9D9' },
+    }
+    cell.border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' },
+    }
+  })
+
+  const header2 = worksheet.addRow([
+    'Waktu',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+    'µg/m³',
+  ])
+
+  header2.eachCell((cell) => {
+    cell.font = { bold: true }
+    cell.alignment = { horizontal: 'center', vertical: 'middle' }
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'D9D9D9' },
+    }
+    cell.border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' },
+    }
+  })
+
+  worksheet.mergeCells(`A${header.number}:A${header2.number}`)
+
+  data.forEach((item) => {
+    const row = worksheet.addRow([
+      item.tanggal,
+      item.pm10,
+      item.pm25,
+      item.so2,
+      item.co,
+      item.o3,
+      item.no2,
+      item.hc,
+    ])
+    row.eachCell((cell) => {
+      cell.alignment = {
+        horizontal: 'center',
+        vertical: 'middle'
+      }
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' },
+      }
+    })
+  })
+
+  const stats = ['Min', 'Mean', 'Maks']
+
+  stats.forEach((key) => {
+    const values = statistik[key] ?? Array(7).fill(0); // kalau tidak ada di response, isi dengan 0
+
+    const row = worksheet.addRow([key.toUpperCase(), ...values]);
+
+    // Styling
+    row.eachCell((cell) => {
+      // cell.alignment = { horizontal: 'center' }
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' },
+      }
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'ECF0F5' },
+      }
+      cell.font = { bold: true }
+    })
+  })
+
+  worksheet.columns = [
+    { width: 12 },
+    { width: 12 },
+    { width: 12 },
+    { width: 12 },
+    { width: 12 },
+    { width: 12 },
+    { width: 12 },
+    { width: 12 },
+  ]
+
+  const buffer = await workbook.xlsx.writeBuffer()
+  const blob = new Blob([buffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  })
+  saveAs(blob, `Laporan_Rata-Rata_Konsentrasi_${periode}.xlsx`)
 }
 
 async function ispuHarian(data, tanggal) {
@@ -454,6 +1190,107 @@ async function ispuHarian(data, tanggal) {
 async function ispuBulanan(dataBulanan, periode) {
   const workbook = new ExcelJS.Workbook();
 
+  if (dataBulanan.length == 0) {
+    const worksheet = workbook.addWorksheet(`Tgl. -}`)
+
+    const leftLogo = fetch('/dlh2.png')
+      .then((r) => r.arrayBuffer())
+    const rightLogo = fetch('/pemkot.png')
+      .then((r) => r.arrayBuffer())
+
+    const leftImageId = workbook.addImage({
+      buffer: leftLogo,
+      extension: 'png',
+    })
+    const rightImageId = workbook.addImage({
+      buffer: rightLogo,
+      extension: 'png',
+    })
+
+    worksheet.mergeCells('A2:A5')
+    worksheet.addImage(leftImageId, {
+      tl: {
+        col: 0, row: 1,
+      },
+      ext: { width: 80, height: 80 },
+    })
+
+    worksheet.mergeCells('J2:J5')
+    worksheet.addImage(rightImageId, {
+      tl: { col: 9, row: 1 },
+      ext: { width: 80, height: 80 },
+    })
+
+    worksheet.mergeCells('B3:I3')
+    const titleCellHeader1 = worksheet.getCell('B3')
+    titleCellHeader1.value = 'INDEKS STANDAR PENCEMARAN UDARA'
+    titleCellHeader1.font = { bold: true, size: 16 }
+    titleCellHeader1.alignment = { horizontal: 'center', vertical: 'middle' }
+
+    worksheet.mergeCells('B4:I4')
+    worksheet.getCell('B4').value = 'Tanggal'
+    const titleCellSubHeader = worksheet.getCell('C4')
+    titleCellSubHeader.value = '-'
+    titleCellSubHeader.font = { bold: false, size: 12 }
+    titleCellSubHeader.alignment = { horizontal: 'center', vertical: 'middle' }
+
+    const header = worksheet.addRow([
+      'Waktu',
+      'PM₁₀',
+      'PM₂.₅',
+      'SO₂',
+      'CO',
+      'O₃',
+      'NO₂',
+      'HC',
+      'Tertinggi'
+    ])
+
+    header.eachCell((cell) => {
+      cell.font = { bold: true }
+      cell.alignment = { horizontal: 'center' }
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'D9D9D9' },
+      }
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' },
+      }
+    })
+
+    const headerRowNumber = header.number
+    worksheet.mergeCells(`I${headerRowNumber}:J${headerRowNumber}`)
+
+    const tertinggiHeader = worksheet.getCell(`I${headerRowNumber}`)
+    tertinggiHeader.value = 'Tertinggi'
+    tertinggiHeader.alignment = { horizontal: 'center', vertical: 'middle' }
+    tertinggiHeader.font = { bold: true }
+
+    const empty = worksheet.addRow([`Tidak Ada Data ISPU`])
+
+    empty.font = {
+      bold: true, size: 12,
+    }
+    empty.alignment = {
+      wrapText: true
+    }
+
+    worksheet.columns = [
+      { width: 12 },
+    ]
+
+    const buffer = await workbook.xlsx.writeBuffer()
+    const blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    })
+    saveAs(blob, `Laporan_ISPU_${periode}.xlsx`)
+  }
+
+
   dataBulanan.forEach((dataHari) => {
     const date = dataHari.tanggal.split('-')[2]
     const worksheet = workbook.addWorksheet(`Tgl. ${date}`)
@@ -591,13 +1428,257 @@ async function ispuBulanan(dataBulanan, periode) {
     ]
   })
 
-
-
   const buffer = await workbook.xlsx.writeBuffer()
   const blob = new Blob([buffer], {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   })
   saveAs(blob, `Laporan_ISPU_${periode}.xlsx`)
+}
+
+async function ispuTahunan(dataTahunan, tahun) {
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Laporan ISPU Harian')
+
+  const leftLogo = await fetch('/dlh2.png')
+    .then((r) => r.arrayBuffer())
+  const rightLogo = await fetch('/pemkot.png')
+    .then((r) => r.arrayBuffer())
+
+  const leftImageId = workbook.addImage({
+    buffer: leftLogo,
+    extension: 'png',
+  })
+  const rightImageId = workbook.addImage({
+    buffer: rightLogo,
+    extension: 'png',
+  })
+
+  worksheet.mergeCells('A2:A5')
+  worksheet.addImage(leftImageId, {
+    tl: {
+      col: 0 + 0.2, row: 1,
+    },
+    ext: { width: 80, height: 80 },
+  })
+
+  worksheet.mergeCells('M2:M5')
+
+  worksheet.addImage(rightImageId, {
+    tl: { col: 12 + 0.3, row: 1 },
+    ext: { width: 80, height: 80 },
+  })
+
+  worksheet.mergeCells('B3:L3')
+  const titleCellHeader1 = worksheet.getCell('B3')
+  titleCellHeader1.value = 'INDEKS STANDAR PENCEMARAN UDARA'
+  titleCellHeader1.font = { bold: true, size: 16 }
+  titleCellHeader1.alignment = { horizontal: 'center', vertical: 'middle' }
+
+  worksheet.mergeCells('B4:L4')
+  worksheet.getCell('B4').value = 'Tanggal'
+  const titleCellSubHeader = worksheet.getCell('C4')
+  titleCellSubHeader.value = tahun
+  titleCellSubHeader.font = { bold: false, size: 14 }
+  titleCellSubHeader.alignment = { horizontal: 'center', vertical: 'middle' }
+
+  const header = worksheet.addRow([
+    'Tanggal',
+    'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'
+  ])
+
+  header.eachCell((cell) => {
+    cell.font = { bold: true }
+    cell.alignment = { horizontal: 'center' }
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'D9D9D9' },
+    }
+    cell.border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' },
+    }
+  })
+
+  const kategoriColors = {
+    'Baik': '00B050',        // Hijau
+    'Sedang': '0070C0',      // BIRU
+    'Tidak Sehat': 'FFFF00', // KUNING
+    'Sangat Tidak Sehat': 'FF0000', // Merah
+    'Berbahaya': '000000',   // HITAM
+  };
+
+  const countKategori = {
+    'Baik': 0,
+    'Sedang': 0,
+    'Tidak Sehat': 0,
+    'Sangat Tidak Sehat': 0,
+    'Berbahaya': 0,
+  };
+
+  dataTahunan.forEach((data) => {
+    const row = worksheet.addRow([
+      data.tanggal,
+      data.januari.param,
+      data.februari.param,
+      data.maret.param,
+      data.april.param,
+      data.mei.param,
+      data.juni.param,
+      data.juli.param,
+      data.agustus.param,
+      data.september.param,
+      data.oktober.param,
+      data.november.param,
+      data.desember.param,
+    ])
+
+    row.height = 30
+
+    const bulanKeys = [
+      'januari', 'februari', 'maret', 'april', 'mei', 'juni',
+      'juli', 'agustus', 'september', 'oktober', 'november', 'desember'
+    ];
+
+
+    row.eachCell((cell, colNumber) => {
+      cell.alignment = { horizontal: 'left', vertical: 'middle', wrapText: true }
+      cell.border = {
+        top: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' },
+        left: { style: 'thin' }
+      }
+
+      if (colNumber === 1) return;
+
+      const bulan = bulanKeys[colNumber - 2]; // karena kolom 2 = Januari
+      const kategori = data[bulan]?.kategori;
+      const color = kategoriColors[kategori] || null;
+
+      cell.font = {
+        color: {
+          argb: kategori === 'Tidak Sehat' ? '000000' : 'ffffff'
+        }
+      }
+
+      if (kategori && countKategori[kategori] !== undefined) {
+        countKategori[kategori]++;
+      }
+
+      if (color) {
+        cell.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: color },
+        };
+      }
+    })
+  })
+
+  worksheet.columns = Array.from({ length: 13 }, () => ({ width: 16 }));
+
+  // STATISTIK ISPU PER HARI
+
+  worksheet.addRow([]);
+  const mergeStart = 1; // mulai dari kolom A
+  const mergeEnd = 10;   // sampai kolom E untuk "JUMLAH HARI"
+  worksheet.mergeCells(worksheet.lastRow.number + 1, mergeStart, worksheet.lastRow.number + 1, mergeEnd);
+  const jumlahHariCell = worksheet.getRow(worksheet.lastRow.number).getCell(mergeStart);
+  jumlahHariCell.value = 'JUMLAH HARI';
+  jumlahHariCell.fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'D9D9D0' },
+  };
+  jumlahHariCell.font = { bold: true, size: 16 };
+  jumlahHariCell.alignment = { horizontal: 'center', vertical: 'middle' };
+  jumlahHariCell.border = {
+    top: { style: 'thin' },
+    bottom: { style: 'thin' },
+    right: { style: 'thin' },
+    left: { style: 'thin' },
+  };
+
+  // Tambahkan baris jumlah berdasarkan kategori
+  const kategoriRow = worksheet.addRow([
+    'Baik',
+    '',
+    'Sedang',
+    '',
+    'Tidak Sehat',
+    '',
+    'Sangat Tidak Sehat',
+    '',
+    'Berbahaya',
+  ]);
+
+  kategoriRow.eachCell((cell) => {
+    cell.font = { bold: false, size: 12 };
+    cell.alignment = { horizontal: 'center', vertical: 'middle' };
+    cell.border = {
+      top: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' },
+      left: { style: 'thin' },
+    };
+  });
+
+  worksheet.mergeCells(`A${kategoriRow.number}:B${kategoriRow.number}`)
+  worksheet.mergeCells(`C${kategoriRow.number}:D${kategoriRow.number}`)
+  worksheet.mergeCells(`E${kategoriRow.number}:F${kategoriRow.number}`)
+  worksheet.mergeCells(`G${kategoriRow.number}:H${kategoriRow.number}`)
+  worksheet.mergeCells(`I${kategoriRow.number}:J${kategoriRow.number}`)
+
+  const jumlahRow = worksheet.addRow([
+    countKategori['Baik'],
+    '',
+    countKategori['Sedang'],
+    '',
+    countKategori['Tidak Sehat'],
+    '',
+    countKategori['Sangat Tidak Sehat'],
+    '',
+    countKategori['Berbahaya'],
+  ]);
+
+  jumlahRow.eachCell((cell) => {
+    cell.font = { bold: false, size: 14 };
+    cell.alignment = { horizontal: 'center', vertical: 'middle' };
+    cell.border = {
+      top: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' },
+      left: { style: 'thin' },
+    };
+  });
+
+  worksheet.mergeCells(`A${jumlahRow.number}:B${jumlahRow.number}`)
+  worksheet.mergeCells(`C${jumlahRow.number}:D${jumlahRow.number}`)
+  worksheet.mergeCells(`E${jumlahRow.number}:F${jumlahRow.number}`)
+  worksheet.mergeCells(`G${jumlahRow.number}:H${jumlahRow.number}`)
+  worksheet.mergeCells(`I${jumlahRow.number}:J${jumlahRow.number}`)
+
+  writeLegendIspu(worksheet);
+
+  const buffer = await workbook.xlsx.writeBuffer()
+  const blob = new Blob([buffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  })
+  saveAs(blob, `Laporan_ISPU_${tahun}.xlsx`)
 }
 
 async function cuacaHarian(data, statistik, tanggal) {
@@ -636,7 +1717,7 @@ async function cuacaHarian(data, statistik, tanggal) {
 
   worksheet.mergeCells('B3:H3')
   const titleCellHeader1 = worksheet.getCell('B3')
-  titleCellHeader1.value = 'LAPORAN Cuaca HARIAN'
+  titleCellHeader1.value = 'LAPORAN CUACA HARIAN'
   titleCellHeader1.font = { bold: true, size: 16 }
   titleCellHeader1.alignment = { horizontal: 'center', vertical: 'middle' }
 
@@ -743,6 +1824,246 @@ async function cuacaHarian(data, statistik, tanggal) {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   })
   saveAs(blob, `Laporan_Cuaca_${tanggal}.xlsx`)
+}
+
+async function cuacaMingguan(data, periode) {
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Laporan Cuaca Mingguan')
+
+  const leftLogo = await fetch('/dlh2.png')
+    .then((r) => r.arrayBuffer())
+  const rightLogo = await fetch('/pemkot.png')
+    .then((r) => r.arrayBuffer())
+
+  const leftImageId = workbook.addImage({
+    buffer: leftLogo,
+    extension: 'png',
+  })
+  const rightImageId = workbook.addImage({
+    buffer: rightLogo,
+    extension: 'png',
+  })
+
+  worksheet.mergeCells('A2:A5')
+  worksheet.addImage(leftImageId, {
+    tl: {
+      col: 0, row: 1,
+    },
+    ext: { width: 80, height: 80 },
+  })
+
+  worksheet.mergeCells('BE2:BE5')
+
+  // const offsetX = (18 - 77) / 2
+  worksheet.addImage(rightImageId, {
+    tl: { col: 56, row: 1 },
+    ext: { width: 80, height: 80 },
+  })
+
+  worksheet.mergeCells('B3:BD3')
+  const titleCellHeader1 = worksheet.getCell('B3')
+  titleCellHeader1.value = 'LAPORAN CUACA MINGGUAN'
+  titleCellHeader1.font = { bold: true, size: 16 }
+  titleCellHeader1.alignment = { horizontal: 'center', vertical: 'middle' }
+
+  worksheet.mergeCells('B4:BD4')
+  const [startPeriode, endPeriode] = periode.split(' s/d ')
+  const titleCellSubHeader = worksheet.getCell('B4')
+  titleCellSubHeader.value = `${DateFormatter.formatIDDate(startPeriode, false)} s/d ${DateFormatter.formatIDDate(endPeriode, false)}`
+  titleCellSubHeader.font = { bold: false, size: 12 }
+  titleCellSubHeader.alignment = { horizontal: 'center', vertical: 'middle' }
+
+
+  // Ambil nama parameter dari jam pertama
+  const hariDenganData = data.find((d) => Array.isArray(d.jam) && d.jam.length > 0);
+
+  let parameters = [];
+  if (hariDenganData) {
+    parameters = Object.keys(hariDenganData.jam[0]).filter((k) => k !== 'jam');
+  } else {
+    // fallback kalau semua kosong — ambil dari statistik
+    parameters = Object.keys(data[0].statistik || {});
+  }
+
+  // Row 1: Header tanggal
+  const header1 = ['Waktu'];
+  data.forEach((item) => {
+    header1.push(new Date(item.tanggal).toLocaleDateString('id-ID', { day: 'numeric', month: 'long' }));
+    for (let i = 1; i < parameters.length; i++) header1.push('');
+  });
+  const headerWaktu = worksheet.addRow(header1);
+
+  headerWaktu.eachCell((cell) => {
+    cell.border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' },
+    }
+
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'D9D9D9' },
+    };
+  })
+
+  // Gabung sel tanggal
+  let startCol = 2;
+  data.forEach(() => {
+    worksheet.mergeCells(1, startCol, 1, startCol + parameters.length - 1);
+    startCol += parameters.length;
+  });
+
+  // Row 2: Header nama parameter
+  const header2 = [''];
+  data.forEach(() => {
+    header2.push(...parameters.map((p) => generateTextParameter(p)));
+  });
+  const headerParam = worksheet.addRow(header2);
+
+  headerParam.eachCell((cell) => {
+    cell.border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' },
+    }
+
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'D9D9D9' },
+    };
+  })
+
+  // Row 3: Satuan (jika mau, bisa ubah manual)
+  const satuanMap = {
+    ws: 'm/s',
+    wd: '°',
+    humidity: '%',
+    temperature: '°C',
+    pressure: 'hPa',
+    sr: 'W/m²',
+    rain_intensity: 'mm/h',
+    uv: 'index',
+  };
+  const header3 = [''];
+  data.forEach(() => {
+    header3.push(...parameters.map((p) => satuanMap[p] || ''));
+  });
+  const headerUnit = worksheet.addRow(header3);
+
+  headerUnit.eachCell((cell) => {
+    cell.border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' },
+    }
+
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'D9D9D9' },
+    };
+  })
+
+  // GABUNG SEL WAKTU HORIZONTAL
+  worksheet.mergeCells('B6:I6')
+  worksheet.mergeCells('J6:Q6')
+  worksheet.mergeCells('R6:Y6')
+  worksheet.mergeCells('Z6:AG6')
+  worksheet.mergeCells('AH6:AO6')
+  worksheet.mergeCells('AP6:AW6')
+  worksheet.mergeCells('AX6:BE6')
+
+  // Gabung sel 'Waktu' secara vertikal
+  worksheet.mergeCells('A6:A8');
+  worksheet.getCell('A6').value = 'Waktu';
+  worksheet.getCell('A6').alignment = { vertical: 'middle', horizontal: 'center' };
+  worksheet.getCell('A8').font = { bold: true };
+
+  // Styling semua header
+  worksheet.getRow(headerWaktu.number).font = { bold: true };
+  worksheet.getRow(headerParam.number).font = { bold: true };
+  worksheet.getRow(headerUnit.number).font = { italic: true };
+
+  worksheet.getRow(headerWaktu.number).alignment = { horizontal: 'center', vertical: 'middle' };
+  worksheet.getRow(headerParam.number).alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
+  worksheet.getRow(headerUnit.number).alignment = { horizontal: 'center', vertical: 'middle' };
+
+  // --- MULAI ISI DATA ---
+
+  // Buat daftar jam unik dari hari pertama (asumsi semua punya jam yang sama)
+  const jamList = data[0].jam.length > 0 ? data[0].jam.map((j) => j.jam) : generateJamList();
+
+  // Tambahkan setiap baris jam
+  jamList.forEach((jam) => {
+    const rowData = [jam]; // kolom pertama: waktu
+
+    data.forEach((hari) => {
+      parameters.forEach((param) => {
+        const nilai = toNumber(hari.jam.find((x) =>
+          x.jam.startsWith(jam) || jam.startsWith(x.jam)
+        )?.[param]);
+
+        rowData.push(nilai);
+      });
+    });
+
+    const row = worksheet.addRow(rowData);
+
+    row.eachCell((cell) => {
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' },
+      }
+      cell.alignment = { horizontal: 'center', vertical: 'middle' }
+    })
+  });
+
+  // Tambahkan baris statistik (Min, Mean, Maks, P95, P98)
+  const stats = ['min', 'mean', 'max', 'p95', 'p98'];
+  stats.forEach((key) => {
+    const rowData = [key.toUpperCase()]; // kolom pertama nama statistik
+
+    data.forEach((hari) => {
+      parameters.forEach((param) => {
+        const val = toNumber(hari.statistik?.[param]?.[key]);
+        rowData.push(val);
+      });
+    });
+
+    const row = worksheet.addRow(rowData);
+
+    // Styling khusus baris statistik
+    row.eachCell((cell) => {
+      cell.font = { bold: true };
+      cell.alignment = { horizontal: 'center', vertical: 'middle' }
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'ECF0F5' },
+      };
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' },
+      };
+    });
+  });
+
+  worksheet.columns = Array.from({ length: 57 }, () => ({ width: 12 }));
+
+  const buffer = await workbook.xlsx.writeBuffer()
+  const blob = new Blob([buffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  })
+  saveAs(blob, `Laporan_Cuaca_${periode}.xlsx`)
 }
 
 async function cuacaBulanan(dataBulanan, bulan, tahun, parameter) {
@@ -978,6 +2299,29 @@ function writeLegendIspu(worksheet) {
   worksheet.mergeCells(`I${currentStatusRow}:J${currentStatusRow}`)
 }
 
+function generateJamList(short = false) {
+  const list = [];
+  for (let h = 0; h < 24; h++) {
+    for (let m = 0; m < 60; m += 30) {
+      const hh = String(h).padStart(2, '0');
+      const mm = String(m).padStart(2, '0');
+
+      if (short) {
+        list.push(`${hh}:${mm}`);
+      } else {
+        list.push(`${hh}:${mm}:00`);
+      }
+    }
+  }
+  return list;
+}
+
+function toNumber(val) {
+  if (val === undefined || val === null || val === '') return '';
+  const num = Number(val);
+  return isNaN(num) ? '' : num;
+}
+
 function generateColorCell(value) {
   switch (true) {
     case value >= 0 && value <= 50:
@@ -1048,10 +2392,16 @@ function generateLegendCellColor(colNumber) {
 export default {
   exportToExcel,
   konsentrasiHarian,
+  konsentrasiMingguan,
   konsentrasiBulanan,
+  konsentrasiTahunan,
+  avgKonsentrasiBulanan,
+  avgKonsentrasiTahunan,
   ispuHarian,
-  cuacaHarian,
   ispuBulanan,
+  ispuTahunan,
+  cuacaHarian,
+  cuacaMingguan,
   cuacaBulanan,
 }
 

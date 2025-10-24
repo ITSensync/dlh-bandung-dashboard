@@ -53,11 +53,17 @@ function handleResetHarian() {
 }
 
 // MINGGUAN
-function handleSubmitMingguan() {
+async function handleSubmitMingguan() {
   if (!formMingguan.week || !formMingguan.month || !formMingguan.year)
     return alert('Lengkapi semua field Mingguan!')
-  console.log('Download Mingguan:', formMingguan)
-  //   mainStore.fetch30Minute('weekly', formMingguan)
+
+  const result = await mainStore.fetchKonsentrasiWeekly(
+    formMingguan.week,
+    formMingguan.month,
+    formMingguan.year,
+  )
+
+  Export.konsentrasiMingguan(result.data, result.periode)
 }
 
 function handleResetMingguan() {
@@ -87,10 +93,12 @@ function handleResetBulanan() {
 }
 
 // TAHUNAN
-function handleSubmitTahunan() {
+async function handleSubmitTahunan() {
   if (!formTahunan.year || !formTahunan.param) return alert('Lengkapi semua field Tahunan!')
-  console.log('Download Tahunan:', formTahunan)
-  //   mainStore.fetch30Minute('yearly', formTahunan)
+
+  const result = await mainStore.fetchKonsentrasiYearly(formTahunan.year, formTahunan.param)
+
+  Export.konsentrasiTahunan(result.data, result.tahun, result.parameter)
 }
 
 function handleResetTahunan() {
@@ -99,11 +107,13 @@ function handleResetTahunan() {
 }
 
 // AVG BULANAN
-function handleSubmitAvgBulan() {
+async function handleSubmitAvgBulan() {
   if (!formAvgBulan.month || !formAvgBulan.year)
     return alert('Lengkapi semua field Rata-Rata Bulanan!')
-  console.log('Download Rata-rata Bulanan:', formAvgBulan)
-  //   mainStore.fetch30Minute('avg-monthly', formAvgBulan)
+
+  const result = await mainStore.fetchAvgKonsentrasiMonthly(formAvgBulan.month, formAvgBulan.year)
+
+  Export.avgKonsentrasiBulanan(result.data_harian, result.ringkasan, result.periode)
 }
 
 function handleResetAvgBulan() {
@@ -112,10 +122,11 @@ function handleResetAvgBulan() {
 }
 
 // AVG TAHUNAN
-function handleSubmitAvgTahun() {
+async function handleSubmitAvgTahun() {
   if (!formAvgTahun.year) return alert('Tahun harus diisi!')
-  console.log('Download Rata-rata Tahunan:', formAvgTahun)
-  //   mainStore.fetch30Minute('avg-yearly', formAvgTahun)
+  const result = await mainStore.fetchAvgKonsentrasiYearly(formAvgTahun.year)
+
+  Export.avgKonsentrasiTahunan(result.data_harian, result.ringkasan_tahunan, result.periode)
 }
 
 function handleResetAvgTahun() {
@@ -143,10 +154,6 @@ const yearOptions = [
   { id: 3, label: '2027', value: '2027' },
   { id: 4, label: '2028', value: '2028' },
 ]
-
-/* function handleBtnExcel() {
-  Export.exportToExcel(tableData.value, `30Menit_${form.startDate}-${form.endDate}.xlsx`)
-} */
 </script>
 
 <template>

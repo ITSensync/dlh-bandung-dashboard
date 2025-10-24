@@ -47,10 +47,12 @@ function handleResetBulanan() {
 }
 
 // TAHUNAN
-function handleSubmitTahunan() {
+async function handleSubmitTahunan() {
   if (!formTahunan.year) return alert('Lengkapi semua field Tahunan!')
-  console.log('Download Tahunan:', formTahunan)
-  //   mainStore.fetch30Minute('yearly', formTahunan)
+
+  const result = await mainStore.fetchReportIspuYearly(formTahunan.year)
+
+  Export.ispuTahunan(result.data, result.tahun)
 }
 
 function handleResetTahunan() {

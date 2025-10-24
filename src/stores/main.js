@@ -192,8 +192,32 @@ export const useMainStore = defineStore('main', () => {
     return res.data
   }
 
+  async function fetchKonsentrasiWeekly(week = '1', month = monthNow, year = yearNow) {
+    const res = await axios.get(`${apiUrl}/laporan/konsentrasi-mingguan.php?minggu=${week}&bulan=${month}&tahun=${year}`)
+
+    return res.data
+  }
+
   async function fetchKonsentrasiMonthly(month = monthNow, year = yearNow, sensor = 'pm10') {
     const res = await axios.get(`${apiUrl}/laporan/konsentrasi-bulanan.php?bulan=${month}&tahun=${year}&parameter=${sensor}`)
+
+    return res.data
+  }
+
+  async function fetchKonsentrasiYearly(year = yearNow, sensor = 'pm10') {
+    const res = await axios.get(`${apiUrl}/laporan/konsentrasi-tahunan.php?tahun=${year}&parameter=${sensor}`)
+
+    return res.data
+  }
+
+  async function fetchAvgKonsentrasiMonthly(month = monthNow, year = yearNow) {
+    const res = await axios.get(`${apiUrl}/laporan/konsentrasi-avg-bulanan.php?bulan=${month}&tahun=${year}`)
+
+    return res.data
+  }
+
+  async function fetchAvgKonsentrasiYearly(year = yearNow) {
+    const res = await axios.get(`${apiUrl}/laporan/konsentrasi-avg-tahunan.php?tahun=${year}`)
 
     return res.data
   }
@@ -210,8 +234,20 @@ export const useMainStore = defineStore('main', () => {
     return res.data
   }
 
+  async function fetchReportIspuYearly(year = yearNow) {
+    const res = await axios.get(`${apiUrl}/laporan/ispu-tahunan.php?tahun=${year}`)
+
+    return res.data
+  }
+
   async function fetchReportWeatherDaily(date = formatted) {
     const res = await axios.get(`${apiUrl}/laporan/cuaca-harian.php?tanggal=${date}`)
+
+    return res.data
+  }
+
+  async function fetchReportWeatherWeekly(week = '1', month = monthNow, year = yearNow) {
+    const res = await axios.get(`${apiUrl}/laporan/cuaca-mingguan.php?minggu=${week}&bulan=${month}&tahun=${year}`)
 
     return res.data
   }
@@ -245,10 +281,16 @@ export const useMainStore = defineStore('main', () => {
     fetchIspuDaily,
     fetch30Minute,
     fetchKonsentrasiDaily,
+    fetchKonsentrasiWeekly,
     fetchKonsentrasiMonthly,
+    fetchAvgKonsentrasiMonthly,
+    fetchAvgKonsentrasiYearly,
     fetchReportIspuDaily,
     fetchReportIspuMonthly,
+    fetchReportIspuYearly,
     fetchReportWeatherDaily,
-    fetchReportWeatherMonthly
+    fetchReportWeatherMonthly,
+    fetchReportWeatherWeekly,
+    fetchKonsentrasiYearly,
   }
 })

@@ -35,14 +35,18 @@ function getNamaBulan(bulan) {
   return namaBulan[parseInt(bulan) - 1]
 }
 
-function formatIDDate(tanggal) {
+function formatIDDate(tanggal, reverse = false) {
   const bulan = [
     'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
     'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
   ]
 
   const [tahun, bulanIndex, hari] = tanggal.split('-')
-  return `${parseInt(hari)} ${bulan[parseInt(bulanIndex) - 1]} ${tahun}`
+  if (reverse) {
+    return `${parseInt(hari)} ${bulan[parseInt(bulanIndex) - 1]} ${tahun}`.split(' ').reverse().join(' ')
+  } else {
+    return `${parseInt(hari)} ${bulan[parseInt(bulanIndex) - 1]} ${tahun}`
+  }
 }
 
 function convertToNamedMonth(isoMonth) {
