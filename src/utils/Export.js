@@ -1,16 +1,13 @@
-import * as XLSX from "xlsx"
-import ExcelJS from 'exceljs';
-import { saveAs } from 'file-saver'
+// import { saveAs } from 'file-saver'
 import DateFormatter from "./DateFormatter";
-
-function exportToExcel(data, fileName = 'data.xlsx') {
-  const worksheet = XLSX.utils.json_to_sheet(data)
-  const workbook = XLSX.utils.book_new()
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1")
-  XLSX.writeFile(workbook, fileName)
-}
+// const ExcelJS = await import('exceljs');
 
 async function konsentrasiHarian(data, statistik, tanggal) {
+  const [ExcelJS, { saveAs }] = await Promise.all([
+    import('exceljs').then(m => m.default),
+    import('file-saver')
+  ]);
+
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Laporan Konsentrasi Harian')
 
@@ -180,6 +177,11 @@ async function konsentrasiHarian(data, statistik, tanggal) {
 }
 
 async function konsentrasiMingguan(data, periode) {
+  const [ExcelJS, { saveAs }] = await Promise.all([
+    import('exceljs').then(m => m.default),
+    import('file-saver')
+  ]);
+
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Laporan Konsentrasi Mingguan')
 
@@ -418,6 +420,11 @@ async function konsentrasiMingguan(data, periode) {
 }
 
 async function konsentrasiBulanan(dataBulanan, bulan, tahun, parameter) {
+  const [ExcelJS, { saveAs }] = await Promise.all([
+    import('exceljs').then(m => m.default),
+    import('file-saver')
+  ]);
+
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Laporan Konsentrasi Bulanan');
 
@@ -547,6 +554,11 @@ async function konsentrasiBulanan(dataBulanan, bulan, tahun, parameter) {
 }
 
 async function konsentrasiTahunan(dataTahunan, tahun, sensor) {
+  const [ExcelJS, { saveAs }] = await Promise.all([
+    import('exceljs').then(m => m.default),
+    import('file-saver')
+  ]);
+
   const workbook = new ExcelJS.Workbook();
   const leftLogo = await fetch('/dlh2.png').then((r) => r.arrayBuffer());
   const rightLogo = await fetch('/pemkot.png').then((r) => r.arrayBuffer());
@@ -707,6 +719,11 @@ async function konsentrasiTahunan(dataTahunan, tahun, sensor) {
 }
 
 async function avgKonsentrasiBulanan(data, statistik, periode) {
+  const [ExcelJS, { saveAs }] = await Promise.all([
+    import('exceljs').then(m => m.default),
+    import('file-saver')
+  ]);
+
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Rata-Rata Konsentrasi Bulanan')
 
@@ -876,6 +893,11 @@ async function avgKonsentrasiBulanan(data, statistik, periode) {
 }
 
 async function avgKonsentrasiTahunan(data, statistik, periode) {
+  const [ExcelJS, { saveAs }] = await Promise.all([
+    import('exceljs').then(m => m.default),
+    import('file-saver')
+  ]);
+
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Rata-Rata Konsentrasi Tahunan')
 
@@ -1045,6 +1067,11 @@ async function avgKonsentrasiTahunan(data, statistik, periode) {
 }
 
 async function ispuHarian(data, tanggal) {
+  const [ExcelJS, { saveAs }] = await Promise.all([
+    import('exceljs').then(m => m.default),
+    import('file-saver')
+  ]);
+
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Laporan ISPU Harian')
 
@@ -1188,6 +1215,11 @@ async function ispuHarian(data, tanggal) {
 }
 
 async function ispuBulanan(dataBulanan, periode) {
+  const [ExcelJS, { saveAs }] = await Promise.all([
+    import('exceljs').then(m => m.default),
+    import('file-saver')
+  ]);
+
   const workbook = new ExcelJS.Workbook();
 
   if (dataBulanan.length == 0) {
@@ -1436,6 +1468,11 @@ async function ispuBulanan(dataBulanan, periode) {
 }
 
 async function ispuTahunan(dataTahunan, tahun) {
+  const [ExcelJS, { saveAs }] = await Promise.all([
+    import('exceljs').then(m => m.default),
+    import('file-saver')
+  ]);
+
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Laporan ISPU Harian')
 
@@ -1682,6 +1719,11 @@ async function ispuTahunan(dataTahunan, tahun) {
 }
 
 async function cuacaHarian(data, statistik, tanggal) {
+  const [ExcelJS, { saveAs }] = await Promise.all([
+    import('exceljs').then(m => m.default),
+    import('file-saver')
+  ]);
+
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Laporan Cuaca Harian')
 
@@ -1827,6 +1869,11 @@ async function cuacaHarian(data, statistik, tanggal) {
 }
 
 async function cuacaMingguan(data, periode) {
+  const [ExcelJS, { saveAs }] = await Promise.all([
+    import('exceljs').then(m => m.default),
+    import('file-saver')
+  ]);
+
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Laporan Cuaca Mingguan')
 
@@ -2067,6 +2114,11 @@ async function cuacaMingguan(data, periode) {
 }
 
 async function cuacaBulanan(dataBulanan, bulan, tahun, parameter) {
+  const [ExcelJS, { saveAs }] = await Promise.all([
+    import('exceljs').then(m => m.default),
+    import('file-saver')
+  ]);
+  
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Laporan Cuaca Bulanan');
 
@@ -2390,7 +2442,6 @@ function generateLegendCellColor(colNumber) {
 }
 
 export default {
-  exportToExcel,
   konsentrasiHarian,
   konsentrasiMingguan,
   konsentrasiBulanan,
