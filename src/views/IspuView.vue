@@ -9,8 +9,7 @@ import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.
 import TableData from '@/components/TableData.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import { useMainStore } from '@/stores/main'
-import Export from '@/utils/Export'
-import { mdiCalendarRange, mdiFileExcel, mdiTable } from '@mdi/js'
+import { mdiCalendarRange } from '@mdi/js'
 import { onMounted, reactive, ref, watch } from 'vue'
 
 const form = reactive({
@@ -48,9 +47,9 @@ function handleReset() {
   tableIspu.value = mainStore.listDailyIspu
 }
 
-function handleBtnExcel() {
-  Export.exportToExcel(tableIspu.value, `ISPU_${form.startDate}-${form.endDate}.xlsx`)
-}
+// function handleBtnExcel() {
+//   Export.exportToExcel(tableIspu.value, `ISPU_${form.startDate}-${form.endDate}.xlsx`)
+// }
 </script>
 
 <template>
@@ -86,7 +85,7 @@ function handleBtnExcel() {
         </div>
       </component>
 
-      <SectionTitleLineWithButton :icon="mdiTable" title="ISPU">
+      <!-- <SectionTitleLineWithButton :icon="mdiTable" title="ISPU">
         <BaseButton
           @click="handleBtnExcel"
           target="_blank"
@@ -96,7 +95,7 @@ function handleBtnExcel() {
           rounded-full
           small
         />
-      </SectionTitleLineWithButton>
+      </SectionTitleLineWithButton> -->
 
       <CardBox has-table v-if="tableIspu.length > 0">
         <TableData type="ispu" :data="tableIspu" />
