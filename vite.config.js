@@ -14,10 +14,8 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          excel: ['exceljs'],
-          filesaver: ['file-saver'],
           vue: ['vue', 'vue-router', 'pinia'],
-          charts: ['chart.js', 'vue3-apexcharts'],
+          // apex: ['vue3-apexcharts', 'apexcharts'],
           leaflet: ['leaflet'],
           icons: ['@mdi/js'],
         },
