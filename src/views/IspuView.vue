@@ -85,8 +85,8 @@ function handleReset() {
         </div>
       </component>
 
-      <!-- <SectionTitleLineWithButton :icon="mdiTable" title="ISPU">
-        <BaseButton
+      <SectionTitleLineWithButton :icon="mdiTable" title="ISPU">
+        <!-- <BaseButton
           @click="handleBtnExcel"
           target="_blank"
           :icon="mdiFileExcel"
@@ -94,8 +94,8 @@ function handleReset() {
           color="success"
           rounded-full
           small
-        />
-      </SectionTitleLineWithButton> -->
+        /> -->
+      </SectionTitleLineWithButton>
 
       <CardBox has-table v-if="tableIspu.length > 0">
         <TableData type="ispu" :data="tableIspu" />
