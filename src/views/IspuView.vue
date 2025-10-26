@@ -9,7 +9,7 @@ import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.
 import TableData from '@/components/TableData.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import { useMainStore } from '@/stores/main'
-import { mdiCalendarRange } from '@mdi/js'
+import { mdiCalendarRange, mdiTable } from '@mdi/js'
 import { onMounted, reactive, ref, watch } from 'vue'
 
 const form = reactive({
