@@ -1,8 +1,8 @@
 <script setup>
 import { computed } from 'vue'
-import CardTextGas from './CardTextGas.vue'
 import { useMainStore } from '@/stores/main'
 import { mdiWeatherDust } from '@mdi/js'
+import CardTextGas from '../Admin/CardTextGas.vue'
 
 // let intervalId = null
 const mainStore = useMainStore()

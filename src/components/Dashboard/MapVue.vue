@@ -94,7 +94,7 @@ function createMarker() {
     iconAnchor: [22.5, 60],
   })
 
-  marker = L.marker([-6.858189893364737, 107.59426700036065], { icon })
+  marker = L.marker([-6.858833, 107.593446], { icon })
     .addTo(map)
     .bindPopup(
       `AMDK PDAM BANDUNG, Jl. Sersan Bajuri No.5, Isola, Kec. Sukasari, Kota Bandung, Jawa Barat 40154`,
@@ -215,7 +215,7 @@ function addWindLegend() {
 
 onMounted(async () => {
   map = L.map('map', {
-    center: [-6.858189893364737, 107.59426700036065],
+    center: [-6.858833, 107.593446],
     zoom: 17,
     minZoom: 15,
     maxZoom: 18,

@@ -1,8 +1,8 @@
 <script setup>
 import { defineAsyncComponent } from 'vue';
-import CardBox from './CardBox.vue'
+import CardBox from '../CardBox.vue'
 // import { ref } from 'vue'
-const GaugeChart = defineAsyncComponent(() => import('./Charts/GaugeChart.vue'))
+const GaugeChart = defineAsyncComponent(() => import('../Charts/GaugeChart.vue'))
 
 
 const props = defineProps({

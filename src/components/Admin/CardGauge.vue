@@ -1,7 +1,7 @@
 <script setup>
 import { defineAsyncComponent } from 'vue'
-import CardBox from './CardBox.vue'
-const GaugeSpeedometer = defineAsyncComponent(() => import('./Charts/GaugeSpeedometer.vue'))
+import CardBox from '../CardBox.vue'
+const GaugeSpeedometer = defineAsyncComponent(() => import('../Charts/GaugeSpeedometer.vue'))
 
 const param = defineProps({
   name: String,
@@ -19,7 +19,7 @@ const param = defineProps({
         class="font-poppins"
         :class="role === 'spv' ? 'flex flex-col justify-center items-center' : ''"
       >
-        <p class="font-medium text-2xl text-zinc-400">{{ param.name }}</p>
+        <p class="font-medium text-2xl text-zinc-400" v-html="param.name"></p>
         <p class="font-extrabold text-4xl">{{ param.value }}</p>
         <p class="text-xl">{{ param.unit }}</p>
       </div>

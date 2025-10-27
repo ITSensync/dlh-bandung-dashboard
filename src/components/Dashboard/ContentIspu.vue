@@ -1,8 +1,8 @@
 <script setup>
 import { computed } from 'vue'
-import IspuChart from './Charts/IspuChart.vue'
 import { useMainStore } from '@/stores/main'
 import LegendIspu from './LegendIspu.vue'
+import IspuChart from '../Charts/IspuChart.vue'
 
 const mainStore = useMainStore()
 
@@ -10,13 +10,12 @@ const ispuLatestData = computed(() => mainStore.ispuLatest)
 const bars = computed(() => [
   { label: 'PM10', value: Number(ispuLatestData.value?.pm10) || 0 },
   { label: 'PM2.5', value: Number(ispuLatestData.value?.pm25) || 0 },
-  { label: 'SO2', value: Number(ispuLatestData.value?.so2) || 0 },
+  { label: 'SO<sub>2</sub>', value: Number(ispuLatestData.value?.so2) || 0 },
   { label: 'CO', value: Number(ispuLatestData.value?.co) || 0 },
-  { label: 'O3', value: Number(ispuLatestData.value?.o3) || 0 },
-  { label: 'NO2', value: Number(ispuLatestData.value?.no2) || 0 },
+  { label: 'O<sub>3</sub>', value: Number(ispuLatestData.value?.o3) || 0 },
+  { label: 'NO<sub>2</sub>', value: Number(ispuLatestData.value?.no2) || 0 },
   { label: 'HC', value: Number(ispuLatestData.value?.hc) || 0 },
 ])
-
 </script>
 
 <template>
@@ -32,7 +31,9 @@ const bars = computed(() => [
     </div>
     <LegendIspu />
     <div class="w-full h-full flex items-end px-2">
-      <p class="text-xs"><span class="text-red-700">*</span> Perhitungan berdasarkan Permen LHK No. 14 Tahun 2020</p>
+      <p class="text-xs">
+        <span class="text-red-700">*</span> Perhitungan berdasarkan Permen LHK No. 14 Tahun 2020
+      </p>
     </div>
   </div>
 </template>

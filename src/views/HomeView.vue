@@ -1,30 +1,22 @@
-<!-- eslint-disable no-unused-vars -->
 <script setup>
 import { computed, defineAsyncComponent, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useMainStore } from '@/stores/main'
-import {
-  mdiSmog,
-  mdiGasCylinder,
-  mdiFlaskOutline,
-  mdiMolecule,
-  mdiMoleculeCo,
-  mdiFactory,
-  mdiCar,
-  mdiWeatherCloudy,
-} from '@mdi/js'
+import { mdiSmog, mdiGasCylinder, mdiWeatherCloudy, mdiGauge } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'
 import CardBoxWidget from '@/components/CardBoxWidget.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import { useAuthStore } from '@/stores/auth'
+import CardIspu from '@/components/Admin/CardIspu.vue'
+import CardIspuIcon from '@/components/Admin/CardIspuIcon.vue'
 
-const CardGauge = defineAsyncComponent(() => import('@/components/Home/CardGauge.vue'))
-const CardTemperature = defineAsyncComponent(() => import('@/components/Home/CardTemperature.vue'))
-const CardWind = defineAsyncComponent(() => import('@/components/Home/CardWind.vue'))
-const CardPressure = defineAsyncComponent(() => import('@/components/Home/CardPressure.vue'))
-const CardPrecip = defineAsyncComponent(() => import('@/components/Home/CardPrecip.vue'))
-const CardUv = defineAsyncComponent(() => import('@/components/Home/CardUv.vue'))
-const CardSolar = defineAsyncComponent(() => import('@/components/Home/CardSolar.vue'))
+const CardGauge = defineAsyncComponent(() => import('@/components/Admin/CardGauge.vue'))
+const CardTemperature = defineAsyncComponent(() => import('@/components/Admin/CardTemperature.vue'))
+const CardWind = defineAsyncComponent(() => import('@/components/Admin/CardWind.vue'))
+const CardPressure = defineAsyncComponent(() => import('@/components/Admin/CardPressure.vue'))
+const CardPrecip = defineAsyncComponent(() => import('@/components/Admin/CardPrecip.vue'))
+const CardUv = defineAsyncComponent(() => import('@/components/Admin/CardUv.vue'))
+const CardSolar = defineAsyncComponent(() => import('@/components/Admin/CardSolar.vue'))
 
 const mainStore = useMainStore()
 const authStore = useAuthStore()
@@ -33,6 +25,7 @@ const summaryToday = ref({})
 let intervalId = null
 const fetchData = () => {
   mainStore.fetch30Minute('daily')
+  mainStore.fetchIspuLatest()
   summaryToday.value = mainStore.listDaily30Minute[0]
 }
 const role = computed(() => authStore.role)
@@ -59,7 +52,14 @@ onUnmounted(() => {
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiSmog" title="Partikulat" class="-mt-10" />
+      <SectionTitleLineWithButton :icon="mdiGauge" title="ISPU" class="-mt-10" />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <CardIspu />
+        <CardIspuIcon />
+      </div>
+
+      <SectionTitleLineWithButton :icon="mdiSmog" title="Partikulat" class="" />
 
       <div class="flex flex-col lg:flex-row w-full gap-4">
         <div class="flex flex-col h-fit w-full">
@@ -84,8 +84,46 @@ onUnmounted(() => {
 
       <SectionTitleLineWithButton :icon="mdiGasCylinder" title="Gas (µg/m³)" class="" />
 
-      <div class="grid grid-cols-1 md:grid-cols-5 w-full gap-4 mb-3 font-poppins">
-        <CardBoxWidget
+      <div class="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-3 w-full gap-4 mb-3 font-poppins">
+        <CardGauge
+          class=""
+          name="HC"
+          :value="Number(summaryToday?.hc || 0)"
+          unit="µg/m³"
+          :role="role"
+        />
+        <CardGauge
+          class=""
+          name="CO"
+          :value="Number(summaryToday?.co || 0)"
+          unit="µg/m³"
+          :role="role"
+        />
+        <CardGauge
+          class="lg:col-span-2 xl:col-auto"
+          name="O<sub>3</sub>"
+          :value="Number(summaryToday?.o3 || 0)"
+          unit="µg/m³"
+          :role="role"
+        />
+        <div class="flex flex-col lg:flex-row gap-4 w-full md:col-end-2 lg:col-span-3">
+          <CardGauge
+            class=""
+            name="NO<sub>2</sub>"
+            :value="Number(summaryToday?.no2 || 0)"
+            unit="µg/m³"
+            :role="role"
+          />
+          <CardGauge
+            class=""
+            name="SO<sub>2</sub>"
+            :value="Number(summaryToday?.so2 || 0)"
+            unit="µg/m³"
+            :role="role"
+          />
+        </div>
+
+        <!-- <CardBoxWidget
           class="h-fit"
           color="text-violet-500"
           :icon="role == 'admin' ? mdiFlaskOutline : ''"
@@ -119,7 +157,7 @@ onUnmounted(() => {
           :icon="role == 'admin' ? mdiCar : ''"
           :number="Number(summaryToday?.no2 || 0)"
           label="NO²"
-        />
+        /> -->
       </div>
 
       <SectionTitleLineWithButton :icon="mdiWeatherCloudy" title="Cuaca" class="" />

@@ -71,7 +71,7 @@ const listKategori = [
       </div>
 
       <!-- LABEL -->
-      <p class="text-[10px] sm:text-sm font-medium mt-3">{{ data.label }}</p>
+      <p class="text-[10px] sm:text-sm font-medium mt-3" v-html="data.label"></p>
     </div>
   </div>
 </template>

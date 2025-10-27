@@ -1,8 +1,15 @@
 <script setup>
 import { useMainStore } from '@/stores/main'
-import CardTextGas from './CardTextGas.vue'
 import { computed } from 'vue'
-import { mdiCar, mdiFactory, mdiFlaskOutline, mdiMolecule, mdiMoleculeCo } from '@mdi/js'
+import {
+  mdiFlaskOutline,
+  mdiMolecule,
+  mdiMoleculeCo,
+  mdiSmog,
+  mdiWeatherDust,
+  mdiWeatherFog,
+} from '@mdi/js'
+import CardTextGas from '../Admin/CardTextGas.vue'
 
 // let intervalId = null
 const mainStore = useMainStore()
@@ -20,37 +27,56 @@ const latestGasData = computed(() => {
     so2: firstData.so2 ?? '-',
   }
 })
-
 </script>
 
 <template>
-  <div class="grid grid-cols-3 gap-2 py-4">
+  <div class="grid grid-cols-2 md:grid-cols-7 gap-2 py-4">
+    <CardTextGas
+      name="PM10"
+      :icon="mdiWeatherDust"
+      :value="latestGasData?.pm10 || '-'"
+      unit="µg/m³"
+    />
+    <CardTextGas
+      name="PM2.5"
+      :icon="mdiWeatherDust"
+      :value="latestGasData?.pm25 || '-'"
+      unit="µg/m³"
+    />
     <CardTextGas
       name="HC"
       :icon="mdiFlaskOutline"
       :value="latestGasData?.hc"
       unit="µg/m³"
+      class="col-span-2 sm:col-span-1"
     />
-    <CardTextGas name="CO" :icon="mdiMoleculeCo" :value="latestGasData?.co" unit="µg/m³" />
+    <CardTextGas
+      name="CO"
+      :icon="mdiMoleculeCo"
+      :value="latestGasData?.co"
+      unit="µg/m³"
+      class="col-span-2 sm:col-span-1"
+    />
     <CardTextGas
       name="O<sub>3</sub>"
       :icon="mdiMolecule"
       :value="latestGasData?.o3"
       unit="µg/m³"
+      class="col-span-2 sm:col-span-1"
     />
-    <div class="flex flex-row gap-2 col-span-3">
-      <CardTextGas
-        name="SO<sub>2</sub>"
-        :icon="mdiFactory"
-        :value="latestGasData?.so2"
-        unit="µg/m³"
-      />
-      <CardTextGas
-        name="NO<sub>2</sub>"
-        :icon="mdiCar"
-        :value="latestGasData?.no2"
-        unit="µg/m³"
-      />
-    </div>
+    <CardTextGas
+      name="SO<sub>2</sub>"
+      :icon="mdiWeatherFog"
+      :value="latestGasData?.so2"
+      unit="µg/m³"
+      class="col-span-2 sm:col-span-1"
+    />
+    <CardTextGas
+      name="NO<sub>2</sub>"
+      :icon="mdiSmog"
+      :value="latestGasData?.no2"
+      unit="µg/m³"
+      class="col-span-2 sm:col-span-1"
+    />
   </div>
 </template>

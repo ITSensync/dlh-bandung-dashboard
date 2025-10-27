@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
-import CardBox from './CardBox.vue'
+import CardBox from '../CardBox.vue'
 
 const props = defineProps({
   val: {

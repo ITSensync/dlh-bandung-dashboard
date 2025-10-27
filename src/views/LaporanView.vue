@@ -1,7 +1,7 @@
 <script setup>
-import FormReportIspu from '@/components/Home/FormReportIspu.vue'
-import FormReportKonsentrasi from '@/components/Home/FormReportKonsentrasi.vue'
-import FormReportWeather from '@/components/Home/FormReportWeather.vue'
+import FormReportIspu from '@/components/Admin/FormReportIspu.vue'
+import FormReportKonsentrasi from '@/components/Admin/FormReportKonsentrasi.vue'
+import FormReportWeather from '@/components/Admin/FormReportWeather.vue'
 import SectionMain from '@/components/SectionMain.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
@@ -28,16 +28,16 @@ onMounted(() => {
       <FormReportKonsentrasi />
 
       <div class="w-full border border-slate-900/70 mt-10 mb-5"></div>
-      
+
       <SectionTitleLineWithButton :icon="mdiGraph" title="ISPU" class="" />
-      
+
       <FormReportIspu />
-      
+
       <div class="w-full border border-slate-900/70 mt-10 mb-5"></div>
 
       <SectionTitleLineWithButton :icon="mdiWeatherCloudy" title="Cuaca" class="" />
 
-      <FormReportWeather/>
+      <FormReportWeather />
 
       <!-- <SectionTitleLineWithButton :icon="mdiTable" title="Rata-Rata Harian">
         <BaseButton

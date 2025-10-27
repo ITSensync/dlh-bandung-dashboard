@@ -32,13 +32,13 @@ const maxValue = computed(() => {
       return 1000
     case props.name === 'HC':
       return 648
-    case props.name === 'NO2':
+    case props.name === 'NO<sub>2</sub>':
       return 3000
-    case props.name === 'O3':
+    case props.name === 'O<sub>3</sub>':
       return 1000
     case props.name === 'CO':
       return 45000
-    case props.name === 'SO2':
+    case props.name === 'SO<sub>2</sub>':
       return 1200
     default:
       return 100

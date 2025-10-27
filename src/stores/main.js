@@ -257,6 +257,12 @@ export const useMainStore = defineStore('main', () => {
     return res.data
   }
 
+  async function fetchReportWeatherYearly(year = yearNow, sensor = 'ws') {
+    const res = await axios.get(`${apiUrl}/laporan/cuaca-tahunan.php?tahun=${year}&parameter=${sensor}`)
+
+    return res.data
+  }
+
 
 
 
@@ -291,5 +297,6 @@ export const useMainStore = defineStore('main', () => {
     fetchReportWeatherMonthly,
     fetchReportWeatherWeekly,
     fetchKonsentrasiYearly,
+    fetchReportWeatherYearly,
   }
 })

@@ -1,6 +1,6 @@
 <script setup>
 import { useDarkModeStore } from '@/stores/darkMode'
-import CardBox from './CardBox.vue'
+import CardBox from '../CardBox.vue'
 
 const props = defineProps({
   degrees: {

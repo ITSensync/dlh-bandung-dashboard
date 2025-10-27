@@ -15,10 +15,10 @@ const formBulanan = reactive({
   year: '',
   sensor: '',
 })
-const formMingguan = reactive({
-  week: '',
-  month: '',
+
+const formTahunan = reactive({
   year: '',
+  sensor: '',
 })
 
 const mainStore = useMainStore()
@@ -52,23 +52,17 @@ function handleResetBulanan() {
 }
 
 // Mingguan
-async function handleSubmitMingguan() {
-  if (!formMingguan.year || !formMingguan.week || !formMingguan.month)
-    return alert('Lengkapi semua field Mingguann!')
+async function handleSubmitTahunan() {
+  if (!formTahunan.year || !formTahunan.sensor) return alert('Lengkapi semua field Mingguann!')
 
-    const result = await mainStore.fetchReportWeatherWeekly(
-    formMingguan.week,
-    formMingguan.month,
-    formMingguan.year,
-  )
+  const result = await mainStore.fetchReportWeatherYearly(formTahunan.year, formTahunan.sensor)
 
-  Export.cuacaMingguan(result.data, result.periode)
+  Export.CuacaTahunan(result.data, result.tahun, result.parameter)
 }
 
-function handleResetMingguan() {
-  formMingguan.year = ''
-  formMingguan.week = ''
-  formMingguan.month = ''
+function handleResetTahunan() {
+  formTahunan.year = ''
+  formTahunan.sensor = ''
 }
 
 const monthOptions = [
@@ -166,73 +160,6 @@ const sensorOptions = [
       </component>
     </CardBox>
 
-    <!-- MINGGUAN -->
-    <CardBox>
-      <component :is="'form'" class="font-poppins" @submit.prevent="handleSubmitMingguan">
-        <div class="flex flex-col items-end gap-5">
-          <FormField label="Mingguan" class="w-full">
-            <FormControl
-              label="Minggu ke - "
-              type="select"
-              v-model="formMingguan.week"
-              placeholder="Pilih minggu"
-              :options="[
-                {
-                  id: 1,
-                  label: '1',
-                  value: '1',
-                },
-                {
-                  id: 2,
-                  label: '2',
-                  value: '2',
-                },
-                {
-                  id: 3,
-                  label: '3',
-                  value: '3',
-                },
-                {
-                  id: 4,
-                  label: '4',
-                  value: '4',
-                },
-                {
-                  id: 5,
-                  label: '5',
-                  value: '5',
-                },
-              ]"
-            ></FormControl>
-            <FormControl
-              label="Bulan"
-              type="select"
-              v-model="formMingguan.month"
-              placeholder="Pilih Bulan"
-              :options="monthOptions"
-            ></FormControl>
-            <FormControl
-              label="Tahun"
-              type="select"
-              v-model="formMingguan.year"
-              placeholder="Pilih Tahun"
-              :options="yearOptions"
-            ></FormControl>
-          </FormField>
-          <div class="w-full sm:w-fit gap-4 flex flex-col sm:flex-row justify-end -mt-5">
-            <BaseButton
-              type="reset"
-              color="danger"
-              outline
-              label="Reset"
-              :onclick="handleResetMingguan"
-            />
-            <BaseButton type="submit" color="info" label="Download" />
-          </div>
-        </div>
-      </component>
-    </CardBox>
-
     <!-- BULANAN -->
     <CardBox>
       <component :is="'form'" class="font-poppins" @submit.prevent="handleSubmitBulanan">
@@ -276,5 +203,37 @@ const sensorOptions = [
     </CardBox>
 
     <!-- TAHUNAN -->
+    <CardBox>
+      <component :is="'form'" class="font-poppins" @submit.prevent="handleSubmitTahunan">
+        <div class="flex flex-col items-end gap-5">
+          <FormField label="Tahunan" class="w-full">
+            <FormControl
+              label="Tahun"
+              type="select"
+              v-model="formTahunan.year"
+              placeholder="Pilih Tahun"
+              :options="yearOptions"
+            ></FormControl>
+            <FormControl
+              label="Parameter"
+              type="select"
+              v-model="formTahunan.sensor"
+              placeholder="Pilih Parameter"
+              :options="sensorOptions"
+            ></FormControl>
+          </FormField>
+          <div class="w-full sm:w-fit gap-4 flex flex-col sm:flex-row justify-end -mt-5">
+            <BaseButton
+              type="reset"
+              color="danger"
+              outline
+              label="Reset"
+              :onclick="handleResetTahunan"
+            />
+            <BaseButton type="submit" color="info" label="Download" />
+          </div>
+        </div>
+      </component>
+    </CardBox>
   </div>
 </template>

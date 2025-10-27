@@ -1,5 +1,5 @@
 <script setup>
-import CardBox from './CardBox.vue'
+import CardBox from '../CardBox.vue'
 
 const props = defineProps({
   waterLevel: {

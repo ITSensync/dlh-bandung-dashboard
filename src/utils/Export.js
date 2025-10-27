@@ -716,7 +716,7 @@ async function konsentrasiTahunan(dataTahunan, tahun, sensor) {
   const blob = new Blob([buffer], {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   });
-  saveAs(blob, `Laporan_Tahunan_${sensor}.xlsx`);
+  saveAs(blob, `Laporan_Tahunan_${sensor}_${tahun}.xlsx`);
 }
 
 async function avgKonsentrasiBulanan(data, statistik, periode) {
@@ -2263,6 +2263,173 @@ async function cuacaBulanan(dataBulanan, bulan, tahun, parameter) {
   saveAs(blob, `Laporan_Cuaca_${generateTextParameter(parameter)}_${DateFormatter.getNamaBulan(bulan)}-${tahun}.xlsx`);
 }
 
+async function CuacaTahunan(dataTahunan, tahun, sensor) {
+  const ExcelJS = window.ExcelJS;
+  const saveAs = window.saveAs;
+
+  if (!ExcelJS || !saveAs) {
+    return;
+  }
+
+  const workbook = new ExcelJS.Workbook();
+  const leftLogo = await fetch('/dlh2.png').then((r) => r.arrayBuffer());
+  const rightLogo = await fetch('/pemkot.png').then((r) => r.arrayBuffer());
+
+  const mapBulan = {
+    Januari: 'January',
+    Februari: 'February',
+    Maret: 'March',
+    April: 'April',
+    Mei: 'May',
+    Juni: 'June',
+    Juli: 'July',
+    Agustus: 'August',
+    September: 'September',
+    Oktober: 'October',
+    November: 'November',
+    Desember: 'December',
+  };
+
+  const bulanList = Object.keys(mapBulan);
+
+  const tanggalList = Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, '0'));
+
+  for (const bulan of bulanList) {
+    const isi = dataTahunan[mapBulan[bulan]] || {};
+    const worksheet = workbook.addWorksheet(bulan);
+
+    const leftImageId = workbook.addImage({
+      buffer: leftLogo,
+      extension: 'png',
+    })
+    const rightImageId = workbook.addImage({
+      buffer: rightLogo,
+      extension: 'png',
+    })
+
+    worksheet.mergeCells('A2:A5')
+    worksheet.addImage(leftImageId, {
+      tl: {
+        col: 0, row: 1,
+      },
+      ext: { width: 80, height: 80 },
+    })
+
+    worksheet.mergeCells('AF2:AF5')
+    worksheet.addImage(rightImageId, {
+      tl: { col: 31, row: 1 },
+      ext: { width: 80, height: 80 },
+    })
+
+    worksheet.mergeCells('B3:AE3')
+    const titleCellHeader1 = worksheet.getCell('B3')
+    titleCellHeader1.value = `LAPORAN KONSENTRASI ${tahun}`
+    titleCellHeader1.font = { bold: true, size: 16 }
+    titleCellHeader1.alignment = { horizontal: 'center', vertical: 'middle' }
+
+    worksheet.mergeCells('B4:AE4')
+    const titleCellHeader2 = worksheet.getCell('B4')
+    titleCellHeader2.value = `Parameter: ${sensor}`
+    titleCellHeader2.font = { bold: true, size: 14 }
+    titleCellHeader2.alignment = { horizontal: 'center', vertical: 'middle' }
+
+    worksheet.mergeCells('B5:AE5')
+    const titleCellSubHeader = worksheet.getCell('C5')
+    titleCellSubHeader.value = bulan
+    titleCellSubHeader.font = { bold: false, size: 12 }
+    titleCellSubHeader.alignment = { horizontal: 'center', vertical: 'middle' }
+
+    worksheet.addRow([]);
+
+    // === HEADER KOLOM ===
+    const header = ['Waktu', ...tanggalList];
+    const rowHeader = worksheet.addRow(header);
+    rowHeader.eachCell((cell) => {
+      cell.font = { bold: true };
+      cell.alignment = { horizontal: 'center' };
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'D9D9D9' },
+      };
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' },
+      };
+    });
+
+    // Ambil jam dari tanggal pertama atau generate default
+    const semuaHari = Object.values(isi);
+    const hariPertama = semuaHari.find((h) => h?.jam?.length);
+    const jamList =
+      hariPertama && hariPertama.jam?.length
+        ? hariPertama.jam.map((j) => j.jam)
+        : generateJamList();
+
+    // === ISI DATA PER JAM ===
+    jamList.forEach((jam) => {
+      const row = [jam];
+      tanggalList.forEach((tgl) => {
+        const tanggalKey = Object.keys(isi).find((k) => k.endsWith(`-${tgl}`));
+        const hari = tanggalKey ? isi[tanggalKey] : null;
+        const nilai = hari?.jam?.find((j) => j.jam === jam)?.nilai ?? '';
+        row.push(nilai);
+      });
+      const jamRow = worksheet.addRow(row);
+
+      jamRow.eachCell((cell) => {
+        cell.alignment = {
+          horizontal: "center"
+        }
+        cell.border = {
+          top: { style: 'thin' },
+          bottom: { style: 'thin' },
+          left: { style: 'thin' },
+          right: { style: 'thin' }
+        }
+      })
+    });
+
+    // === TAMBAHKAN STATISTIK DI BAWAH ===
+    const stats = ['min', 'mean', 'max', 'p95', 'p98'];
+    stats.forEach((key) => {
+      const row = [key.toUpperCase()];
+      tanggalList.forEach((tgl) => {
+        const tanggalKey = Object.keys(isi).find((k) => k.endsWith(`-${tgl}`));
+        const val = tanggalKey ? isi[tanggalKey]?.[key] ?? '' : '';
+        row.push(val);
+      });
+
+      const r = worksheet.addRow(row);
+      r.eachCell((c) => {
+        c.font = { bold: true };
+        c.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'ECF0F5' },
+        };
+        c.alignment = { horizontal: 'center', vertical: 'middle' };
+        c.border = {
+          top: { style: 'thin' },
+          left: { style: 'thin' },
+          bottom: { style: 'thin' },
+          right: { style: 'thin' },
+        };
+      });
+    });
+
+    worksheet.columns = Array.from({ length: 32 }, () => ({ width: 12 }));
+  }
+
+  const buffer = await workbook.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  });
+  saveAs(blob, `Laporan_Tahunan_${changeWeeatherSensor(sensor.toLowerCase())}_${tahun}.xlsx`);
+}
+
 function writeLegendIspu(worksheet) {
   const space = worksheet.addRow([])
   const titleLegendRow = space.number + 1
@@ -2440,6 +2607,29 @@ function generateTextParameter(value) {
   }
 }
 
+function changeWeeatherSensor(value) {
+  switch (true) {
+    case value === 'temperature':
+      return 'Suhu'
+    case value === 'humidity':
+      return 'Kelembapan'
+    case value === 'ws':
+      return 'Kecepatan Angin'
+    case value === 'wd':
+      return 'Arah Angin'
+    case value === 'pressure':
+      return 'Tekanan Udara'
+    case value === 'sr':
+      return 'Solar Radiasi'
+    case value === 'rain_intensity':
+      return 'Curah Hujan'
+    case value === 'uv':
+      return 'Indeks UV'
+    default:
+      return value.toUpperCase();
+  }
+}
+
 function generateLegendCellColor(colNumber) {
   switch (true) {
     case colNumber == 1:
@@ -2470,5 +2660,6 @@ export default {
   cuacaHarian,
   cuacaMingguan,
   cuacaBulanan,
+  CuacaTahunan,
 }
 

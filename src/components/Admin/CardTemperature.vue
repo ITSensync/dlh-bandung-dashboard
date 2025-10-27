@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import CardBox from './CardBox.vue'
+import CardBox from '../CardBox.vue'
 
 const props = defineProps({
   suhu: {
