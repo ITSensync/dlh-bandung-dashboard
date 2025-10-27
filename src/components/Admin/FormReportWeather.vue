@@ -135,9 +135,6 @@ const sensorOptions = [
     value: 'uv',
   },
 ]
-/* function handleBtnExcel() {
-  Export.exportToExcel(tableData.value, `30Menit_${form.startDate}-${form.endDate}.xlsx`)
-} */
 </script>
 
 <template>

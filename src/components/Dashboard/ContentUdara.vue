@@ -6,22 +6,6 @@ import DateFormatter from '@/utils/DateFormatter'
 
 // let intervalId = null
 const mainStore = useMainStore()
-/* const ispuLatestData = ref({
-  pm25: '0',
-  pm10: '0',
-  hc: '0',
-  co: '0',
-  o3: '0',
-  no2: '0',
-  so2: '0',
-  ket: '-',
-  status: '-',
-  tanggal: '01-01-0001',
-  jam: '00:00:00',
-})
-
-const bars = ref([])
-const maxIspu = ref({ param: '-', value: 0 }) */
 
 const ispuLatestData = computed(() => mainStore.ispuLatest)
 
@@ -50,76 +34,6 @@ const maxIspu = computed(() => {
 
   return { param: displayParams, value: maxValue }
 })
-
-/* const fetchData = async () => {
-  await mainStore.fetchIspuLatest()
-  ispuLatestData.value = mainStore.ispuLatest
-
-  if (ispuLatestData.value) {
-    maxIspu.value = getMaxIspu(ispuLatestData.value)
-  }
-
-  const data = ispuLatestData.value || {}
-  bars.value = [
-    { label: 'PM10', value: Number(data.pm10) || 0 },
-    { label: 'PM2.5', value: Number(data.pm25) || 0 },
-    { label: 'SO2', value: Number(data.so2) || 0 },
-    { label: 'CO', value: Number(data.co) || 0 },
-    { label: 'O3', value: Number(data.o3) || 0 },
-    { label: 'NO2', value: Number(data.no2) || 0 },
-    { label: 'HC', value: Number(data.hc) || 0 },
-  ]
-} */
-
-/* onMounted(async () => {
-  fetchData()
-
-  intervalId = setInterval(() => {
-    fetchData()
-    // console.log('interval running')
-  }, 300000) //5 menit sekali
-})
-
-watch(
-  [() => mainStore.ispuLatest, () => mainStore.listIspuPM10, () => mainStore.listIspuPM25],
-  ([newIspuLatest]) => {
-    if (newIspuLatest) {
-      ispuLatestData.value = newIspuLatest
-      maxIspu.value = getMaxIspu(newIspuLatest)
-      bars.value = [
-        { label: 'PM10', value: Number(newIspuLatest.pm10) || 0 },
-        { label: 'PM2.5', value: Number(newIspuLatest.pm25) || 0 },
-        { label: 'SO2', value: Number(newIspuLatest.so2) || 0 },
-        { label: 'CO', value: Number(newIspuLatest.co) || 0 },
-        { label: 'O3', value: Number(newIspuLatest.o3) || 0 },
-        { label: 'NO2', value: Number(newIspuLatest.no2) || 0 },
-        { label: 'HC', value: Number(newIspuLatest.hc) || 0 },
-      ]
-    }
-  },
-)
-
-onUnmounted(() => {
-  if (intervalId) clearInterval(intervalId)
-}) */
-
-/* function getMaxIspu(data) {
-  const keys = ['pm25', 'pm10', 'so2', 'no2', 'co', 'o3', 'hc']
-  const maxParam = keys.reduce((a, b) => (Number(data[a]) > Number(data[b]) ? a : b))
-  return { param: maxParam, value: Number(data[maxParam]) }
-} */
-
-/* function getIspuStats(data, key = 'pm25') {
-  const values = data.map((item) => Number(item[key])).filter((val) => !isNaN(val))
-
-  if (values.length === 0) return { max: 0, min: 0, avg: 0 }
-
-  const max = Math.max(...values)
-  const min = Math.min(...values)
-  const avg = values.reduce((a, b) => a + b, 0) / values.length
-
-  return { max, min, avg: Number(avg.toFixed(2)) }
-} */
 
 function generateColorIspu(value) {
   switch (true) {

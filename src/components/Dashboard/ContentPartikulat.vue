@@ -6,12 +6,6 @@ import { mdiWeatherDust } from '@mdi/js'
 
 // let intervalId = null
 const mainStore = useMainStore()
-/* const latestPmData = ref({
-  pm10: '0',
-  pm25: '0',
-  tanggal: '01-01-0000',
-  jam: '00:00',
-}) */
 
 const latestPmData = computed(() => {
   const firstData = mainStore.listDaily30Minute?.[0] || {}
@@ -23,30 +17,7 @@ const latestPmData = computed(() => {
   }
 })
 
-/* const fetchData = async () => {
-  await mainStore.fetch30Minute('pm')
-  latestPmData.value = mainStore.latestPm
-}
 
-onMounted(async () => {
-  fetchData()
-
-  intervalId = setInterval(() => {
-    fetchData()
-    // console.log('interval running')
-  }, 300000) //5 menit sekali
-})
-
-watch(
-  () => mainStore.latestPm,
-  (newVal) => {
-    latestPmData.value = newVal
-  },
-)
-
-onUnmounted(() => {
-  if (intervalId) clearInterval(intervalId)
-}) */
 </script>
 
 <template>

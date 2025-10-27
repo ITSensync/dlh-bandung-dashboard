@@ -33,16 +33,6 @@ const props = defineProps({
                     <stop offset="1" style="stop-color: #0000ff" />
                   </linearGradient>
                 </defs>
-                <!--               <path
-                  fill="url(#waterGradient)"
-                  d="
-                  M 0,0 v 100 h 200 v -100 
-                  c -10,0 -15,5 -25,5 c -10,0 -15,-5 -25,-5
-                  c -10,0 -15,5 -25,5 c -10,0 -15,-5 -25,-5
-                  c -10,0 -15,5 -25,5 c -10,0 -15,-5 -25,-5
-                  c -10,0 -15,5 -25,5 c -10,0 -15,-5 -25,-5
-                "
-                /> -->
 
                 <path
                   fill="url(#waterGradient)"

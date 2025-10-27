@@ -12,7 +12,6 @@ const props = defineProps({
 const maxVal = 1000
 const animatedVal = ref(0)
 
-// Animasi halus
 const animateTo = (target) => {
   const start = animatedVal.value
   const duration = 1000

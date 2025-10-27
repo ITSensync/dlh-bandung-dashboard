@@ -1,7 +1,7 @@
 <script setup>
-import FormReportIspu from '@/components/FormReportIspu.vue'
-import FormReportKonsentrasi from '@/components/FormReportKonsentrasi.vue'
-import FormReportWeather from '@/components/FormReportWeather.vue'
+import FormReportIspu from '@/components/Home/FormReportIspu.vue'
+import FormReportKonsentrasi from '@/components/Home/FormReportKonsentrasi.vue'
+import FormReportWeather from '@/components/Home/FormReportWeather.vue'
 import SectionMain from '@/components/SectionMain.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'

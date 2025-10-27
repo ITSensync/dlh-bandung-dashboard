@@ -47,9 +47,6 @@ function handleReset() {
   tableIspu.value = mainStore.listDailyIspu
 }
 
-// function handleBtnExcel() {
-//   Export.exportToExcel(tableIspu.value, `ISPU_${form.startDate}-${form.endDate}.xlsx`)
-// }
 </script>
 
 <template>

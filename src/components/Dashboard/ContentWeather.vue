@@ -1,15 +1,5 @@
 <script setup>
 import CardTextGas from './CardTextGas.vue'
-
-// Import Swiper styles
-// import 'swiper/css'
-
-// import 'swiper/css/pagination'
-// import 'swiper/css/navigation'
-
-// import './style.css'
-
-// import required modules
 import { computed } from 'vue'
 import { useMainStore } from '@/stores/main'
 import {
@@ -40,55 +30,6 @@ const latestWeatherData = computed(() => {
     uv: firstData.uv ?? '-',
   }
 })
-/* const latestWeatherData = ref({
-  ws: '0',
-  wd: '0',
-  hum: '0',
-  temp: '0',
-  press: '0',
-  rain: '0',
-  solar: '0',
-  uv: '0',
-  tanggal: '01-01-0000',
-  jam: '00:00',
-})
-
-const fetchData = async () => {
-  await mainStore.fetch30Minute('weather')
-  latestWeatherData.value = mainStore.latestWeather
-
-  mainStore.fetch30Minute('daily')
-}
-
-onMounted(async () => {
-  fetchData()
-
-  intervalId = setInterval(() => {
-    fetchData()
-    // console.log('interval running')
-  }, 300000) //5 menit sekali
-})
-
-watch([() => mainStore.latestWeather], ([newLatestWeather]) => {
-  latestWeatherData.value = newLatestWeather
-})
-
-onUnmounted(() => {
-  if (intervalId) clearInterval(intervalId)
-}) */
-
-/* const modules = [Autoplay]
-
-const activeIndex = ref(0)
-
-const title = ['Suhu', 'Curah Hujan', 'UV']
-
-const onSlideChange = (swiper) => {
-  activeIndex.value = swiper.realIndex
-  // console.log('Slide aktif:', activeIndex.value)
-}
-
-const currentTitle = computed(() => title[activeIndex.value]) */
 
 function generateWindDirection(windData) {
   switch (true) {

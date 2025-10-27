@@ -20,40 +20,7 @@ const latestGasData = computed(() => {
     so2: firstData.so2 ?? '-',
   }
 })
-/* const latestGasData = ref({
-  hc: '0',
-  co: '0',
-  o3: '0',
-  no2: '0',
-  so2: '0',
-  tanggal: '01-01-0000',
-  jam: '00:00',
-})
 
-const fetchData = async () => {
-  await mainStore.fetch30Minute('gas')
-  latestGasData.value = mainStore.latestGas
-}
-
-onMounted(async () => {
-  fetchData()
-
-  intervalId = setInterval(() => {
-    fetchData()
-    // console.log('interval running')
-  }, 300000) //5 menit sekali
-})
-
-watch(
-  () => mainStore.latestGas,
-  (newVal) => {
-    latestGasData.value = newVal
-  },
-)
-
-onUnmounted(() => {
-  if (intervalId) clearInterval(intervalId)
-}) */
 </script>
 
 <template>

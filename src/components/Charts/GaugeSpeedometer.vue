@@ -13,16 +13,6 @@ const darkModeStore = useDarkModeStore()
 const isDark = computed(() => darkModeStore.isEnabled)
 
 const textColor = computed(() => (isDark.value ? '#ffffff' : '#1e293b'))
-// Buat gradasi dinamis
-/* const segmentStops = computed(() => {
-  if (props.name === 'PM10') {
-    // Rentang 0–500
-    return [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
-  } else {
-    // Rentang 0–300 (misal PM2.5)
-    return [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300]
-  }
-}) */
 
 // Gradasi warna dari hijau → kuning → oranye → merah → merah tua
 const segmentColors = [

@@ -18,13 +18,13 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import { useAuthStore } from '@/stores/auth'
 
-const CardGauge = defineAsyncComponent(() => import('@/components/CardGauge.vue'))
-const CardTemperature = defineAsyncComponent(() => import('@/components/CardTemperature.vue'))
-const CardWind = defineAsyncComponent(() => import('@/components/CardWind.vue'))
-const CardPressure = defineAsyncComponent(() => import('@/components/CardPressure.vue'))
-const CardPrecip = defineAsyncComponent(() => import('@/components/CardPrecip.vue'))
-const CardUv = defineAsyncComponent(() => import('@/components/CardUv.vue'))
-const CardSolar = defineAsyncComponent(() => import('@/components/CardSolar.vue'))
+const CardGauge = defineAsyncComponent(() => import('@/components/Home/CardGauge.vue'))
+const CardTemperature = defineAsyncComponent(() => import('@/components/Home/CardTemperature.vue'))
+const CardWind = defineAsyncComponent(() => import('@/components/Home/CardWind.vue'))
+const CardPressure = defineAsyncComponent(() => import('@/components/Home/CardPressure.vue'))
+const CardPrecip = defineAsyncComponent(() => import('@/components/Home/CardPrecip.vue'))
+const CardUv = defineAsyncComponent(() => import('@/components/Home/CardUv.vue'))
+const CardSolar = defineAsyncComponent(() => import('@/components/Home/CardSolar.vue'))
 
 const mainStore = useMainStore()
 const authStore = useAuthStore()
@@ -43,7 +43,7 @@ watch([() => mainStore.listDaily30Minute], ([newSummaryToday]) => {
 
 onMounted(() => {
   authStore.initialize()
-  fetchData() // fetch pertama kali saat page render
+  fetchData()
 
   // ulangi setiap 2 menit (300000 ms)
   intervalId = setInterval(() => {
@@ -85,14 +85,6 @@ onUnmounted(() => {
       <SectionTitleLineWithButton :icon="mdiGasCylinder" title="Gas (µg/m³)" class="" />
 
       <div class="grid grid-cols-1 md:grid-cols-5 w-full gap-4 mb-3 font-poppins">
-        <!-- <CardGauge class="" name="HC" :value="Number(summaryToday?.pm10 || 0)" unit="µg/m³" />
-        <CardGauge class="" name="CO" :value="Number(summaryToday?.pm10 || 0)" unit="µg/m³" />
-        <CardGauge class="lg:col-span-2 xl:col-auto" name="O3" :value="Number(summaryToday?.pm10 || 0)" unit="µg/m³" />
-        <div class="flex flex-col  lg:flex-row gap-4 w-full md:col-end-2 lg:col-span-3">
-          <CardGauge class="" name="NO2" :value="Number(summaryToday?.pm10 || 0)" unit="µg/m³" />
-          <CardGauge class="" name="SO2" :value="Number(summaryToday?.pm10 || 0)" unit="µg/m³" />
-        </div> -->
-
         <CardBoxWidget
           class="h-fit"
           color="text-violet-500"
