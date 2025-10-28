@@ -3,7 +3,7 @@ import { computed, defineAsyncComponent, onMounted, onUnmounted, ref, watch } fr
 import { useMainStore } from '@/stores/main'
 import { mdiSmog, mdiGasCylinder, mdiWeatherCloudy, mdiGauge } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'
-import CardBoxWidget from '@/components/CardBoxWidget.vue'
+// import CardBoxWidget from '@/components/CardBoxWidget.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import { useAuthStore } from '@/stores/auth'
@@ -162,7 +162,7 @@ onUnmounted(() => {
 
       <SectionTitleLineWithButton :icon="mdiWeatherCloudy" title="Cuaca" class="" />
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" v-if="role === 'admin'">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <CardTemperature
           :suhu="Number(summaryToday?.temp || 0)"
           :humd="Number(summaryToday?.humd || 0)"
@@ -173,7 +173,7 @@ onUnmounted(() => {
         <CardUv :solarRadiation="Number(summaryToday?.uv || 0)" />
         <CardSolar :val="Number(summaryToday?.solar) || 0" />
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-4" v-else>
+      <!-- <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-4" v-else>
         <CardBoxWidget
           class="h-fit"
           :number="Number(summaryToday?.temp || 0)"
@@ -222,7 +222,7 @@ onUnmounted(() => {
           suffix=" index"
           label="UV"
         />
-      </div>
+      </div> -->
     </SectionMain>
   </LayoutAuthenticated>
 </template>
