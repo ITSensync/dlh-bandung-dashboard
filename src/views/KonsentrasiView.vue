@@ -9,6 +9,7 @@ import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.
 import TableData from '@/components/TableData.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import { useMainStore } from '@/stores/main'
+import Export from '@/utils/Export'
 import { mdiCalendarRange, mdiTable } from '@mdi/js'
 import { onMounted, reactive, ref, watch } from 'vue'
 
@@ -47,9 +48,9 @@ function handleReset() {
   tableData.value = mainStore.listDaily30Minute
 }
 
-/* function handleBtnExcel() {
-  Export.exportToExcel(tableData.value, `30Menit_${form.startDate}-${form.endDate}.xlsx`)
-} */
+function handleBtnExcel() {
+  Export.exportToExcel(tableData.value, `Konsentrasi_${form.startDate}-${form.endDate}.xlsx`)
+}
 </script>
 
 <template>
@@ -86,7 +87,7 @@ function handleReset() {
       </component>
 
       <SectionTitleLineWithButton :icon="mdiTable" title="Konsentrasi">
-        <!-- <BaseButton
+        <BaseButton
           @click="handleBtnExcel"
           target="_blank"
           :icon="mdiFileExcel"
@@ -94,7 +95,7 @@ function handleReset() {
           color="success"
           rounded-full
           small
-        /> -->
+        />
       </SectionTitleLineWithButton>
 
       <CardBox has-table v-if="tableData.length > 0">

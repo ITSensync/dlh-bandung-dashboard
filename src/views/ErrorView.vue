@@ -11,7 +11,7 @@ const loginState = ref(AuthToken.validateAuthToken('auth-token'))
 
 <template>
   <LayoutGuest>
-    <SectionFullScreen v-slot="{ cardClass }" bg="pinkRed">
+    <SectionFullScreen v-slot="{ cardClass }" bg="">
       <CardBox :class="cardClass">
         <div class="space-y-3 flex flex-col justify-center items-center">
           <h1 class="mb-4 font-bold font-poppins text-2xl">ERROR</h1>

@@ -10,6 +10,7 @@ import ContentWeather from '@/components/Dashboard/ContentWeather.vue'
 import NavbarGuest from '@/components/NavbarGuest.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
 import { useMainStore } from '@/stores/main'
+import FooterBar from '@/components/FooterBar.vue'
 
 let intervalId = null
 const mainStore = useMainStore()
@@ -32,8 +33,10 @@ onUnmounted(() => {
 
 <template>
   <LayoutGuest>
-    <NavbarGuest />
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 p-4 gap-4">
+    <NavbarGuest class="text-slate-100" />
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 p-4 gap-4 text-slate-100"
+    >
       <Suspense>
         <template #default>
           <ContentMap />
@@ -47,7 +50,7 @@ onUnmounted(() => {
       <ContentUdara />
       <ContentIspu />
     </div>
-    <div class="px-4 h-full">
+    <div class="px-4 h-full text-slate-100">
       <div class="flex flex-col justify-center bg-slate-900/70 rounded-xl h-full">
         <p class="font-poppins text-lg 2xl:text-2xl font-semibold text-center mt-2">Konsentrasi</p>
         <div class="border border-zinc-500 mt-4"></div>
@@ -66,5 +69,6 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
+    <FooterBar class="inset-x-0 bottom-0 text-slate-100"> AQMS DLH KOTA BANDUNG </FooterBar>
   </LayoutGuest>
 </template>

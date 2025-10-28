@@ -64,7 +64,7 @@ const offset = computed(() => circumference - (percent.value / 100) * circumfere
             </defs>
 
             <!-- Background track -->
-            <circle cx="60" cy="60" :r="radius" stroke="#2e3a4b" stroke-width="10" fill="none" />
+            <circle cx="60" cy="60" :r="radius" stroke="#F7F7F7" stroke-width="10" fill="none" />
 
             <!-- Progress -->
             <circle

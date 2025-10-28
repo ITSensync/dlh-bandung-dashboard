@@ -59,7 +59,7 @@ function generateColorIspu(value) {
           :class="generateColorIspu(maxIspu.value)"
         >
           <p
-            class="font-poppins font-extrabold text-5xl sm:text-6xl md:text-6xl xl:text-5xl 2xl:text-7xl 3xl:text-7xl 4xl:text-8xl text-center text-shadow-lg"
+            class="font-poppins font-extrabold text-5xl sm:text-6xl md:text-6xl xl:text-5xl 2xl:text-7xl 3xl:text-7xl 4xl:text-8xl text-center text-shadow-lg text-slate-100"
           >
             {{ maxIspu.value }}
             <!-- 10 -->
@@ -80,7 +80,7 @@ function generateColorIspu(value) {
           <!-- HC -->
         </p>
         <p
-          class="font-poppins font-normal text-center text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl 4xl:text-5xl"
+          class="font-poppins font-normal text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl 4xl:text-5xl"
         >
           {{ ispuLatestData?.status }}
         </p>

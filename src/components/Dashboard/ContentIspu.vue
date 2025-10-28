@@ -31,7 +31,7 @@ const bars = computed(() => [
     </div>
     <LegendIspu />
     <div class="w-full h-full flex items-end px-2">
-      <p class="text-xs">
+      <p class="text-xs 4xl:text-xl">
         <span class="text-red-700">*</span> Perhitungan berdasarkan Permen LHK No. 14 Tahun 2020
       </p>
     </div>

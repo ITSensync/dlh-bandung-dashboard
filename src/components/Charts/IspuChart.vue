@@ -47,9 +47,9 @@ const listKategori = [
       class="h-[7vh] flex items-center justify-center"
       :class="kategori.color"
     >
-      <p class="font-bold">{{ kategori.label }}</p>
+      <p class="font-bold 4xl:text-2xl">{{ kategori.label }}</p>
     </div>
-    <p class="text-center mt-4">Kategori</p>
+    <p class="text-center 4xl:text-2xl mt-4">Kategori</p>
   </div>
   <div class="flex items-start justify-between h-full gap-0 sm:gap-4 w-4/5 md:w-2/3">
     <div
@@ -60,7 +60,7 @@ const listKategori = [
       <!-- VALUE -->
       <div class="relative flex flex-col justify-end bg-gray-500 w-full h-[35vh] overflow-hidden">
         <!-- BAR WARNA -->
-        <div class="w-full text-[5px] sm:text-xs text-center font-bold text-white py-0.5">
+        <div class="w-full text-[5px] sm:text-xs 4xl:text-2xl text-center font-bold text-white py-0.5">
           {{ data.value }}
         </div>
         <div
@@ -71,7 +71,7 @@ const listKategori = [
       </div>
 
       <!-- LABEL -->
-      <p class="text-[10px] sm:text-sm font-medium mt-3" v-html="data.label"></p>
+      <p class="text-[10px] sm:text-sm 4xl:text-xl font-medium mt-3" v-html="data.label"></p>
     </div>
   </div>
 </template>

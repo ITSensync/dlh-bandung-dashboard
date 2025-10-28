@@ -128,15 +128,15 @@ function generateIcon(value) {
         </div>
       </div>
 
-      <div class="w-1/2 flex flex-col items-center justify-center gap-2 p-2 text-center">
+      <div class="w-1/2 flex flex-col items-center justify-center gap-2 4xl:gap-4 p-2 text-center">
         <div v-html="generateIcon(maxIspu.value)" class="flex justify-center"></div>
         <p
-          class="font-poppins font-bold text-xl sm:text-3xl md:text-2xl xl:text-xl 2xl:text-2xl 3xl:text-3xl 4xl:text-5xl"
+          class="font-poppins font-bold text-xl sm:text-3xl md:text-2xl xl:text-xl 2xl:text-2xl 3xl:text-3xl 4xl:text-4xl"
         >
           {{ ispuLatestData?.status }}
         </p>
         <p
-          class="font-poppins font-normal text-center text-xs xl:text-xs 2xl:text-lg 3xl:text-sm 4xl:text-2xl"
+          class="font-poppins font-normal text-center text-xs xl:text-xs 2xl:text-lg 3xl:text-sm 4xl:text-xl"
         >
           {{ ispuLatestData?.ket }}
         </p>
@@ -148,10 +148,10 @@ function generateIcon(value) {
       <div
         class="h-45 w-full 3xl:h-50 4xl:h-60 p-4 font-poppins rounded-xl mx-4 overflow-y-scroll bg-slate-950 mt-2 3xl:mt-4"
       >
-        <p class="font-bold text-yellow-300 mb-2">Rekomendasi yang perlu dilakukan</p>
+        <p class="font-bold text-yellow-300 mb-2 4xl:text-2xl">Rekomendasi yang perlu dilakukan</p>
         <div class="mb-2" v-for="(rekomendasi, index) in ispuLatestData?.rekomendasi" :key="index">
-          <p class="font-bold text-sm md:text-base">{{ rekomendasi.nama }}</p>
-          <p class="text-xs">{{ rekomendasi.saran }}</p>
+          <p class="font-bold text-sm md:text-base 4xl:text-lg">{{ rekomendasi.nama }}</p>
+          <p class="text-xs 4xl:text-base">{{ rekomendasi.saran }}</p>
         </div>
       </div>
     </div>
