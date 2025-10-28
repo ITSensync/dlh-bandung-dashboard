@@ -36,14 +36,14 @@ async function konsentrasiHarian(data, statistik, tanggal) {
   worksheet.mergeCells('A2:A5')
   worksheet.addImage(leftImageId, {
     tl: {
-      col: 0, row: 1,
+      col: 0, row: 2,
     },
-    ext: { width: 80, height: 80 },
+    ext: { width: 80, height: 50 },
   })
 
   worksheet.mergeCells('H2:H5')
   worksheet.addImage(rightImageId, {
-    tl: { col: 7, row: 1 },
+    tl: { col: 7 + 0.025, row: 1 + 0.25 },
     ext: { width: 80, height: 80 },
   })
 
@@ -212,16 +212,16 @@ async function konsentrasiMingguan(data, periode) {
   worksheet.mergeCells('A2:A5')
   worksheet.addImage(leftImageId, {
     tl: {
-      col: 0, row: 1,
+      col: 0, row: 2,
     },
-    ext: { width: 80, height: 80 },
+    ext: { width: 80, height: 50 },
   })
 
   worksheet.mergeCells('AX2:AX5')
 
   // const offsetX = (18 - 77) / 2
   worksheet.addImage(rightImageId, {
-    tl: { col: 49, row: 1 },
+    tl: { col: 49 + 0.025, row: 1 + 0.25 },
     ext: { width: 80, height: 80 },
   })
 
@@ -450,8 +450,8 @@ async function konsentrasiBulanan(dataBulanan, bulan, tahun, parameter) {
 
   worksheet.mergeCells('A2:A5');
   worksheet.addImage(leftImageId, {
-    tl: { col: 0, row: 1 },
-    ext: { width: 80, height: 80 },
+    tl: { col: 0, row: 1.85 },
+    ext: { width: 80, height: 50 },
   });
 
   // === Buat tanggal statis 1–31 ===
@@ -459,7 +459,7 @@ async function konsentrasiBulanan(dataBulanan, bulan, tahun, parameter) {
 
   worksheet.mergeCells(`AF2:AF5`);
   worksheet.addImage(rightImageId, {
-    tl: { col: 31, row: 1 },
+    tl: { col: 31 + 0.025, row: 1 + 0.25 },
     ext: { width: 80, height: 80 },
   });
 
@@ -607,14 +607,14 @@ async function konsentrasiTahunan(dataTahunan, tahun, sensor) {
     worksheet.mergeCells('A2:A5')
     worksheet.addImage(leftImageId, {
       tl: {
-        col: 0, row: 1,
+        col: 0, row: 2,
       },
-      ext: { width: 80, height: 80 },
+      ext: { width: 80, height: 50 },
     })
 
     worksheet.mergeCells('AF2:AF5')
     worksheet.addImage(rightImageId, {
-      tl: { col: 31, row: 1 },
+      tl: { col: 31 + 0.025, row: 1 + 0.25 },
       ext: { width: 80, height: 80 },
     })
 
@@ -755,14 +755,14 @@ async function avgKonsentrasiBulanan(data, statistik, periode) {
   worksheet.mergeCells('A2:A5')
   worksheet.addImage(leftImageId, {
     tl: {
-      col: 0, row: 1,
+      col: 0, row: 2,
     },
-    ext: { width: 80, height: 80 },
+    ext: { width: 80, height: 50 },
   })
 
   worksheet.mergeCells('H2:H5')
   worksheet.addImage(rightImageId, {
-    tl: { col: 7, row: 1 },
+    tl: { col: 7 + 0.025, row: 1 + 0.25 },
     ext: { width: 80, height: 80 },
   })
 
@@ -930,14 +930,14 @@ async function avgKonsentrasiTahunan(data, statistik, periode) {
   worksheet.mergeCells('A2:A5')
   worksheet.addImage(leftImageId, {
     tl: {
-      col: 0, row: 1,
+      col: 0, row: 2,
     },
-    ext: { width: 80, height: 80 },
+    ext: { width: 80, height: 50 },
   })
 
   worksheet.mergeCells('H2:H5')
   worksheet.addImage(rightImageId, {
-    tl: { col: 7, row: 1 },
+    tl: { col: 7 + 0.025, row: 1 + 0.25 },
     ext: { width: 80, height: 80 },
   })
 
@@ -1106,14 +1106,14 @@ async function ispuHarian(data, tanggal) {
   worksheet.mergeCells('A2:A5')
   worksheet.addImage(leftImageId, {
     tl: {
-      col: 0, row: 1,
+      col: 0, row: 2,
     },
-    ext: { width: 80, height: 80 },
+    ext: { width: 80, height: 50 },
   })
 
   worksheet.mergeCells('J2:J5')
   worksheet.addImage(rightImageId, {
-    tl: { col: 9, row: 1 },
+    tl: { col: 9 + 0.025, row: 1 + 0.25 },
     ext: { width: 80, height: 80 },
   })
 
@@ -1258,14 +1258,14 @@ async function ispuBulanan(dataBulanan, periode) {
     worksheet.mergeCells('A2:A5')
     worksheet.addImage(leftImageId, {
       tl: {
-        col: 0, row: 1,
+        col: 0, row: 2,
       },
-      ext: { width: 80, height: 80 },
+      ext: { width: 80, height: 50 },
     })
 
     worksheet.mergeCells('J2:J5')
     worksheet.addImage(rightImageId, {
-      tl: { col: 9, row: 1 },
+      tl: { col: 9 + 0.025, row: 1 + 0.25 },
       ext: { width: 80, height: 80 },
     })
 
@@ -1513,15 +1513,15 @@ async function ispuTahunan(dataTahunan, tahun) {
   worksheet.mergeCells('A2:A5')
   worksheet.addImage(leftImageId, {
     tl: {
-      col: 0 + 0.2, row: 1,
+      col: 0 + 0.2, row: 2,
     },
-    ext: { width: 80, height: 80 },
+    ext: { width: 80, height: 50 },
   })
 
   worksheet.mergeCells('M2:M5')
 
   worksheet.addImage(rightImageId, {
-    tl: { col: 12 + 0.3, row: 1 },
+    tl: { col: 12 + 0.3, row: 1 + 0.7 },
     ext: { width: 80, height: 80 },
   })
 
@@ -1765,16 +1765,16 @@ async function cuacaHarian(data, statistik, tanggal) {
   worksheet.mergeCells('A2:A5')
   worksheet.addImage(leftImageId, {
     tl: {
-      col: 0, row: 1,
+      col: 0, row: 2,
     },
-    ext: { width: 80, height: 80 },
+    ext: { width: 80, height: 50 },
   })
 
   worksheet.mergeCells('I2:I5')
 
   const offsetX = (18 - 77) / 2
   worksheet.addImage(rightImageId, {
-    tl: { col: 10 + offsetX / 18, row: 1 },
+    tl: { col: 10 + offsetX / 18, row: 1 + 0.25 },
     ext: { width: 80, height: 80 },
   })
 
@@ -2160,8 +2160,8 @@ async function cuacaBulanan(dataBulanan, bulan, tahun, parameter) {
 
   worksheet.mergeCells('A2:A5');
   worksheet.addImage(leftImageId, {
-    tl: { col: 0, row: 1 },
-    ext: { width: 80, height: 80 },
+    tl: { col: 0, row: 1 + 0.85 },
+    ext: { width: 80, height: 50 },
   });
 
   // === Buat tanggal statis 1–31 ===
@@ -2169,7 +2169,7 @@ async function cuacaBulanan(dataBulanan, bulan, tahun, parameter) {
 
   worksheet.mergeCells(`AF2:AF5`);
   worksheet.addImage(rightImageId, {
-    tl: { col: 31, row: 1 },
+    tl: { col: 31, row: 1 + 0.25 },
     ext: { width: 80, height: 80 },
   });
 
@@ -2318,14 +2318,14 @@ async function CuacaTahunan(dataTahunan, tahun, sensor) {
     worksheet.mergeCells('A2:A5')
     worksheet.addImage(leftImageId, {
       tl: {
-        col: 0, row: 1,
+        col: 0, row: 2,
       },
-      ext: { width: 80, height: 80 },
+      ext: { width: 80, height: 50 },
     })
 
     worksheet.mergeCells('AF2:AF5')
     worksheet.addImage(rightImageId, {
-      tl: { col: 31, row: 1 },
+      tl: { col: 31, row: 1 + 0.25 },
       ext: { width: 80, height: 80 },
     })
 
