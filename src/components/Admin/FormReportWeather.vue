@@ -28,7 +28,6 @@ async function handleSubmitHarian() {
   if (!formHarian.date) return alert('Tanggal harus diisi!')
 
   const result = await mainStore.fetchReportWeatherDaily(formHarian.date)
-  console.log(result)
   Export.cuacaHarian(result.data, result.statistik, formHarian.date)
 }
 

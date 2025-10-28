@@ -22,7 +22,6 @@ onMounted(() => {
   intervalId = setInterval(() => {
     mainStore.fetchIspuLatest()
     mainStore.fetch30Minute()
-    console.log('interval running')
   }, 60000)
 })
 
