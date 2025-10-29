@@ -16,7 +16,7 @@ const param = defineProps({
     <div class="flex flex-col sm:flex-row items-center justify-center w-full h-full sm:gap-10">
       <GaugeSpeedometer :name="param.name" :value="param.value" />
       <div
-        class="font-poppins"
+        class="font-poppins text-center md:text-start"
         :class="role === 'spv' ? '' : ''"
       >
         <p class="font-medium text-2xl text-zinc-400" v-html="param.name"></p>
