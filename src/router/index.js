@@ -55,6 +55,14 @@ const routes = [
     name: 'laporan',
     component: () => import('@/views/LaporanView.vue'),
   },
+  {
+    meta: {
+      title: 'Laporan Maintenance',
+    },
+    path: '/mt-laporan',
+    name: 'maintenance report',
+    component: () => import('@/views/MtReportView.vue'),
+  },
   /* {
     meta: {
       title: 'Tables',

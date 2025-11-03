@@ -1,4 +1,5 @@
 import {
+  mdiAccountWrench,
   mdiCalendarToday,
   mdiClockOutline,
   mdiFileDocumentOutline,
@@ -25,6 +26,11 @@ export default [
     to: '/laporan',
     label: 'Laporan',
     icon: mdiCalendarToday,
+  },
+  {
+    to: '/mt-laporan',
+    label: 'Laporan MT',
+    icon: mdiAccountWrench,
   },
   // {
   //   to: '/presence-monthly',
