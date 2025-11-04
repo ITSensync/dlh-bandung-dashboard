@@ -24,14 +24,16 @@ const { role } = storeToRefs(authStore)
 const filteredMenu = ref([])
 
 function updateMenu() {
-  if (role.value === 'spv') {
-    filteredMenu.value = props.menu.filter(
-      (item) => item.label !== 'Laporan' && item.label !== 'Maintenenace Report',
-    )
-  } else if (role.value !== 'sensync') {
-    filteredMenu.value = props.menu.filter((item) => item.label !== 'Maintenenace Report')
-  } else {
+  if (role.value === 'sensync') {
     filteredMenu.value = props.menu
+  } else if (role.value === 'admin') {
+    filteredMenu.value = props.menu.filter((item) => item.label !== 'Laporan MT')
+  } else if (role.value === 'spv') {
+    filteredMenu.value = props.menu.filter(
+      (item) => item.label !== 'Laporan' && item.label !== 'Laporan MT',
+    )
+  } else {
+    filteredMenu.value = []
   }
 }
 
