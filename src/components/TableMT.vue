@@ -5,7 +5,10 @@ import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import { computed, ref, watch } from 'vue'
 import DateFormatter from '@/utils/DateFormatter'
+import { mdiPencil, mdiTrashCan } from '@mdi/js'
+import { useMainStore } from '@/stores/main'
 
+const mainStore = useMainStore()
 const props = defineProps({
   checkable: Boolean,
   data: {
@@ -39,12 +42,35 @@ const pagesList = computed(() => {
   return pagesList
 })
 
+const emit = defineEmits(['refresh', 'edit'])
+
 watch(
   () => props.data,
   (newVal) => {
     items.value = newVal
   },
 )
+
+async function handleDelete(id) {
+  if (!id) alert('Cannot Delete Report: ID Not Found')
+
+  const confirmed = confirm('Yakin ingin menghapus data ini?')
+
+  if (!confirmed) {
+    return
+  }
+
+  try {
+    const result = await mainStore.deleteMtReport(id)
+    if (result?.status == 'success') {
+      emit('refresh')
+    } else {
+      alert('Gagal menghapus data')
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
 </script>
 
 <template>
@@ -65,7 +91,23 @@ watch(
             {{ index + 1 }}
           </td>
           <td data-label="Tanggal">
-            {{ `${DateFormatter.formatToDate(data.tanggal)}` }}
+            {{ `${DateFormatter.formatToDate(data.date)}` }}
+          </td>
+          <td data-label="Engineer">
+            {{ data.engineer }}
+          </td>
+          <td data-label="Desc">
+            {{ data.desc }}
+          </td>
+          <td>
+            <BaseButton color="warning" :icon="mdiPencil" label="" @click="emit('edit', data)" />
+            <BaseButton
+              color="danger"
+              :icon="mdiTrashCan"
+              label=""
+              @click="handleDelete(data.id)"
+              class="ml-4"
+            />
           </td>
         </tr>
       </tbody>

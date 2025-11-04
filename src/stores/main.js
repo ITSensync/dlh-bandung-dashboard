@@ -5,6 +5,9 @@ import DateFormatter from '@/utils/DateFormatter'
 
 export const useMainStore = defineStore('main', () => {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const apiSensyncUrl = import.meta.env.VITE_API_SENSYNC_URL;
+  const apiKey = import.meta.env.VITE_API_KEY;
+  const apiSecret = import.meta.env.VITE_API_SECRET;
   const today = DateFormatter.getLocalIsoDate()
   const formatted = today.split('T')[0]
   const [yearNow, monthNow] = formatted.split('-')
@@ -32,6 +35,7 @@ export const useMainStore = defineStore('main', () => {
   const listIspuPM25 = ref([]);
   const listDailyIspu = ref([])
   const listDaily30Minute = ref([]);
+  const listMtReport = ref([]);
 
   function setUser(payload) {
     if (payload.name) {
@@ -263,6 +267,100 @@ export const useMainStore = defineStore('main', () => {
     return res.data
   }
 
+  async function fetchMtReport() {
+    try {
+      const res = await axios.get(`${apiSensyncUrl}/report/get-all.php`, {
+        headers: {
+          'apikey': apiKey,
+          'apisecret': apiSecret
+        }
+      });
+
+      const response = res.data;
+      if (response.status === 'success') {
+        listMtReport.value = response.data;
+      } else {
+        console.warn('API Response:', response.message);
+      }
+    } catch (error) {
+      console.error('API Fetch Error:', error);
+    }
+  }
+
+  async function insertMtReport(engineer, desc) {
+    try {
+      const id = import.meta.env.VITE_ID_DEVICE;
+      const res = await axios.post(`${apiSensyncUrl}/report/insert.php`, {
+        "id_device": id,
+        "engineer": engineer,
+        "desc": desc,
+      }, {
+        headers: {
+          'apikey': apiKey,
+          'apisecret': apiSecret
+        }
+      });
+
+      const response = res.data;
+      if (response.status === 'success') {
+        return response
+      } else {
+        console.warn('API Response:', response);
+        return response
+      }
+    } catch (error) {
+      console.error('API Fetch Error:', error);
+      return error
+    }
+  }
+
+  async function editMtReport(engineer, desc, id) {
+    try {
+      const res = await axios.post(`${apiSensyncUrl}/report/edit.php?id=${id}`, {
+        "engineer": engineer,
+        "desc": desc,
+      }, {
+        headers: {
+          'apikey': apiKey,
+          'apisecret': apiSecret
+        }
+      });
+
+      const response = res.data;
+      if (response.status === 'success') {
+        return response
+      } else {
+        console.warn('API Response:', response);
+        return response
+      }
+    } catch (error) {
+      console.error('API Fetch Error:', error);
+      return error
+    }
+  }
+
+  async function deleteMtReport(id) {
+    try {
+      const res = await axios.delete(`${apiSensyncUrl}/report/delete.php?id=${id}`, {
+        headers: {
+          'apikey': apiKey,
+          'apisecret': apiSecret
+        }
+      });
+
+      const response = res.data;
+      if (response.status === 'success') {
+        return response
+      } else {
+        console.warn('API Response:', response);
+        return response
+      }
+    } catch (error) {
+      console.error('API Fetch Error:', error);
+      return error
+    }
+  }
+
 
 
 
@@ -281,6 +379,7 @@ export const useMainStore = defineStore('main', () => {
     listIspuPM10,
     listIspuPM25,
     listDaily30Minute,
+    listMtReport,
     setUser,
     fetchIspuLatest,
     fetchIspuDaily,
@@ -298,5 +397,9 @@ export const useMainStore = defineStore('main', () => {
     fetchReportWeatherWeekly,
     fetchKonsentrasiYearly,
     fetchReportWeatherYearly,
+    fetchMtReport,
+    insertMtReport,
+    deleteMtReport,
+    editMtReport,
   }
 })

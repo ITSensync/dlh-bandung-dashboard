@@ -8,10 +8,27 @@ import TableMT from '@/components/TableMT.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import { useMainStore } from '@/stores/main'
 import { mdiTable, mdiWrenchCheck } from '@mdi/js'
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 const mainStore = useMainStore()
 const tableData = ref([])
+const editedReport = ref()
+
+onMounted(() => {
+  mainStore.fetchMtReport()
+  tableData.value = mainStore.listMtReport
+})
+
+watch(
+  () => mainStore.listMtReport,
+  (newVal) => {
+    tableData.value = newVal
+  },
+)
+
+function onEditRow(item) {
+  editedReport.value = item
+}
 </script>
 
 <template>
@@ -19,7 +36,7 @@ const tableData = ref([])
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiWrenchCheck" title="Form Maintenance" class="-mt-8" />
 
-      <FormMtReport />
+      <FormMtReport @refresh="mainStore.fetchMtReport" :editedData="editedReport" />
 
       <SectionTitleLineWithButton :icon="mdiTable" title="Maintenance">
         <!-- <BaseButton
@@ -32,8 +49,8 @@ const tableData = ref([])
         /> -->
       </SectionTitleLineWithButton>
 
-      <CardBox has-table v-if="tableData.length >= 0">
-        <TableMT :data="[]" />
+      <CardBox has-table v-if="tableData.length > 0">
+        <TableMT :data="tableData" @refresh="mainStore.fetchMtReport" @edit="onEditRow" />
       </CardBox>
       <CardBox v-else>
         <CardBoxComponentEmpty text="Tidak ada data ..." />
