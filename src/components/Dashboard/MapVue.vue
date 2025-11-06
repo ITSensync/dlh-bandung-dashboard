@@ -216,7 +216,7 @@ function addWindLegend() {
 onMounted(async () => {
   map = L.map('map', {
     center: [-6.858833, 107.593446],
-    zoom: 17,
+    zoom: 18,
     minZoom: 15,
     maxZoom: 18,
     zoomControl: true,
