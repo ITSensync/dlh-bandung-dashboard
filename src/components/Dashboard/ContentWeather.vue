@@ -8,8 +8,8 @@ import {
   mdiThermometer,
   mdiWaterPercent,
   mdiWeatherRainy,
-  mdiWeatherWindy,
   mdiWhiteBalanceSunny,
+  mdiWindsock,
 } from '@mdi/js'
 import CardTextGas from '../Admin/CardTextGas.vue'
 
@@ -61,7 +61,7 @@ function generateWindDirection(windData) {
   <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 py-4 xl:pb-4 xl:pt-4 gap-2">
     <CardTextGas
       name="Kec. Angin"
-      :icon="mdiWeatherWindy"
+      :icon="mdiWindsock"
       :value="latestWeatherData?.ws"
       unit="m/s"
     />
