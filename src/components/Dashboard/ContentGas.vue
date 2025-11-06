@@ -1,14 +1,6 @@
 <script setup>
 import { useMainStore } from '@/stores/main'
 import { computed } from 'vue'
-import {
-  mdiFlaskOutline,
-  mdiMolecule,
-  mdiMoleculeCo,
-  mdiSmog,
-  mdiWeatherDust,
-  mdiWeatherFog,
-} from '@mdi/js'
 import CardTextGas from '../Admin/CardTextGas.vue'
 
 // let intervalId = null
@@ -33,47 +25,40 @@ const latestGasData = computed(() => {
   <div class="grid grid-cols-2 md:grid-cols-7 gap-2 py-4">
     <CardTextGas
       name="PM10"
-      :icon="mdiWeatherDust"
       :value="latestGasData?.pm10 || '-'"
       unit="µg/m³"
     />
     <CardTextGas
       name="PM2.5"
-      :icon="mdiWeatherDust"
       :value="latestGasData?.pm25 || '-'"
       unit="µg/m³"
     />
     <CardTextGas
       name="HC"
-      :icon="mdiFlaskOutline"
       :value="latestGasData?.hc"
       unit="µg/m³"
       class="col-span-2 sm:col-span-1"
     />
     <CardTextGas
       name="CO"
-      :icon="mdiMoleculeCo"
       :value="latestGasData?.co"
       unit="µg/m³"
       class="col-span-2 sm:col-span-1"
     />
     <CardTextGas
       name="O<sub>3</sub>"
-      :icon="mdiMolecule"
       :value="latestGasData?.o3"
       unit="µg/m³"
       class="col-span-2 sm:col-span-1"
     />
     <CardTextGas
       name="SO<sub>2</sub>"
-      :icon="mdiWeatherFog"
       :value="latestGasData?.so2"
       unit="µg/m³"
       class="col-span-2 sm:col-span-1"
     />
     <CardTextGas
       name="NO<sub>2</sub>"
-      :icon="mdiSmog"
       :value="latestGasData?.no2"
       unit="µg/m³"
       class="col-span-2 sm:col-span-1"

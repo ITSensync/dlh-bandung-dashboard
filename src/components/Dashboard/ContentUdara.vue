@@ -144,14 +144,14 @@ function generateIcon(value) {
     </div>
 
     <!-- REKOMENDASI PERLAKUAN -->
-    <div class="h-full flex items-center">
+    <div class="h-full flex items-center 4xl:pt-2 4xl:pb-6">
       <div
-        class="h-45 w-full 3xl:h-50 4xl:h-60 p-4 font-poppins rounded-xl mx-4 overflow-y-scroll bg-slate-950 mt-2 3xl:mt-4"
+        class="h-45 w-full 3xl:h-50 4xl:h-full p-4 font-poppins rounded-xl mx-4 overflow-y-scroll bg-slate-950 mt-2 3xl:mt-4" 
       >
         <p class="font-bold text-yellow-300 mb-2 4xl:text-2xl">Rekomendasi yang perlu dilakukan</p>
         <div class="mb-2" v-for="(rekomendasi, index) in ispuLatestData?.rekomendasi" :key="index">
-          <p class="font-bold text-sm md:text-base 4xl:text-lg">{{ rekomendasi.nama }}</p>
-          <p class="text-xs 4xl:text-base">{{ rekomendasi.saran }}</p>
+          <p class="font-bold text-sm md:text-base 4xl:text-xl">{{ rekomendasi.nama }}</p>
+          <p class="text-xs 4xl:text-xl">{{ rekomendasi.saran }}</p>
         </div>
       </div>
     </div>

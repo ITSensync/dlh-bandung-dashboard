@@ -13,7 +13,7 @@ onMounted(() => {
     <div class="flex flex-row gap-4 items-center py-2 justify-center w-full sm:w-fit">
       <img src="/dlh.png" alt="DLH LOGO" height="20" class="h-12 sm:h-12" />
       <div class="hidden sm:flex-1 sm:flex sm:flex-col">
-        <a class="text-xs sm:text-xl font-poppins font-extrabold"
+        <a class="text-xs sm:text-xl 2xl:text-2xl 4xl:text-3xl font-poppins font-extrabold"
           >Pemantauan Kualitas Udara Kota Bandung</a
         >
       </div>

@@ -68,6 +68,6 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
-    <FooterBar class="inset-x-0 bottom-0 text-slate-100"> AQMS DLH KOTA BANDUNG </FooterBar>
+    <FooterBar class="inset-x-0 bottom-0 text-slate-100 4xl:hidden 5xl:flex"> AQMS DLH KOTA BANDUNG </FooterBar>
   </LayoutGuest>
 </template>

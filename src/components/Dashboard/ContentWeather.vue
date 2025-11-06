@@ -96,7 +96,7 @@ function generateWindDirection(windData) {
       unit="mm/jam"
     />
     <CardTextGas
-      name="Solar Radiasi"
+      name="Radiasi Matahari"
       :icon="mdiWhiteBalanceSunny"
       :value="latestWeatherData?.solar"
       unit="W/m²"
