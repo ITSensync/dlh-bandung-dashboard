@@ -13,7 +13,13 @@ const props = defineProps({
 })
 
 const mainStore = useMainStore()
-const weatherLatestData = computed(() => mainStore.latestWeather)
+const weatherLatestData = computed(() => {
+  const firstData = mainStore.listDaily30Minute?.[0] || {}
+  return {
+    ws: firstData.ws ?? '-',
+    wd: firstData.wd ?? '-',
+  }
+})
 
 let map = null
 let marker = null
@@ -101,6 +107,16 @@ function createMarker() {
     )
 }
 
+function getWindColor(speed) {
+  if (speed < 2) return '#0033cc' // Biru tua
+  if (speed < 4) return '#0099ff' // Biru muda
+  if (speed < 6) return '#66ff66' // Hijau
+  if (speed < 8) return '#ffcc00' // Kuning
+  if (speed < 11) return '#ff6600' // Oranye
+  if (speed < 14) return '#ff3300' // Merah
+  return '#990000' // Merah tua (badai)
+}
+
 function createWindLayer(ws, wd) {
   if (!map) return
 
@@ -166,9 +182,9 @@ function createWindLayer(ws, wd) {
       speedUnit: 'm/s',
     }, */
     data: windData.data,
-    maxVelocity: 10,
-    velocityScale: 0.01,
-    colorScale: ['#0033cc', '#0099ff', '#66ff66', '#ffcc00', '#ff3300', '#ff0000'],
+    maxVelocity: 1,
+    velocityScale: 0.004,
+    colorScale: [getWindColor(weatherLatestData.value.ws)],
   })
 
   velocityLayer.addTo(map)
@@ -189,14 +205,14 @@ function addWindLegend() {
       <div
         class='flex flex-col items-center justify-center bg-white/90 p-1 gap-1 rounded-lg shadow-md'
       >
-        <div class='flex flex-row-reverse md:flex-col gap-1 md:gap-2 items-center justify-center'> 
+        <div class='flex flex-row-reverse md:flex-col gap-1 md:gap-2 items-center justify-center'>
           <p class='font-poppins text-zinc-900 text-center text-[6px] md:text-xs font-medium'>Cepat</p>
-  
+
           <div
             id="gradient-bar"
             style='${barStyle}'
           ></div>
-  
+
           <p class='font-poppins text-zinc-900 text-center text-[6px] md:text-xs font-medium'>Lambat</p>
         </div>
 
