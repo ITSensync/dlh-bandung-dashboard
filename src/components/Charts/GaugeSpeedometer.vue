@@ -14,6 +14,12 @@ const isDark = computed(() => darkModeStore.isEnabled)
 
 const textColor = computed(() => (isDark.value ? '#ffffff' : '#1e293b'))
 
+const clampedValue = computed(() => {
+  if (props.value > maxValue.value) return maxValue.value
+  if (props.value < 0) return 0
+  return props.value
+})
+
 // Gradasi warna dari hijau → kuning → oranye → merah → merah tua
 /* const segmentColors = [
   '#00b300', // hijau terang
@@ -103,7 +109,7 @@ const segmentStops = computed(() => {
       :max-segment-labels="8"
       :custom-segment-stops="segmentStops"
       :segment-colors="['limegreen', 'skyblue', 'gold', 'tomato', 'black']"
-      :value="props.value"
+      :value="clampedValue"
       :min-value="0"
       :max-value="maxValue"
       :textColor="textColor"
