@@ -481,8 +481,9 @@ async function konsentrasiBulanan(dataBulanan, bulan, tahun, parameter) {
   titleCellSubHeader.font = { bold: false, size: 12 };
   titleCellSubHeader.alignment = { horizontal: 'center', vertical: 'middle' };
 
-  const firstDataTanggal = Object.keys(dataBulanan)[0];
-  const jamList = dataBulanan[firstDataTanggal]?.jam?.map(j => j.jam) || [];
+  /* const firstDataTanggal = Object.keys(dataBulanan)[0];
+  const jamList = dataBulanan[firstDataTanggal]?.jam?.map(j => j.jam) || []; */
+  const jamList = generateJamList(true);
 
   // === Header ===
   const headerRow = ['JAM', ...tanggalList.map(tgl => tgl.split('-')[2])];
@@ -658,12 +659,14 @@ async function konsentrasiTahunan(dataTahunan, tahun, sensor) {
     });
 
     // Ambil jam dari tanggal pertama atau generate default
-    const semuaHari = Object.values(isi);
+    /* const semuaHari = Object.values(isi);
     const hariPertama = semuaHari.find((h) => h?.jam?.length);
     const jamList =
       hariPertama && hariPertama.jam?.length
         ? hariPertama.jam.map((j) => j.jam)
-        : generateJamList();
+        : generateJamList(); */
+
+    const jamList = generateJamList(true);
 
     // === ISI DATA PER JAM ===
     jamList.forEach((jam) => {
@@ -2192,8 +2195,7 @@ async function cuacaBulanan(dataBulanan, bulan, tahun, parameter) {
   titleCellSubHeader.alignment = { horizontal: 'center', vertical: 'middle' };
 
   // === Ambil list jam dari tanggal pertama yang punya data ===
-  const firstDataTanggal = Object.keys(dataBulanan)[0];
-  const jamList = dataBulanan[firstDataTanggal]?.jam?.map(j => j.jam) || [];
+  const jamList = generateJamList(true);
 
   // === Header ===
   const headerRow = ['JAM', ...tanggalList.map(tgl => tgl.split('-')[2])];
@@ -2369,12 +2371,14 @@ async function CuacaTahunan(dataTahunan, tahun, sensor) {
     });
 
     // Ambil jam dari tanggal pertama atau generate default
-    const semuaHari = Object.values(isi);
+    /* const semuaHari = Object.values(isi);
     const hariPertama = semuaHari.find((h) => h?.jam?.length);
     const jamList =
       hariPertama && hariPertama.jam?.length
         ? hariPertama.jam.map((j) => j.jam)
-        : generateJamList();
+        : generateJamList(); */
+
+    const jamList = generateJamList(true);
 
     // === ISI DATA PER JAM ===
     jamList.forEach((jam) => {
