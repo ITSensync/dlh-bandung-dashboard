@@ -47,6 +47,7 @@ onMounted(() => {
 onUnmounted(() => {
   if (intervalId) clearInterval(intervalId)
 })
+console.log(summaryToday)
 </script>
 
 <template>
@@ -167,7 +168,7 @@ onUnmounted(() => {
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <CardTemperature
           :suhu="Number(summaryToday?.temp || 0)"
-          :humd="Number(summaryToday?.humd || 0)"
+          :humd="Number(summaryToday?.hum || 0)"
         />
         <CardWind :degrees="Number(summaryToday?.wd || 0)" :speed="Number(summaryToday?.ws || 0)" />
         <CardPressure :press="Number(summaryToday?.press || 0)" />
