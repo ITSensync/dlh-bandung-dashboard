@@ -2339,7 +2339,7 @@ async function CuacaTahunan(dataTahunan, tahun, sensor) {
 
     worksheet.mergeCells('B4:AE4')
     const titleCellHeader2 = worksheet.getCell('B4')
-    titleCellHeader2.value = `Parameter: ${sensor}`
+    titleCellHeader2.value = `Parameter: ${generateTextParameter(sensor.toLowerCase())}`
     titleCellHeader2.font = { bold: true, size: 14 }
     titleCellHeader2.alignment = { horizontal: 'center', vertical: 'middle' }
 
