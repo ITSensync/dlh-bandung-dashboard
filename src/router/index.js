@@ -57,10 +57,10 @@ const routes = [
   },
   {
     meta: {
-      title: 'Laporan Maintenance',
+      title: 'Maintenance',
     },
-    path: '/mt-laporan',
-    name: 'maintenance report',
+    path: '/maintenance',
+    name: 'maintenance',
     component: () => import('@/views/MtReportView.vue'),
   },
   /* {

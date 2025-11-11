@@ -28,8 +28,8 @@ export default [
     icon: mdiCalendarToday,
   },
   {
-    to: '/mt-laporan',
-    label: 'Laporan MT',
+    to: '/maintenance',
+    label: 'Maintenance',
     icon: mdiAccountWrench,
   },
   // {
