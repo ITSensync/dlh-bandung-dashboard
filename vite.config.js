@@ -9,6 +9,16 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   // base: "/dashboard/",
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://secure.getsensync.com/fix-aqms/api', // API asli (HTTP)
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
   build: {
     sourcemap: false,
     rollupOptions: {

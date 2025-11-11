@@ -5,7 +5,6 @@ import DateFormatter from '@/utils/DateFormatter'
 
 export const useMainStore = defineStore('main', () => {
   const apiUrl = import.meta.env.VITE_API_URL;
-  const apiSensyncUrl = import.meta.env.VITE_API_SENSYNC_URL;
   const apiKey = import.meta.env.VITE_API_KEY;
   const apiSecret = import.meta.env.VITE_API_SECRET;
   const today = DateFormatter.getLocalIsoDate()
@@ -269,7 +268,7 @@ export const useMainStore = defineStore('main', () => {
 
   async function fetchMtReport() {
     try {
-      const res = await axios.get(`${apiSensyncUrl}/report/get-all.php`, {
+      const res = await axios.get(`/api/report/get-all.php`, {
         headers: {
           'apikey': apiKey,
           'apisecret': apiSecret
@@ -290,7 +289,7 @@ export const useMainStore = defineStore('main', () => {
   async function insertMtReport(engineer, desc) {
     try {
       const id = import.meta.env.VITE_ID_DEVICE;
-      const res = await axios.post(`${apiSensyncUrl}/report/insert.php`, {
+      const res = await axios.post(`/api/report/insert.php`, {
         "id_device": id,
         "engineer": engineer,
         "desc": desc,
@@ -316,7 +315,7 @@ export const useMainStore = defineStore('main', () => {
 
   async function editMtReport(engineer, desc, id) {
     try {
-      const res = await axios.post(`${apiSensyncUrl}/report/edit.php?id=${id}`, {
+      const res = await axios.post(`/api/report/edit.php?id=${id}`, {
         "engineer": engineer,
         "desc": desc,
       }, {
@@ -341,7 +340,7 @@ export const useMainStore = defineStore('main', () => {
 
   async function deleteMtReport(id) {
     try {
-      const res = await axios.delete(`${apiSensyncUrl}/report/delete.php?id=${id}`, {
+      const res = await axios.delete(`/api/report/delete.php?id=${id}`, {
         headers: {
           'apikey': apiKey,
           'apisecret': apiSecret
