@@ -27,10 +27,10 @@ function updateMenu() {
   if (role.value === 'sensync') {
     filteredMenu.value = props.menu
   } else if (role.value === 'admin') {
-    filteredMenu.value = props.menu.filter((item) => item.label !== 'Laporan MT')
+    filteredMenu.value = props.menu.filter((item) => item.label !== 'Maintenance')
   } else if (role.value === 'spv') {
     filteredMenu.value = props.menu.filter(
-      (item) => item.label !== 'Laporan' && item.label !== 'Laporan MT',
+      (item) => item.label !== 'Laporan' && item.label !== 'Maintenance',
     )
   } else {
     filteredMenu.value = []
